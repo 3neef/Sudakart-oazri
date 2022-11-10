@@ -1,0 +1,139 @@
+.wishlist-section .cart-table thead th {
+    text-align : right;
+}
+
+.show-div.shopping-cart {
+    left: 0;
+    right: auto;
+}
+
+.onhover-div .show-div.shopping-cart li .total h5 {
+    text-align: right;
+}
+
+.onhover-div .show-div.shopping-cart li .total h5 span{
+    float: left;
+}
+
+.slider-newproduct .product-wrapper .btn_wrapper .pro_btn span.add_cart
+{
+    padding-right: 20px;
+}
+.slider-newproduct .product-li .product-wrapper .product-description {
+    text-align: right;
+}
+
+.blog-content-wrap {
+    text-align: right;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    float: right;
+}
+
+.show-div.shopping-cart {
+    left: -80px;
+    right: auto;
+}
+
+#timer {
+    float: left;
+}
+
+.slider-newproduct .product-wrapper .product-description .btn_wrapper .add-to-wishlist.pro_btn {
+    float: right;
+}
+
+.slider-newproduct .product-wrapper .product-description .btn_wrapper .pro_btn.add_tocart {
+    float: right;
+}
+
+.deal_of_day_nav_wrap {
+    float: left;
+    margin-left: 20px;
+}
+
+
+.show-div.w-170 {
+    left: 0;
+    right: auto;
+}
+
+body.rtl .owl-carousel {
+    direction: rtl;
+}
+
+.tt-title {
+    float: right;
+}
+
+.best-seller-filters {
+    margin-left: 20px;
+    margin-right: 0;
+}
+
+@media screen and (min-width: 992px) {
+    .best-seller-filters {
+        margin-left: 20px;
+        margin-right: auto;
+    }
+}
+
+.category-header-section:after{
+    left: auto;
+    right: 0;
+    -webkit-border-radius: 0px 10px 10ox 0px;
+    -moz-border-radius: 0px 10px 10ox 0px;
+    -khtml-border-radius: 0px 10px 10ox 0px;
+    border-radius: 0px 10px 10px 0px;   
+}
+
+.best-seller-title-one:after {
+    left: auto;
+    right: 0;
+    -webkit-border-radius: 0px 10px 10ox 0px;
+    -moz-border-radius: 0px 10px 10ox 0px;
+    -khtml-border-radius: 0px 10px 10ox 0px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.tt-title:after {
+    left: auto;
+    right: 0;
+    -webkit-border-radius: 0px 10px 10ox 0px;
+    -moz-border-radius: 0px 10px 10ox 0px;
+    -khtml-border-radius: 0px 10px 10ox 0px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+
+.customNavigation {
+    right: auto;
+    left : 10px;
+}
+
+@media screen and (min-width: 1025px){
+    .section-header {
+        display: flex;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .header_2 .full-header-wrap .myaccount.icon-btn {
+        position: absolute;
+        right: auto;
+        left: 10px;
+        bottom: 6px;
+        top: auto;
+    }
+}
+
+
+
+@media screen and (max-width: 480px) {
+    .myaccount.icon-btn {
+        right: auto;
+        left: 10px;
+    }
+}

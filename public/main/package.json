@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@mdi/font": "^7.0.96",
+    "sticky-js": "^1.3.0"
+  }
+}
