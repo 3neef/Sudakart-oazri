@@ -76,7 +76,9 @@ class OffersController extends Controller
      */
     public function destroy(Request $request, Offer $offer)
     {
+        ProductOffer::where('offer_id', $offer->id)->delete();
         $offer->delete();
+
         if (! $request->expectsJson()) {
             return redirect()->route('admin.offers');
         }

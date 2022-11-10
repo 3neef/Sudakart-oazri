@@ -1,0 +1,2 @@
+<img src="<?php echo e(asset('main/images/new_logo.png')); ?>" style="width : 80px; height: 80px;" />
+<?php /**PATH C:\Users\10\Desktop\oazri\suda\resources\views/components/application-logo.blade.php ENDPATH**/ ?>

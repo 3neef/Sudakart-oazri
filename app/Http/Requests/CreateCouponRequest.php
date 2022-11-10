@@ -25,7 +25,7 @@ class CreateCouponRequest extends FormRequest
     {
         return [
             'code'      => ['required', 'string'],
-            'discount'  => ['required', 'numeric', 'max:1'],
+            'discount'  => ['required', 'numeric'],
             'expire_at' => ['required', 'date']
         ];
     }

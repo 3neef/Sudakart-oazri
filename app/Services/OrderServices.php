@@ -54,9 +54,9 @@ class OrderServices
             'shop_id' => $item->shop_id,
         ]));
         $increments = self::options($order_product, $product['options']);
-        $coupn = (($price + $increments) * self::hasCoupon($order_product));
-        $order_product->update(['price' => ($price + $increments) - $coupn ]);
-        return $order_product->price * $product['quantity'];
+        $after_coupon = (($price + $increments) * $product['quantity'] - self::hasCoupon($order_product));
+        $order_product->update(['price' => $after_coupon/$product['quantity'] ]);
+        return $after_coupon;
     }
 
     public static function options($order_product, $options)
