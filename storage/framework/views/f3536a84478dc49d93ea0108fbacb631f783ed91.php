@@ -77,7 +77,23 @@
                                                     <td><?php echo e($one->pivot->created_at); ?></td>
                                                     <td><?php echo e($one->en_name); ?></td>
                                                     <td>
+<<<<<<< Updated upstream:storage/framework/views/f3536a84478dc49d93ea0108fbacb631f783ed91.php
                                            
+=======
+                                                       
+                                                       <?php $__empty_1 = true; $__currentLoopData = \App\Models\Product::getOptions($order->id,$one->pivot->product_id); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $op): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                                         <?php if($op->name): ?>
+                                                         <?php if(app()->getLocale() == 'en'): ?>
+                                                            <div><?php echo e($op->en_name); ?> : <?php echo e($op->en_option); ?> </div>
+                                                         <?php else: ?> 
+                                                            <div><?php echo e($op->name); ?> : <?php echo e($op->option); ?> </div>
+                                                         <?php endif; ?>
+                                                         <?php endif; ?>
+                                                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                                        <?php echo e(__('body.no_options')); ?>
+
+                                                       <?php endif; ?>
+>>>>>>> Stashed changes:storage/framework/views/08b10c6976ae39e6242145a80f4b05a4294ff8b4.php
                                                     </td>
                                                     <td><?php echo e($one->pivot->quantity); ?></td>
                                                     <td><?php echo e(number_format($one->pivot->price * $one->pivot->quantity,2)); ?>

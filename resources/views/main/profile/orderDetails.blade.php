@@ -74,7 +74,22 @@
                                                     <td>{{ $one->pivot->created_at }}</td>
                                                     <td>{{ $one->en_name }}</td>
                                                     <td>
+<<<<<<< Updated upstream
                                            
+=======
+                                                       
+                                                       @forelse(\App\Models\Product::getOptions($order->id,$one->pivot->product_id) as $op)
+                                                         @if($op->name)
+                                                         @if(app()->getLocale() == 'en')
+                                                            <div>{{ $op->en_name }} : {{ $op->en_option }} </div>
+                                                         @else 
+                                                            <div>{{ $op->name }} : {{ $op->option }} </div>
+                                                         @endif
+                                                         @endif
+                                                       @empty
+                                                        {{ __('body.no_options') }}
+                                                       @endforelse
+>>>>>>> Stashed changes
                                                     </td>
                                                     <td>{{ $one->pivot->quantity }}</td>
                                                     <td>{{ number_format($one->pivot->price * $one->pivot->quantity,2) }}
