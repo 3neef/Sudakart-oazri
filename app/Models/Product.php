@@ -190,4 +190,22 @@ class Product extends Model
             return $rate;
         }
     }
+
+    public static function getOptions($order_id,$product_id)
+    {
+        $result = DB::table('order_products as op')
+        ->select([
+           'options.en_option' , 'tis.increment' , 'att.en_name','options.option','att.name'
+        ])
+        ->leftJoin('order_product_options as ops','ops.order_product_id','op.id')
+        ->leftJoin('product_options as tis','tis.id','ops.product_option_id')
+        ->leftJoin('options','options.id','tis.option_id')
+        ->leftJoin('attributes as att','att.id','options.attribute_id')
+        ->where('op.order_id',$order_id)
+        ->where('op.product_id',$product_id)
+        ->get();
+       
+
+        return $result;
+    }
 }
