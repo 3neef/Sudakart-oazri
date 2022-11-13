@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/logs
 /vendor
 .env
 .env.backup
@@ -17,3 +18,5 @@ suda-kart-api.zip
 game.html
 storage/framework/sessions/6vEDwdXcEh4px0tH5JNzpOaiREZu6NpvSvh0lKD3
 storage/logs/laravel.log
+storage/app/public/products/products1666095982
+storage/app/public/products/products1666095982
