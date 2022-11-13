@@ -31,6 +31,7 @@ class Order extends Model
         'status',
         'region_id',
         'approved',
+        'handover',
         'delivery_ref_id'
     ];
 

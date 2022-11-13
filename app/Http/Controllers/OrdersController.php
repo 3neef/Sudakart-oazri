@@ -152,7 +152,7 @@ class OrdersController extends Controller
 
     public function VendorOrder(Request $request) {
         $vendor =  Vendor::where('id',auth()->user()->userable->id)->first();
-        $perPage = $request->limit  ? $request->limit : 50;
+        $perPage = $request->limit  ? $request->limit : 10;
         $ordersProduct  = OrderProduct::where('shop_id', $vendor->shop->id)
         ->where('status', 'pending')
         ->with('product','order')
@@ -160,7 +160,7 @@ class OrdersController extends Controller
 
         ->pluck('order_id');
         
-        $orders = Order::whereIn('id',$ordersProduct)->orderBy('created_at', 'desc')->get();
+        $orders = Order::whereIn('id',$ordersProduct)->orderBy('created_at', 'desc')->paginate($perPage);
         return $orders; 
     }
     public function VendorOrderShow(Request $request, $orderId) {

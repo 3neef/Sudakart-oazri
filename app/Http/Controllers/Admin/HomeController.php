@@ -66,7 +66,7 @@ class HomeController extends Controller
                 $orders = Order::whereIn('id',$ordersProduct)->orderBy('created_at', 'desc')->get();
                 $Yorders = $this->getYesterdayOrders($orders);
                 // =====================================================
-                $sub = Transaction::where('wallet_id', auth()->user()->userable->wallet->id)->where('type', 'withdraw' && 'type', 'withdraw' )->sum('amount');
+                $sub = Transaction::where('wallet_id', auth()->user()->userable->wallet->id)->where('type', 'withdraw')->sum('amount');
                         // =====================================================
 
                 $now = Carbon::now();

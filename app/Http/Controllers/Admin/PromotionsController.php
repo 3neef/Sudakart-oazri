@@ -108,7 +108,7 @@ class PromotionsController extends Controller
             
         }else{
             
-            $notifications = Notification::where('user_id', auth()->user()->id)->paginate(10);
+            $notifications = Notification::where('user_id', auth()->user()->id)->orWhere('type', 'App\Models\Vendor')->paginate(10);
         }
 
         return view('panel.promotions.notifications.index', compact('notifications'));

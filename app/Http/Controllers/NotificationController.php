@@ -18,13 +18,15 @@ class NotificationController extends Controller
 
     public function index()
     {
-        $has_notification = Notification::where('user_id', auth()->user()->id)->first();
-        $notification = Notification::where('user_id', auth()->user()->id)->get();
-        if($has_notification){
-            return $notification;
-        }else{
-            abort('204', __('You have no notifications'));            
+        if (Auth::user() != null && Auth::user()->userable_type == 'App\Models\Vendor'){
+            
+            $notifications = Notification::where('user_id', auth()->user()->id)->orWhere('type', 'App\Models\Vendor')->get(); 
+            
+        }elseif(Auth::user() != null && Auth::user()->userable_type == 'App\Models\Customer'){
+            
+            $notifications = Notification::where('user_id', auth()->user()->id)->orWhere('type', 'App\Models\Customer')->get(); 
         }
+        return $notifications;           
 
     }
 

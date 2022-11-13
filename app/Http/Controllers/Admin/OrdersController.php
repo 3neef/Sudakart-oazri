@@ -300,6 +300,20 @@ class OrdersController extends Controller
             ]);
     }
 
+    public function handover(Request $request, Order $order) {
+        // return $order->handover;
+        if ($request->handover == 1) {
+            $order->update([
+                'handover' => 1
+            ]);
+        }else{
+            $order->update([
+                'handover' => 0
+            ]);
+        }
+        return redirect()->route('admin.orders.index');
+    }
+
     public function VendorOrder(Request $request) {
         $vendor =  Vendor::where('id',auth()->user()->userable->id)->first();
         $perPage = $request->limit  ? $request->limit : 50;

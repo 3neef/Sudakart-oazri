@@ -21,7 +21,7 @@
                                 <th>{{ __('adminBody.date') }}</th>
                                 <th>{{ __('adminBody.total') }}</th>
                                 <th>{{ __('adminBody.Approved') }}</th>
-                                <th>{{ __('adminBody.Actions') }}</th>
+                                <th>{{ __('adminBody.delivery') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,8 +49,21 @@
                             </td>
                             <td>{{$order->delivery_amount}}</td>
                             <td>
-                                <a  href="javascript:void(0)">
-                                    <span data-id="{{$order->id}}" class="badge badge-success asign-ticket">{{$order->status}}</span>
+                                <a  href="javascript:void(0)"  class="{{$order->handover == 1 ? 'disabled' : '' }}" style="{{$order->handover == 1 ? 'pointer-events: none;' : '' }}">
+                                    <span data-id="{{$order->id}}" 
+                                        class=" badge
+                                        @if ($order->status == 'pending')
+                                            badge-danger
+                                        @elseif($order->status == 'in progress')
+                                            badge-info
+                                        @elseif ($order->status == 'completed')
+                                            badge-success
+                                        @elseif ($order->status == 'canceled')
+                                            badge-primary
+                                        @endif
+                                            asign-ticket">
+                                        {{$order->status}}
+                                    </span>
                                 </a>
                             </td>
                             <td>{{ \Carbon\Carbon::createFromTimestamp(strtotime($order->created_at))->format('d-m-Y')}}</td>
@@ -68,7 +81,12 @@
                             @endif
                             <td>
                                 <div style="display: flex;">
-                                @if (auth()->user()->userable_type == 'App\Models\Admin' && $order->approved == 0 && $order->status == 'completed')
+                                @if (auth()->user()->userable_type == 'App\Models\Admin')
+                                <a class=" mx-1 btn btn-success" href="javascript:void(0)" style="padding: 5px 5px;">
+                                    <i  data-id="{{$order->id}}" class="fa fa-dot-circle-o px-1 status-ticket" title="change status"></i>
+                                </a>
+                                @endif
+                                @if (auth()->user()->userable_type == 'App\Models\Admin' && $order->approved == 0)
                                 <a class=" mx-1 btn btn-success" href="{{route('admin.orders.approve', $order->id)}}" aria-label="Approve Order" style="padding: 5px 5px;">
                                     <i class="fa fa-check-circle px-1" aria-hidden="true" title="Approve Order"></i>
                                 </a>
@@ -82,7 +100,7 @@
                                     <i class="fa fa-ban  px-1" aria-hidden="true" title="Cancel Order"></i>
                                 </a>
                                 @endif
-                                @if ($order->status != 'canceled' && $order->approved == 1)
+                                @if ($order->status != 'canceled')
                                 <a class=" mx-1 btn btn-info" href="{{route('admin.orders.sendtoDelivery', $order->id)}}" aria-label="Send Order To Delivery" style="padding: 5px 5px;">
                                     <i class="fa fa-paper-plane  px-1" aria-hidden="true" title="Send Order To Delivery"></i>
                                 </a>
@@ -147,17 +165,71 @@
     </div>
 </div>
 
+{{-- model 2 --}}
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true" id="return-ticket-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle">Change the ticket status</h5>
+            </div>
+            <div class="modal-body">
+                <form id="status-ticket" action="#" method="POST" id="return-ticket-form">
+                    @csrf
+                   @method('put')
+
+                    <div class="form-group">
+                        <label for="">Choose a Status</label>
+                        <div class="col-md-7">
+                        <select class="mySelect2 form-control" name="handover" required>
+                            <option value="0">Self Managed</option>
+                            <option value="1">Delivery Company</option>
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Request" class="btn btn-success">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="clsBtnFooter" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- end --}}
+
 <script src="{{ asset('main/js/modal/order.js') }}" defer></script>
+<script src="{{ asset('main/js/modal/ticket.js') }}" defer></script>
 
 @endsection
 
 @push('scripts')
 <script>
     $('.asign-ticket').on('click',function () {  
+        if($(this).closest().hasClass('disabled')) {
+            alert('hi');
+        }else {
+            // alert('haaaay');
+            var id = $(this).data('id');
+            console.log(id);
+            $('#asign-ticket').attr('action', '/admin/orders/status/'+id);
+            $('#return-order-modal').modal('show');
+        }
+    
+});
+</script>
+<script>
+    $('.status-ticket').on('click',function () {  
     var id = $(this).data('id');
     console.log(id);
-    $('#asign-ticket').attr('action', '/admin/orders/status/'+id);
-    $('#return-order-modal').modal('show');
+    $('#status-ticket').attr('action', '/admin/orders/handover/'+id);
+    $('#return-ticket-modal').modal('show');
 });
 </script>
 @endpush

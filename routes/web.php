@@ -83,6 +83,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/orders/print/{order}',[OrdersController::class, 'print'])->name('orders.print');
     Route::get('/orders/sendtoDelivery/{order}',[OrdersController::class, 'sendtoDelivery'])->name('orders.sendtoDelivery');
     Route::post('/orders/status/{order}',[OrdersController::class, 'statusupdate'])->name('orders.statusupdate');
+    Route::put('/orders/handover/{order}',[OrdersController::class, 'handover'])->name('orders.handoverupdate');
     Route::get('/orders/cancel/{order}',[OrdersController::class, 'cancel'])->name('orders.cancel');
     Route::get('/orders/canceled',[OrdersController::class, 'canceled'])->name('orders.canceled')->middleware('can:view-canceled-orders');
     Route::get('/orders/returned',[OrdersController::class, 'returned'])->name('orders.returned')->middleware('can:view-returned-products');

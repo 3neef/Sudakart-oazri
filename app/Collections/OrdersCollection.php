@@ -35,6 +35,7 @@ class OrdersCollection
             'gift',
             'status',
             'approved',
+            'handover',
             'created_at',
             'updated_at'
         ];
