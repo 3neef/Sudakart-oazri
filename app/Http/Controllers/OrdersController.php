@@ -25,6 +25,7 @@ use App\Services\SMSServices;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class OrdersController extends Controller
 {
@@ -160,8 +161,18 @@ class OrdersController extends Controller
 
         ->pluck('order_id');
         
-        $orders = Order::whereIn('id',$ordersProduct)->orderBy('created_at', 'desc')->paginate($perPage);
-        return $orders; 
+        // $orders = Order::whereIn('id',$ordersProduct)->orderBy('created_at', 'desc')->paginate($perPage);
+        $allowedFilters = [
+            'customer_id',
+            'status'
+        ];
+        return QueryBuilder::for(Order::class)
+            ->allowedFilters($allowedFilters)
+            ->whereIn('id',$ordersProduct)
+            ->with('products')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
+        // return $orders; 
     }
     public function VendorOrderShow(Request $request, $orderId) {
         $vendor =  Vendor::where('id',auth()->user()->userable->id)->first();
