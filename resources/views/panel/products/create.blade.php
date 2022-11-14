@@ -47,8 +47,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                    Product Cost</label>
+                                <input class="form-control"  id="cost" name="cost"  type="number" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="validationCustom02" class="col-form-label"><span>*</span>
                                     Product Quantity</label>
                                 <input class="form-control"  id="quantity" name="quantity"  type="number" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                    Product Warranty</label>
+                                <input class="form-control"  id="warranty" name="warranty"  type="text" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>

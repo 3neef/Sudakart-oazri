@@ -69,6 +69,8 @@ class ProductsController extends Controller
             'price'         => $request->price,
             'image'         => $image,
             'quantity'      => $request->quantity,
+            'warranty'      => $request->warranty,
+            'cost'          => $request->cost,
             'description'   => $request->description,
             'en_description' => $request->en_description
         ]);
@@ -106,6 +108,8 @@ class ProductsController extends Controller
             'frs'           => $request->frs,
             'price'         => $request->price,
             'quantity'      => $request->quantity,
+            'warranty'      => $request->warranty,
+            'cost'          => $request->cost,
             'description'   => $request->description,
             'en_description' => $request->en_description
         ]);

@@ -39,7 +39,9 @@ class ProductsCollection
             'stop',
             'sku',
             'weight',
-            'frs'
+            'frs',
+            'cost',
+            'warranty'
         ];
 
         $allowedFilters = [

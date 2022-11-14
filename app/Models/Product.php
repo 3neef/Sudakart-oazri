@@ -25,6 +25,8 @@ class Product extends Model
         'quantity',
         'description',
         'en_description',
+        'cost',
+        'warranty',
         'stop'
     ];
 

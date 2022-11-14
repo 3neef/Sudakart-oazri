@@ -48,8 +48,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                    Product Cost</label>
+                                <input class="form-control"  value="{{$pro->cost > 0 ? $pro->cost : 0 }}" min="{{ $pro->cost < 0 ? 0 : 0 }}" name="cost"  type="number" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="validationCustom02" class="col-form-label"><span>*</span>
                                     Product Quantity</label>
                                 <input class="form-control"  value="{{$pro->quantity > 0 ? $pro->quantity : 0 }}" min="{{ $pro->quantity < 0 ? 0 : 0 }}" name="quantity"  type="number" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                    Product Warranty</label>
+                                <input class="form-control"  value="{{$pro->warranty}}" name="warranty"  type="text" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
