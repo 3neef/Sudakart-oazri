@@ -128,6 +128,7 @@ class OrderServices
         $coupn = Coupon::where('id', $product->coupon_id)->where('shop_id', $product->shop_id)->where('stop', 0)->where('expire_at','>=', Carbon::today())->first();
 
         if($coupn){
+            $coupn->increment('uses');
             return $coupn->discount;
         }else{
             return 0;
