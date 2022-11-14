@@ -128,7 +128,11 @@ class ProductsController extends Controller
     public function show(Product $product)
     {
         Product::where('id', $product->id)->increment('views');
-        return new ProductResource($product);
+        $linked_products = Product::where('stop',0)
+        ->where('id', '!=', $product->id)
+        ->whereRaw('(name like ? or en_name like ?)',["%". $product->name ."%","%". $product->en_name ."%"])
+        ->get();
+        return (object) array('product' => new ProductResource($product) , 'linked_products' => $linked_products);
     }
 
     public function mostviews()
