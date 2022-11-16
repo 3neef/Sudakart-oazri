@@ -11,6 +11,20 @@
                             <input class="form-control-plaintext" type="search" placeholder="Search..">
                         </div>
                     </form> --}}
+                    <form action="{{ route('admin.products.search') }}" method="get" class="form-inline search-form search-box" role="search" style="position: relative;">
+                  
+                        <input type="search" name="q"  placeholder="{{ __('labels.search') }}" class="input-group-field" 
+                            aria-label="Search our product" autocomplete="off"> 
+                        <span class="input-group-btn search-submit-wrap">
+                            <button type="submit" class="btn search-submit icon-fallback-text" style="z-index:0;">
+                           
+                            <span class="fallback-text">{{ __('body.search-btn') }}</span>
+                            </button>
+                        </span>
+                        
+                        </form>
+
+                    
                     @can('create-product', auth()->user())
                     <a href="{{route('admin.products.create')}}" class="btn btn-primary mt-md-0 mt-2">
                         {{ __('adminBody.new_product') }}
@@ -35,7 +49,7 @@
                             </thead>
 
                             <tbody>
-                                @foreach ($products as $product)
+                                @forelse ($products as $product)
                                 <tr>
                                     <td>{{$product->id}}</td>
 
@@ -87,8 +101,11 @@
                                         @endcan
                                     </td>
                                 </tr>
-
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <h3 class="text-center text-danger">{{ __('labels.no_result') }}</h3>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

@@ -18,6 +18,7 @@ use App\Models\UpSellProducts;
 use App\Services\ProductOptionsServices;
 use App\Services\UploadImageServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Print_;
 
@@ -33,6 +34,24 @@ class ProductsController extends Controller
         $products = ProductResource::collection(ProductsCollection::collection($request));
         return view('panel.products.index', compact('products'));
     }
+
+    public function search(Request $request)
+    {
+        if($request->has('q')){
+            if(Auth::user() != null && Auth::user()->userable_type == 'App\Models\Vendor'){
+                $search = Product::where('shop_id', auth()->user()->userable->shop->id)->whereRaw('(name like ? or en_name like ? or sku like ?)',["%".$request->q."%","%".$request->q."%","%".$request->q."%"])
+                ->paginate(10);
+                $products =  ProductResource::collection($search);
+            }else {
+                $search = Product::whereRaw('(name like ? or en_name like ? or sku like ?)',["%".$request->q."%","%".$request->q."%","%".$request->q."%"])
+                ->paginate(10);
+                $products =  ProductResource::collection($search);
+            }
+
+            return view('panel.products.index', compact('products'));
+        }
+    }
+
     public function create()
     {
         $shop_categories = ShopCategory::where('shop_id', auth()->user()->userable->shop->id)->pluck('category_id');

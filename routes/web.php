@@ -57,6 +57,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //products routes
     Route::get('/products',[ProductsController::class, 'index'])->name('products.index')->middleware('can:view-products');
+    Route::get('/products/search',[ProductsController::class, 'search'])->name('products.search')->middleware('can:view-products');
     Route::get('/products/create',[ProductsController::class, 'create'])->name('products.create')->middleware('can:create-product');
     Route::get('/products/edit/{product}',[ProductsController::class, 'edit'])->name('products.edit')->middleware('can:edit-product');
     Route::delete('/products/destroy/{product}',[ProductsController::class, 'destroy'])->name('products.destroy')->middleware('can:delete-product');

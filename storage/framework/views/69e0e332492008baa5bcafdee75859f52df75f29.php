@@ -7,6 +7,20 @@
             <div class="card">
                 <div class="card-header">
                     
+                    <form action="<?php echo e(route('admin.products.search')); ?>" method="get" class="form-inline search-form search-box" role="search" style="position: relative;">
+                  
+                        <input type="search" name="q"  placeholder="<?php echo e(__('labels.search')); ?>" class="input-group-field" 
+                            aria-label="Search our product" autocomplete="off"> 
+                        <span class="input-group-btn search-submit-wrap">
+                            <button type="submit" class="btn search-submit icon-fallback-text" style="z-index:0;">
+                           
+                            <span class="fallback-text"><?php echo e(__('body.search-btn')); ?></span>
+                            </button>
+                        </span>
+                        
+                        </form>
+
+                    
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create-product', auth()->user())): ?>
                     <a href="<?php echo e(route('admin.products.create')); ?>" class="btn btn-primary mt-md-0 mt-2">
                         <?php echo e(__('adminBody.new_product')); ?>
@@ -32,7 +46,7 @@
                             </thead>
 
                             <tbody>
-                                <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__empty_1 = true; $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <tr>
                                     <td><?php echo e($product->id); ?></td>
 
@@ -84,8 +98,11 @@
                                         <?php endif; ?>
                                     </td>
                                 </tr>
-
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                <tr>
+                                    <h3 class="text-center text-danger"><?php echo e(__('labels.no_result')); ?></h3>
+                                </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
