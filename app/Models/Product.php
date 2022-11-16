@@ -93,7 +93,7 @@ class Product extends Model
     }
 
     public function orders ()  {
-        return $this->hasMany(OrderProduct::class);
+        return $this->hasMany(OrderProduct::class)->withTrashed();
     }
 
     public function Offers () {

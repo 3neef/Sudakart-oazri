@@ -11,6 +11,7 @@ use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductOffer;
 use App\Models\ProductOption;
+use App\Models\UpSell;
 use App\Models\UpSellProducts;
 use Carbon\Carbon;
 
@@ -51,10 +52,11 @@ class OrderServices
         $order_product = $order->products()->create(array_merge($product, [
             'price' => $price,
             'coupon_id' => $product['coupon_id'],
+            'up_sell_id' => $product['upsell_id'],
             'shop_id' => $item->shop_id,
         ]));
         $increments = self::options($order_product, $product['options']);
-        $after_coupon = (($price + $increments) * $product['quantity'] - self::hasCoupon($order_product));
+        $after_coupon = (($price + $increments) * $product['quantity'] - self::hasCoupon($order_product)) - (($price + $increments) * $product['quantity'] * self::isUpsell($order_product) - self::hasCoupon($order_product)) ;
         $order_product->update(['price' => $after_coupon/$product['quantity'] ]);
         return $after_coupon;
     }
@@ -157,8 +159,17 @@ class OrderServices
     }
 
     // {[TODO] + [implement] + [upselling] + [in] + [order]}
-    private static function isUpsell($product_id){
-        
-        $has_upsell = UpSellProducts::where('product_id',$product_id)->get();
+    private static function isUpsell($product){
+        if($product->up_sell_id != null){
+            $upsell = UpSell::findorfail($product->up_sell_id);
+            if($upsell->shop_id == $product->shop_id){
+                return $upsell->discount;
+            }else{
+                return 0;
+            }
+        }else{
+            return 0;
+        }
+        // $coupn = Coupon::where('id', $product->coupon_id)->where('shop_id', $product->shop_id)->where('stop', 0)->where('expire_at','>=', Carbon::today())->first();
     }
 }

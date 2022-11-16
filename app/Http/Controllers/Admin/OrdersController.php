@@ -134,6 +134,9 @@ class OrdersController extends Controller
 
 
     public function sendtoDelivery(Order $order){
+        $delivery_order = new Dotman(config('services.product_delivery.api'));
+        try {
+        if ($order->payment_method == 'online'){
         $payment = Payment::where(['order_id' => $order->id, 'user_id' =>  $order->customer->user->id])->first();
         $session_id = $payment->reference_id;
         if (!$payment) {
@@ -145,9 +148,6 @@ class OrdersController extends Controller
             'test'
         );
         $response = $client->getCheckoutSession($session_id);
-        try {
-            $delivery_order = new Dotman(config('services.product_delivery.api'));
-                    if ($order->payment_method == 'online'){
                         $data = [
                             "name" => $order->customer->name,
                             "phone" => $order->customer->user->phone,
@@ -201,7 +201,7 @@ class OrdersController extends Controller
                 dd($e->getMessage());
             }
         
-        }
+    }
 
     public function returned(Request $request)
     {

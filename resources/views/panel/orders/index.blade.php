@@ -8,8 +8,8 @@
                 <!-- <div class="card-header">
                     <h5>Manage Order</h5>
                 </div> -->
-                <div class="card-body order-datatable">
-                    <table class="display" id="basic-1">
+                 <div class="table-responsive table-desi">
+                        <table class="table all-package">
                         <thead>
                             <tr>
                                 <th>{{ __('adminBody.Ref_No') }}</th>
@@ -21,7 +21,8 @@
                                 <th>{{ __('adminBody.date') }}</th>
                                 <th>{{ __('adminBody.total') }}</th>
                                 <th>{{ __('adminBody.Approved') }}</th>
-                                <th>{{ __('adminBody.delivery') }}</th>
+                                <th>{{ __('adminBody.manage') }}</th>
+                                <th>{{ __('adminBody.Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,7 +30,7 @@
                             
                         <tr>
                             <td>#{{$order->id}}</td>
-                            <td>{{$order->customer->name}}</td>
+                            <td>{{$order->customer ? $order->customer->name : 'deleted'}}</td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     @foreach ($order->products->take(3) as $product )
@@ -42,8 +43,9 @@
                                 @if ($order->payment_method == 'online')
                                     
                                 <span class="badge badge-secondary">{{$order->payment_method}}</span>
+                                @elseif($order->payment_method == 'bank')
+                                <span class="badge badge-dark">{{$order->payment_method}}</span>
                                 @else
-                                
                                 <span class="badge badge-danger">{{$order->payment_method}}</span>
                                 @endif
                             </td>
@@ -67,7 +69,7 @@
                                 </a>
                             </td>
                             <td>{{ \Carbon\Carbon::createFromTimestamp(strtotime($order->created_at))->format('d-m-Y')}}</td>
-                            <td>{{$order->total}} OMR</td>
+                            <td>@money($order->total,'OMR')</td>
                             @if ($order->approved == true)
                             <td class="td-check">
                                 <i data-feather="check-circle"></i>
@@ -80,13 +82,29 @@
                             </td>
                             @endif
                             <td>
+                                <span
+                                    class=" badge
+                                    @if ($order->handover == 0)
+                                        badge-danger
+                                    @elseif($order->handover == 1)
+                                        badge-info
+                                    @endif
+                                        ">
+                                    @if ($order->handover == 0)
+                                    {{ __('adminBody.self') }}
+                                    @elseif($order->handover == 1)
+                                    {{ __('adminBody.party') }}
+                                    @endif
+                                </span>
+                            </td>
+                            <td>
                                 <div style="display: flex;">
-                                @if (auth()->user()->userable_type == 'App\Models\Admin')
+                                @if (auth()->user()->userable_type == 'App\Models\Admin' && $order->delivery_ref_id == null && $order->status != 'completed' && $order->status != 'canceled' && Str::contains($order->region_id, 'region_') == false)
                                 <a class=" mx-1 btn btn-success" href="javascript:void(0)" style="padding: 5px 5px;">
                                     <i  data-id="{{$order->id}}" class="fa fa-dot-circle-o px-1 status-ticket" title="change status"></i>
                                 </a>
                                 @endif
-                                @if (auth()->user()->userable_type == 'App\Models\Admin' && $order->approved == 0)
+                                @if (auth()->user()->userable_type == 'App\Models\Admin' && $order->approved == 0 && $order->status == 'completed')
                                 <a class=" mx-1 btn btn-success" href="{{route('admin.orders.approve', $order->id)}}" aria-label="Approve Order" style="padding: 5px 5px;">
                                     <i class="fa fa-check-circle px-1" aria-hidden="true" title="Approve Order"></i>
                                 </a>
@@ -95,12 +113,12 @@
                                     <i class="fa fa-eye  px-1" aria-hidden="true" title="Show Order"></i>
                                 </a>
                                 @if (auth()->user()->userable_type == 'App\Models\Admin')
-                                @if ($order->status != 'canceled')
+                                @if ($order->status == 'pending')
                                 <a class=" mx-1 btn btn-primary" href="{{route('admin.orders.cancel', $order->id)}}" aria-label="Cancel Order" style="padding: 5px 5px;">
                                     <i class="fa fa-ban  px-1" aria-hidden="true" title="Cancel Order"></i>
                                 </a>
                                 @endif
-                                @if ($order->status != 'canceled')
+                                @if ($order->status != 'canceled' && $order->handover == 1 && $order->delivery_ref_id == null && Str::contains($order->region_id, 'region_') == false)
                                 <a class=" mx-1 btn btn-info" href="{{route('admin.orders.sendtoDelivery', $order->id)}}" aria-label="Send Order To Delivery" style="padding: 5px 5px;">
                                     <i class="fa fa-paper-plane  px-1" aria-hidden="true" title="Send Order To Delivery"></i>
                                 </a>
@@ -182,8 +200,8 @@
                         <label for="">Choose a Status</label>
                         <div class="col-md-7">
                         <select class="mySelect2 form-control" name="handover" required>
-                            <option value="0">Self Managed</option>
-                            <option value="1">Delivery Company</option>
+                            <option value="0">{{ __('adminBody.self') }}</option>
+                            <option value="1">{{ __('adminBody.party') }}</option>
                         </select>
                         </div>
                     </div>
@@ -194,10 +212,10 @@
 
                 </form>
             </div>
-            <div class="modal-footer">
+            {{-- <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="clsBtnFooter" data-dismiss="modal">Close</button>
 
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
