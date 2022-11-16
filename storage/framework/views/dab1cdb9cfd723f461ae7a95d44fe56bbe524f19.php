@@ -79,7 +79,8 @@
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <span>Quantity : <?php echo e($pro->quantity > 0 ? $pro->quantity : 0); ?></span>
+                                                    <span>Quantity : <?php echo e($pro->quantity > 0 ? $pro->quantity : 0); ?></span> <br>
+                                                    <span>SKU : <?php echo e($pro->sku); ?></span>
                                                 </div>
                                             </div>
                                         </div>

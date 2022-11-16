@@ -79,7 +79,8 @@
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <span>Quantity : {{$pro->quantity > 0 ? $pro->quantity : 0 }}</span>
+                                                    <span>Quantity : {{$pro->quantity > 0 ? $pro->quantity : 0 }}</span> <br>
+                                                    <span>SKU : {{$pro->sku}}</span>
                                                 </div>
                                             </div>
                                         </div>

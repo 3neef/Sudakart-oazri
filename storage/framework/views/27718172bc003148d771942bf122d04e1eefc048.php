@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Oazri Recipt </title>
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/font-awesome.css')}}">
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('assets/css/vendors/font-awesome.css')); ?>">
 		<style>
 			.invoice-box {
 				max-width: 800px;
@@ -69,7 +69,7 @@
 				font-weight: bold;
 			}
 
-			@media only screen and (max-width: 600px) {
+			@media  only screen and (max-width: 600px) {
 				.invoice-box table tr.top table td {
 					width: 100%;
 					display: block;
@@ -98,7 +98,7 @@
             text-align: center;
         }
 
-            @media print{
+            @media  print{
             .order-buttons{
                 display: none;
             }
@@ -141,8 +141,8 @@
                 <tr style="text-align: right">
                     <td>
                         <span style="font-weight: bold; font-size: 40px;">INVOICE</span> <br />
-                        <span style="font-weight: bold; font-size: 20px;">INVOICE #{{$order->id}}</span> <br />
-                        <span style="font-weight: bold; font-size: 10px;">INVOICE DATE: {{$date}}</span> 
+                        <span style="font-weight: bold; font-size: 20px;">INVOICE #<?php echo e($order->id); ?></span> <br />
+                        <span style="font-weight: bold; font-size: 10px;">INVOICE DATE: <?php echo e($date); ?></span> 
                     </td>
                 </tr>
             </table>
@@ -151,7 +151,7 @@
 					<td colspan="2">
 						<table>
 							<tr>
-									<img src="{{ asset('main/images/new_logo.png') }}" style=" margin:auto; display: flex;
+									<img src="<?php echo e(asset('main/images/new_logo.png')); ?>" style=" margin:auto; display: flex;
                                     justify-content: center; width: 100%; max-width: 200px" />
 							</tr>
 						</table>
@@ -164,18 +164,19 @@
 							<tr>
 								<td>
 									<span style="font-weight: bold; font-size: 20px;">بيانات الزبون</span> <br />
-									{{$order->customer->name}}<br />
-									{{$order->customer->user->phone}} <br />
-                                    {{$order->address}} <br />
-									@if ($delivery['status'] != 0)
-									{{ $delivery['data']['region'] }} <br />
-									{{ $delivery['data']['ref_no'] }}
-									@endif
+									<?php echo e($order->customer->name); ?><br />
+									<?php echo e($order->customer->user->phone); ?> <br />
+                                    <?php echo e($order->address); ?> <br />
+									<?php if($delivery['status'] != 0): ?>
+									<?php echo e($delivery['data']['region']); ?> <br />
+									<?php echo e($delivery['data']['ref_no']); ?>
+
+									<?php endif; ?>
 								</td>
 
 								<td style="text-align: right">
-									<span style="font-size: 15px;">Order No:</span> <span style="font-weight: bold;">#{{$order->id}}</span><br />
-									<span style="font-size: 15px;">Order Date :</span> <span style="font-weight: bold;"> {{ \Carbon\Carbon::createFromTimestamp(strtotime($order->created_at))->format('d-m-Y')}}</span><br />
+									<span style="font-size: 15px;">Order No:</span> <span style="font-weight: bold;">#<?php echo e($order->id); ?></span><br />
+									<span style="font-size: 15px;">Order Date :</span> <span style="font-weight: bold;"> <?php echo e(\Carbon\Carbon::createFromTimestamp(strtotime($order->created_at))->format('d-m-Y')); ?></span><br />
 									<span style="font-size: 15px;">Shipping Method:</span> <span style="font-weight: bold;">Reguler</span><br />
 								</td>
 							</tr>
@@ -194,41 +195,41 @@
 					<td>Price</td>
 					<td>Total</td>
 				</tr>
-                @foreach ($order->products as $product)
+                <?php $__currentLoopData = $order->products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 				<tr class="item">
-					<td>{{$loop->index + 1}}</td>
-					<td><img src="{{asset($product->product ? $product->product->first : '')}}" alt=""
+					<td><?php echo e($loop->index + 1); ?></td>
+					<td><img src="<?php echo e(asset($product->product ? $product->product->first : '')); ?>" alt=""
                         style="width:2em; height:2em;" ></td>
-					<td>{{$product->sku}}</td>
-					<td>{{$product->product->name}}</td>
-					<td>{{$product->quantity}}</td>
-					<td>{{$product->price}}</td>
-					<td>{{$product->price * $product->quantity}}</td>
+					<td><?php echo e($product->sku); ?></td>
+					<td><?php echo e($product->product->name); ?></td>
+					<td><?php echo e($product->quantity); ?></td>
+					<td><?php echo e($product->price); ?></td>
+					<td><?php echo e($product->price * $product->quantity); ?></td>
 				</tr>
                     
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </table>
             <table>
 
 				<tr class="total">
-					<td style="font-weight: bold;">Delivery: {{$order->total - $order->amount}}</td>
-					<td style="text-align: right">Total: {{$order->total}}</td>
+					<td style="font-weight: bold;">Delivery: <?php echo e($order->total - $order->amount); ?></td>
+					<td style="text-align: right">Total: <?php echo e($order->total); ?></td>
 				</tr>
 			</table>
             <table style="padding-top: 40px;">
 				<tr class="heading">
 					<td>Payment Method</td>
 
-					<td style="text-align: right">{{$order->payment_method}} </td>
+					<td style="text-align: right"><?php echo e($order->payment_method); ?> </td>
 				</tr>
-                @if ($order->payment && $delivery['status'] != 0)
+                <?php if($order->payment && $delivery['status'] != 0): ?>
                     
 				<tr class="details">
                     <td>Cash On Delivery</td>
                     
-					<td style="text-align: right">{{ $delivery['data']['price'] }}</td>
+					<td style="text-align: right"><?php echo e($delivery['data']['price']); ?></td>
 				</tr>
-                @endif
+                <?php endif; ?>
             </table>
             <table style="padding-top: 40px;">
 				<tr>
@@ -243,10 +244,10 @@
                 <i class="fa fa-print"></i>
                 <span>طباعة</span>
             </button>
-            <a href="{{ url()->previous() }}" class="button button4">
+            <a href="<?php echo e(url()->previous()); ?>" class="button button4">
                 <i class="fa fa-arrow-left"></i>
                 <span>رجوع</span>
             </a>
         </div>
 	</body>
-</html>
+</html><?php /**PATH C:\Users\10\Desktop\oazri\suda\resources\views/panel/orders/recipt.blade.php ENDPATH**/ ?>

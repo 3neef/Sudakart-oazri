@@ -28,12 +28,6 @@
                         <tbody>
                         <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             
-                            <?php if(Str::contains($order->region_id, 'region_')): ?>
-                                <p><?php echo e($order->region_id); ?></p>
-
-                                <?php else: ?>
-                                <p><?php echo e($order->amount); ?></p>
-                            <?php endif; ?>
                         <tr>
                             <td>#<?php echo e($order->id); ?></td>
                             <td><?php echo e($order->customer ? $order->customer->name : 'deleted'); ?></td>
@@ -108,7 +102,7 @@
                             </td>
                             <td>
                                 <div style="display: flex;">
-                                <?php if(auth()->user()->userable_type == 'App\Models\Admin' && $order->delivery_ref_id == null && $order->status != 'completed'): ?>
+                                <?php if(auth()->user()->userable_type == 'App\Models\Admin' && $order->delivery_ref_id == null && $order->status != 'completed' && $order->status != 'canceled' && Str::contains($order->region_id, 'region_') == false): ?>
                                 <a class=" mx-1 btn btn-success" href="javascript:void(0)" style="padding: 5px 5px;">
                                     <i  data-id="<?php echo e($order->id); ?>" class="fa fa-dot-circle-o px-1 status-ticket" title="change status"></i>
                                 </a>
@@ -127,7 +121,7 @@
                                     <i class="fa fa-ban  px-1" aria-hidden="true" title="Cancel Order"></i>
                                 </a>
                                 <?php endif; ?>
-                                <?php if($order->status != 'canceled' && $order->handover == 1 && $order->delivery_ref_id == null && !Str::contains($order->region_id, 'region_')): ?>
+                                <?php if($order->status != 'canceled' && $order->handover == 1 && $order->delivery_ref_id == null && Str::contains($order->region_id, 'region_') == false): ?>
                                 <a class=" mx-1 btn btn-info" href="<?php echo e(route('admin.orders.sendtoDelivery', $order->id)); ?>" aria-label="Send Order To Delivery" style="padding: 5px 5px;">
                                     <i class="fa fa-paper-plane  px-1" aria-hidden="true" title="Send Order To Delivery"></i>
                                 </a>
@@ -210,8 +204,8 @@
                         <label for="">Choose a Status</label>
                         <div class="col-md-7">
                         <select class="mySelect2 form-control" name="handover" required>
-                            <option value="0">Self Managed</option>
-                            <option value="1">Delivery Company</option>
+                            <option value="0"><?php echo e(__('adminBody.self')); ?></option>
+                            <option value="1"><?php echo e(__('adminBody.party')); ?></option>
                         </select>
                         </div>
                     </div>
@@ -222,10 +216,7 @@
 
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="clsBtnFooter" data-dismiss="modal">Close</button>
-
-            </div>
+            
         </div>
     </div>
 </div>
