@@ -95,6 +95,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/accounting/transactions',[AccountingController::class, 'transactions'])->name('accounting.transactions');
     Route::get('/accounting/wallets',[AccountingController::class, 'wallets'])->name('accounting.wallets');
     Route::get('/accounting/wallets/operation/{wallet}',[AccountingController::class, 'walletsoperation'])->name('accounting.wallets.operation');
+    Route::get('/accounting/wallets/history/{wallet}',[AccountingController::class, 'wallethistory'])->name('accounting.wallets.history');
     Route::get('/accounting/expenses',[ExpenseController::class, 'index'])->name('accounting.expenses');
     Route::get('/accounting/expenses/create',[ExpenseController::class, 'create'])->name('accounting.expenses.create');
     Route::post('/accounting/expenses/create',[ExpenseController::class, 'store'])->name('accounting.expenses.store');

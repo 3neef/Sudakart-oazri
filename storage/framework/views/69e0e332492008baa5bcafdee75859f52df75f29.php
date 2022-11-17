@@ -39,6 +39,8 @@
                                     <th><?php echo e(__('adminBody.product_image')); ?></th>
                                     <th><?php echo e(__('adminBody.Product_Name')); ?></th>
                                     <th><?php echo e(__('adminBody.product_category')); ?></th>
+                                    <th><?php echo e(__('adminBody.Quantity')); ?></th>
+                                    <th><?php echo e(__('body.sku')); ?></th>
                                     <th><?php echo e(__('adminBody.price')); ?></th>
                                     <th><?php echo e(__('adminBody.stoped')); ?></th>
                                     <th><?php echo e(__('adminBody.option')); ?></th>
@@ -60,6 +62,10 @@
                                     <td data-field="name"><?php echo e($product->name); ?></td>
 
                                     <td data-field="price"><?php echo e($product->category->name); ?></td>
+
+                                    <td data-field="name"><?php echo e($product->quantity > 0 ? $product->quantity : 0); ?></td>
+
+                                    <td data-field="name"><?php echo e($product->sku); ?></td>
 
                                     <td data-field="name"><?php echo e($product->price); ?></td>
                                     <?php if($product->stop == false): ?>

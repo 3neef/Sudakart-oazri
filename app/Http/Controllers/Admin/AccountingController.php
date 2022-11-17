@@ -45,6 +45,12 @@ class AccountingController extends Controller
         }
     }
 
+    public function wallethistory(Wallet $wallet)
+    {
+        $transactions = Transaction::where('wallet_id', $wallet->id)->orderBy('created_at', 'desc')->paginate(10);
+        return view('panel.wallets.history', compact('transactions'));
+    }
+
     public function walletsoperation(Wallet $wallet)
     {
         return view('panel.wallets.operation', compact('wallet'));

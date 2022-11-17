@@ -42,6 +42,8 @@
                                     <th>{{ __('adminBody.product_image') }}</th>
                                     <th>{{ __('adminBody.Product_Name') }}</th>
                                     <th>{{ __('adminBody.product_category') }}</th>
+                                    <th>{{ __('adminBody.Quantity') }}</th>
+                                    <th>{{ __('body.sku') }}</th>
                                     <th>{{ __('adminBody.price') }}</th>
                                     <th>{{ __('adminBody.stoped') }}</th>
                                     <th>{{ __('adminBody.option') }}</th>
@@ -63,6 +65,10 @@
                                     <td data-field="name">{{$product->name}}</td>
 
                                     <td data-field="price">{{$product->category->name}}</td>
+
+                                    <td data-field="name">{{$product->quantity > 0 ? $product->quantity : 0 }}</td>
+
+                                    <td data-field="name">{{$product->sku}}</td>
 
                                     <td data-field="name">{{$product->price}}</td>
                                     @if ($product->stop == false)
