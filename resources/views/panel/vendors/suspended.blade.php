@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="card">
-        <div class="card-body vendor-table">
+        <div class="card-body order-datatable">
             <table class="display" id="basic-1">
                 <thead>
                     <tr>
@@ -35,8 +35,8 @@
                         <td>{{$vendor->wallet->balance}}</td>
                         <td>
                             <div>
-                                <a href="{{route('admin.vendors.suspend', $vendor->id)}}">
-                                    <i class="fa fa-stop" title="stop"></i>
+                                <a href="{{route('admin.vendors.suspend', $vendor->id)}}" class="{{ $vendor->suspended == 1 ? 'text-success' : 'text-success' }}">
+                                    <i class="{{ $vendor->suspended == 1 ? 'fa fa-check fa-2x' : 'fa fa-toggle-on fa-2x' }}" title="{{ $vendor->suspended == 1 ? 'unsuspend' : 'stop' }}"></i>
                                 </a>
                             </div>
                         </td>

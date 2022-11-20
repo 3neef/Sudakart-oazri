@@ -27,6 +27,9 @@
         'monthly_expenses' => 'Monthly Expenses',
         'Monthly_Returned_Products' => 'Monthly Returned Products',
         'Online_Payments_Transactions' => 'Online Payments Transactions',
+        'bank_payments' => 'Total Bank Payments',
+        'cash_payments' => 'Total Cash Payments',
+
         
 
     ];

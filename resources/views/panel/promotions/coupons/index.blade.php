@@ -12,11 +12,11 @@
                         </div>
                     </form>
 
-                    @can('create-coupon')
+                    @if(auth()->user()->userable_type == 'App\Models\Vendor')
                     <a href="{{route('admin.coupons.create')}}" class="btn btn-primary mt-md-0 mt-2">
                         {{ __('adminBody.new_Coupons') }}
                     </a>
-                    @endcan
+                    @endif
                 </div>
 
                 <div class="card-body">
@@ -25,18 +25,21 @@
                             <table class="all-package coupon-table table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>{{ __('adminBody.Shop_Ref') }}</th>
+                                        <th>{{ __('adminBody.shop_name') }}</th>
                                         <th>{{ __('adminBody.Code') }}</th>
                                         <th>{{ __('adminBody.Discount') }}</th>
                                         <th>{{ __('adminBody.Expire_Date') }}</th>
                                         <th>{{ __('adminBody.stoped') }}</th>
+                                        @if (auth()->user()->userable_type == 'App\Models\Vendor')
+                                            
                                         <th>{{ __('adminBody.Actions') }}</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($coupons as $coupon)
                                     <tr data-row-id="1">
-                                        <td>##{{$coupon->shop_id}}</td>
+                                        <td>{{$coupon->shop ? $coupon->shop->shop_name : 'oazri'}}</td>
 
                                         <td>{{$coupon->code}}</td>
 
@@ -56,9 +59,10 @@
                                             <i data-feather="x-circle"></i>
                                         </td>
                                         @endif
+                                        @if (auth()->user()->userable_type == 'App\Models\Vendor')
                                         <td>
                                             @can('stop-coupon')
-                                                
+                                            
                                             <form action="{{route('admin.coupons.update', $coupon->id)}}" method="POST">
                                                 @csrf
                                                 @method('Put')
@@ -72,9 +76,10 @@
                                                 @method('DELETE')
                                                 <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash"></i></button>
                                             </form>
-                                                
+                                            
                                             @endcan
                                         </td>
+                                        @endif
                                     </tr>
                                         
                                     @endforeach

@@ -26,7 +26,9 @@
         'monthly_Sales' => 'المبيعات الشهرية',
         'monthly_expenses' => 'المصاريف الشهرية',
         'Monthly_Returned_Products' => 'المنتجات المرتجعة شهريا',
-        'Online_Payments_Transactions' => 'معاملات المدفوعات عبر الإنترنت'
+        'Online_Payments_Transactions' => 'معاملات المدفوعات عبر الإنترنت',
+        'bank_payments' => 'المعاملات البنكية',
+        'cash_payments' => 'المعاملات النقدية',
 
 
 

@@ -54,7 +54,9 @@ class HomeController extends Controller
                 $products = $total_products->count();
                 $total_sales = OrderProduct::where('shop_id', auth()->user()->userable->shop->id)->get();
                 $sales = $total_sales->count();
-                $total_transactions = Payment::where(['vendor_id' => Auth::user()->id, 'status' => 'success'])->sum('amount');
+                $total_transactions = Payment::where(['vendor_id' => Auth::user()->userable_id, 'status' => 'success'])->sum('amount');
+                // $cash_payments = Order::where(['payment_method' => 'cash', 'approved' => 1])->sum('vendor_total');
+                // $bank_payments = Order::where(['payment_method' => 'bank', 'approved' => 1])->sum('vendor_total');
                 $total_commition = [];
                 $total_wallets = Wallet::count('id');
                 $total_vendors = Vendor::count('id');
@@ -125,6 +127,8 @@ class HomeController extends Controller
                 $total_sales = OrderProduct::get();
                 $sales = $total_sales->count();
                 $total_transactions = Payment::sum('amount');
+                $cash_payments = Order::where(['payment_method' => 'cash', 'approved' => 1])->sum('total');
+                $bank_payments = Order::where(['payment_method' => 'bank', 'approved' => 1])->sum('total');
                 $total_commition = [];
                 $total_wallets = Wallet::count('id');
                 $total_vendors = Vendor::count('id');
@@ -175,6 +179,8 @@ class HomeController extends Controller
                  'todays_orders' => $orders->where('created_at', '>=', today())->count(),
                  'yesterday_sales' => $Ysales,
                  'yesterday_orders' =>$Yorders,
+                 'cash_payments' =>$cash_payments,
+                 'bank_payments' =>$bank_payments,
                  'monthly' => $SalesMonthlyGraph,
                  'this_week' => $this_week,
                  'last_week' => $last_week,

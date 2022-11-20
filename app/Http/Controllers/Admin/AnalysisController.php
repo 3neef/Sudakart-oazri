@@ -29,11 +29,11 @@ class AnalysisController extends Controller
     public function mostsold()
     {
         if (Auth::user() != null && Auth::user()->userable_type == 'App\Models\Vendor') {
-            $most = Product::where('shop_id', auth()->user()->userable->shop->id)->whereHas('orders')->withCount('orders')
+            $most = Product::where('shop_id', auth()->user()->userable->shop->id)->whereHas('orders')->withCount('orders')->orderBy('orders_count', 'desc')
             ->take(5)
                 ->get();
         } else {
-            $most = Product::whereHas('orders')->withCount('orders')
+            $most = Product::whereHas('orders')->withCount('orders')->orderBy('orders_count', 'desc')
             ->take(5)
                 ->get();
         }
@@ -42,7 +42,10 @@ class AnalysisController extends Controller
     }
     public function vipvendor()
     {
-        $vendors = Vendor::where('type', 'premium')->paginate(10);
+        $vendors= Vendor::whereHas('orders')->withCount('orders')->orderBy('orders_count', 'desc')
+        ->take(10)
+            ->get();
+            // dd($vendors);
         return view('panel.analytics.vipvendor', compact(['vendors']));
     }
     public function mostviewedBlogs()

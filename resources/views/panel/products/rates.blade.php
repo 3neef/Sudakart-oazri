@@ -21,6 +21,7 @@
                                         <th>{{ __('adminBody.no') }}</th>
                                         <th>{{ __('adminBody.customer_name') }}</th>
                                         <th>{{ __('adminBody.Product_Name') }}</th>
+                                        <th>{{ __('adminBody.Create_Date') }}</th>
                                         <th>{{ __('adminBody.rating') }}</th>
                                         <th>{{ __('adminBody.comment') }}</th>
                                     </tr>
@@ -31,6 +32,7 @@
                                             <td>{{$rate->id}}</td>
                                             <td>@if($rate->customer){{$rate->customer->name}}@endif</td>
                                             <td>{{$rate->product->en_name}}</td>
+                                            <td>{{$rate->product->created_at}}</td>
                                             <td>
                                                 <ul class="rating">
                                                 @for ($i = 1; $i <= $rate->rate; $i++)

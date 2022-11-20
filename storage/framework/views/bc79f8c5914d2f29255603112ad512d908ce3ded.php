@@ -127,7 +127,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xxl-3 col-md-5 xl-10">
+        <div class="col-xxl-3 col-md-4 xl-10">
             <div class="card o-hidden widget-cards">
                 <div class="secondary-box card-body">
                     <div class="media static-top-widget align-items-center">
@@ -142,6 +142,38 @@
                 </div>
             </div>
         </div>
+        <?php if(auth()->user()->userable_type == 'App\Models\Admin'): ?>
+        <div class="col-xxl-3 col-md-4 xl-10">
+            <div class="card o-hidden widget-cards">
+                <div class="secondary-box card-body">
+                    <div class="media static-top-widget align-items-center">
+                        <div class="icons-widgets">
+                            <div class="align-self-center text-center"><i data-feather="message-square"
+                                    class="font-secondary"></i></div>
+                        </div>
+                        <div class="media-body media-doller"><span class="m-0"><?php echo e(__('adminDash.bank_payments')); ?></span>
+                            <h3 class="mb-0"><span class="counter"><?php echo e($stats->bank_payments); ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-3 col-md-4 xl-10">
+            <div class="card o-hidden widget-cards">
+                <div class="secondary-box card-body">
+                    <div class="media static-top-widget align-items-center">
+                        <div class="icons-widgets">
+                            <div class="align-self-center text-center"><i data-feather="message-square"
+                                    class="font-secondary"></i></div>
+                        </div>
+                        <div class="media-body media-doller"><span class="m-0"><?php echo e(__('adminDash.cash_payments')); ?></span>
+                            <h3 class="mb-0"><span class="counter"><?php echo e($stats->cash_payments); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
         <div class="col-xl-6 xl-100">
             <div class="card">
                 <div class="card-header">

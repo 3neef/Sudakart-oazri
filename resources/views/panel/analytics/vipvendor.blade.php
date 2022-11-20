@@ -3,21 +3,24 @@
 @section('content')
 <div class="container-fluid">
     <div class="card">
-        <div class="card-body vendor-table">
-            <table class="display" id="basic-1">
+        <div class=" table-responsive table-desi">
+            <table class="table list-digital all-package table-category "
+                id="editableTable">
                 <thead>
                     <tr>
+                        <th>{{ __('adminBody.no') }}</th>
                         <th>{{ __('adminBody.Vendor') }}</th>
                         <th>{{ __('adminBody.products') }}</th>
                         <th>{{ __('adminBody.Store_Name') }}</th>
-                        <th>{{ __('adminBody.Create_Date') }}</th>
+                        <th>{{ __('adminBody.join') }}</th>
+                        <th>{{ __('adminBody.sold') }}</th>
                         <th>{{ __('adminBody.Wallet_Balance') }}</th>
-                        <th>{{ __('adminBody.Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($vendors as $vendor)
                     <tr>
+                        <td>{{$loop->index+1}}</td>
                         <td>
                             <div class="d-flex vendor-list">
                                 <span>{{$vendor->first_name}}</span>
@@ -32,14 +35,8 @@
                             
                         @endif
                         <td>{{ \Carbon\Carbon::createFromTimestamp(strtotime($vendor->created_at))->format('d-m-Y')}}</td>
+                        <td>{{$vendor->orders_count}}</td>
                         <td>{{$vendor->wallet->balance}}</td>
-                        <td>
-                            <div>
-                                <a href="{{route('admin.vendors.suspend', $vendor->id)}}">
-                                    <i class="fa fa-stop" title="stop"></i>
-                                </a>
-                            </div>
-                        </td>
                     </tr>
                         
                     @endforeach 
@@ -48,8 +45,8 @@
             </table>
         </div>
     </div>
-    <div class="d-flex justify-content-center">
+    {{-- <div class="d-flex justify-content-center">
         {!! $vendors->links() !!}
-    </div>
+    </div> --}}
 </div>
 @endsection

@@ -1,19 +1,14 @@
-@extends('layouts.app2')
-@section('title', __('adminBody.Returned_Products_List'))
-@section('content')
+
+<?php $__env->startSection('title', __('adminBody.Returned_Products_List')); ?>
+<?php $__env->startSection('content'); ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    {{-- <form class="form-inline search-form search-box">
-                        <div class="form-group">
-                            <input class="form-control-plaintext" type="search" placeholder="Search..">
-                        </div>
-                    </form> --}}
+                    
 
-                    {{-- <a href="add-digital-product.html" class="btn btn-primary mt-md-0 mt-2">Add New
-                        Product</a> --}}
+                    
                 </div>
 
                 <div class="card-body">
@@ -22,64 +17,66 @@
                             id="editableTable">
                             <thead>
                                 <tr>
-                                    <th>{{ __('adminDash.order_ref') }}</th>
-                                    <th>{{ __('adminBody.product_image') }}</th>
-                                    <th>{{ __('adminBody.customer_name') }}</th>
-                                    <th>{{ __('adminBody.Product_Name') }}</th>
-                                    <th>{{ __('adminDash.product_status') }}</th>
-                                    <th>{{ __('adminDash.reason') }}</th>
+                                    <th><?php echo e(__('adminDash.order_ref')); ?></th>
+                                    <th><?php echo e(__('adminBody.product_image')); ?></th>
+                                    <th><?php echo e(__('adminBody.customer_name')); ?></th>
+                                    <th><?php echo e(__('adminBody.Product_Name')); ?></th>
+                                    <th><?php echo e(__('adminDash.product_status')); ?></th>
+                                    <th><?php echo e(__('adminDash.reason')); ?></th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @foreach ($products as $product)
+                                <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td data-field="name">#{{$product->order_id}}</td>
+                                    <td data-field="name">#<?php echo e($product->order_id); ?></td>
 
 
                                     <td>
                                       
-                                        <img src="{{asset($product->product ? $product->product->first : 'images/placeholder.png')}}"
+                                        <img src="<?php echo e(asset($product->product ? $product->product->first : 'images/placeholder.png')); ?>"
                                             data-field="image" alt="
                                             ">
                                         
                                     </td>
-                                    <td data-field="name">{{$product->orderProduct ? $product->orderProduct->order->customer->name : 'deleted customer' }}</td>
+                                    <td data-field="name"><?php echo e($product->orderProduct ? $product->orderProduct->order->customer->name : 'deleted customer'); ?></td>
 
-                                    <td data-field="name">{{$product->product ? $product->product->name : '' }}</td>
+                                    <td data-field="name"><?php echo e($product->product ? $product->product->name : ''); ?></td>
 
                                     <td>
-                                        <a  href="javascript:void(0)">
-                                            <span data-id="{{$product->id}}" 
+                                        <a  href="javascript:void(0)" >
+                                            <span data-id="<?php echo e($product->id); ?>" 
                                                 class=" badge
-                                                @if ($product->status == 'pending')
+                                                <?php if($product->status == 'pending'): ?>
                                                     badge-danger
-                                                @elseif($product->status == 'approved')
+                                                <?php elseif($product->status == 'approved'): ?>
                                                     badge-info
-                                                @elseif($product->status == 'returned')
+                                                <?php elseif($product->status == 'returned'): ?>
                                                     badge-secondary
-                                                @elseif ($product->status == 'refunded')
+                                                <?php elseif($product->status == 'refunded'): ?>
                                                     badge-success
-                                                @elseif ($product->status == 'rejected')
+                                                <?php elseif($product->status == 'rejected'): ?>
                                                     badge-primary
-                                                @endif
+                                                <?php endif; ?>
                                                     asign-ticket">
-                                                {{$product->status}}
+                                                <?php echo e($product->status); ?>
+
                                             </span>
                                         </a>
                                     </td>
 
-                                    <td data-field="name">{{$product->reason}}</td>
+                                    <td data-field="name"><?php echo e($product->reason); ?></td>
                                     
                                 </tr>
                                     
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
                     <div class="d-flex justify-content-center">
-                        {!! $products->links() !!}
+                        <?php echo $products->links(); ?>
+
                     </div>
             </div>
         </div>
@@ -98,8 +95,8 @@
             </div>
             <div class="modal-body">
                 <form id="asign-ticket" action="#" method="POST" id="return-order-form">
-                    @csrf
-                    @method('PUT')
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PUT'); ?>
                     <div class="form-group">
                         <label for="">Change Status</label>
                         <div class="col-md-7">
@@ -125,10 +122,10 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('main/js/modal/order.js') }}" defer></script>
-@endsection
+<script src="<?php echo e(asset('main/js/modal/order.js')); ?>" defer></script>
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
     $('.asign-ticket').on('click',function () {  
             // alert('haaaay');
@@ -139,4 +136,5 @@
     
 });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.app2', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\10\Desktop\oazri\suda\resources\views/panel/orders/returned.blade.php ENDPATH**/ ?>

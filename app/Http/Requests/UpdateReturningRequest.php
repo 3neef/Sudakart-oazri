@@ -16,8 +16,8 @@ class UpdateReturningRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        $id = $this->route()->parameters()['returning'];
-        $returned = ReturnedProducts::findOrFail($id);
+        // $id = $this->route()->parameters()['returning'];
+        // $returned = ReturnedProducts::findOrFail($id);
 
         // if ($request->driver_id) {
         //     abort_if(auth()->user()->userable_type != 'App\Models\Admin' && $request->driver_id != null,
@@ -26,13 +26,13 @@ class UpdateReturningRequest extends FormRequest
         //     );
         // }
 
-        abort_if(($returned->status == 'pending' && $request->status != 'approved') && $request->driver_id != null,
-        '403',
-        __('you cannot assign driver without changing status to approved'));
+        // abort_if(($returned->status == 'pending' && $request->status != 'approved') && $request->driver_id != null,
+        // '403',
+        // __('you cannot assign driver without changing status to approved'));
 
-        abort_if($returned->status == 'rejected' || $returned->status == 'returned' || $returned->status == 'canceled',
-        '403',
-        __('you cannot change the status'));
+        // abort_if($returned->status == 'rejected' || $returned->status == 'returned' || $returned->status == 'canceled',
+        // '403',
+        // __('you cannot change the status'));
 
 
         return true;
@@ -46,7 +46,7 @@ class UpdateReturningRequest extends FormRequest
     public function rules()
     {
         return [
-            'driver_id' => ['nullable', 'exists:drivers,id'],
+            // 'driver_id' => ['nullable', 'exists:drivers,id'],
             'status' => ['nullable', Rule::in(['rejected', 'refunded', 'approved', 'returned'])]
         ];
     }

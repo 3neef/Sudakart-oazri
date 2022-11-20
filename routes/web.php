@@ -21,6 +21,7 @@ use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\ProductsController as ControllersProductsController;
+use App\Http\Controllers\ReturnedController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UpSellsController;
 use Illuminate\Support\Facades\Route;
@@ -88,6 +89,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/orders/cancel/{order}',[OrdersController::class, 'cancel'])->name('orders.cancel');
     Route::get('/orders/canceled',[OrdersController::class, 'canceled'])->name('orders.canceled')->middleware('can:view-canceled-orders');
     Route::get('/orders/returned',[OrdersController::class, 'returned'])->name('orders.returned')->middleware('can:view-returned-products');
+    Route::put('/orders/returned/{id}',[ReturnedController::class, 'update'])->name('orders.returned.update')->middleware('can:view-returned-products');
 
     //accounting routes
     Route::group(['middleware' => ['can:view-payments']], function () {

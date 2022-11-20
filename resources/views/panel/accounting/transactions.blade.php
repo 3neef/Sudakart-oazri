@@ -20,7 +20,7 @@
                                     <th>{{ __('adminBody.Account_Owner') }}</th>
                                     <th>{{ __('adminBody.Notes') }}</th>
                                     <th>{{ __('adminBody.Amount') }}</th>
-                                    <th>{{ __('adminBody.Product_Id') }}</th>
+                                    <th>{{ __('adminBody.Product_Name') }}</th>
                                 </tr>
                             </thead>
 
@@ -41,7 +41,7 @@
 
                                     <td>{{$transaction->amount}}</td>
                                     @if ($transaction->product_id == null)
-                                    <td>{{__('Order related transaction')}}</td>
+                                    <td>{{__('Not product related transaction')}}</td>
                                     
                                     @else
                                         

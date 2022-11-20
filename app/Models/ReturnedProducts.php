@@ -25,7 +25,7 @@ class ReturnedProducts extends Model
     }
 
     public function orderProduct () {
-        return $this->belongsTo(OrderProduct::class)->withTrashed();
+        return $this->belongsTo(OrderProduct::class);
     }
     
     public function product () {

@@ -12,6 +12,7 @@ use App\Models\ReturnedProducts;
 use App\Services\Delivery\Dotman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ReturnedController extends Controller
 {
@@ -55,24 +56,24 @@ class ReturnedController extends Controller
         $returnedProduct->update($request->validated());
         if($returnedProduct->status == 'approved'){
             $order = Order::findorfail($returnedProduct->order_id);
-            $delivery_order = new Dotman(config('services.product_delivery.api'));
-            $data = [
-                "name" =>$order->customer->name,
-                "phone" =>$order->customer->user->phone,
-                "region_id" => $order->region_id,
-                "address" => $order->address,
-                "cod" => 0,
-                "ecom_ref_no" => "refnofromcom"
-            ];
-            $delivery_order = $delivery_order->createOrder($data);
+            if(Str::contains($order->region_id, 'region_') == false){
 
-            $Product = ReturnedProducts::findorfail($id);
-            $Product->update([
-                'delivery_ref_id' => $delivery_order['data']['ref_no'],
-                'region_id' => $order->region_id,
-            ]);
-            dd($Product);
-            // dd($returnedProduct);
+                $delivery_order = new Dotman(config('services.product_delivery.api'));
+                $data = [
+                    "name" =>$order->customer->name,
+                    "phone" =>$order->customer->user->phone,
+                    "region_id" => $order->region_id,
+                    "address" => $order->address,
+                    "cod" => 0,
+                    "ecom_ref_no" => "refnofromcom"
+                ];
+                $delivery_order = $delivery_order->createOrder($data);
+                $Product = ReturnedProducts::findorfail($id);
+                $Product->update([
+                    'delivery_ref_id' => $delivery_order['data']['ref_no'],
+                    'region_id' => $order->region_id,
+                ]);
+            } 
             $order_product = OrderProduct::where([
                 'product_id' => $returnedProduct->order_product_id,
                 'order_id' => $returnedProduct->order_id
@@ -82,6 +83,9 @@ class ReturnedController extends Controller
                 $order_product->update(['status'=> 'returned']);
                 
             }
+        }
+        if (! $request->expectsJson()) {
+            return redirect()->route('admin.orders.returned');
         }
         return  $returnedProduct;
     }

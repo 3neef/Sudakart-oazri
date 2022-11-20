@@ -50,7 +50,7 @@ class VendorController extends Controller
             }
         });
 
-            return redirect()->route('admin.vendors');
+            return redirect()->back();
     }
     public function approved(Request $request, Vendor $vendor)
     {

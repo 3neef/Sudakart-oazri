@@ -206,7 +206,6 @@ class OrdersController extends Controller
     public function returned(Request $request)
     {
         $products = ReturnedsResource::collection(ReturnedCollection::collection($request));
-        // dd($products->first()->product->first);
         return view('panel.orders.returned', compact('products'));
     }
 

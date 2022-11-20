@@ -37,6 +37,10 @@ class Vendor extends Model
         return $this->morphOne(Wallet::class, 'accountable');
     }
 
+    public function orders () {
+        return $this->hasManyThrough(OrderProduct::class, Shop::class);
+    }
+
     public function transactions () {
         return $this->morphMany(Transaction::class, 'operator');
     }
