@@ -17,6 +17,8 @@
     <title>Oazri | @yield('title')</title>
 
     @include('partials.styles')
+        {{-- toastr --}}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
 </head>
 
 <body class="{{ app()->getLocale() == 'ar' ? 'rtl' : '' }}">
@@ -44,7 +46,7 @@
                             <div class="col-lg-6">
                                 <div class="page-header-left">
                                     <h3>@yield('title')
-                                        <small>Oazri Admin panel</small>
+                                        <small>{{__('footer.oazri_online_store')}}</small>
                                     </h3>
                                 </div>
                             </div>
@@ -102,7 +104,20 @@
     $('.js-example-basic-multiple > option').prop("selected", false);
     $('.js-example-basic-multiple').trigger("change");
     }
-    </script>
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                toastr.options.timeOut = 1000;
+                @if (Session::has('error'))
+                    toastr.error('{{ Session::get('error') }}');
+                @elseif(Session::has('success'))
+                    toastr.success('{{ Session::get('success') }}');
+                @endif
+            });
+    
+        </script>
 </body>
 
 </html>

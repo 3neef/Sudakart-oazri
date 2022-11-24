@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div class="pull-right">
-                                    <input type="submit" class="btn btn-primary"></input>
+                                    <input type="submit" class="btn btn-primary" value="{{__('adminBody.save')}}"></input>
                                 </div>
                             </form>
                         </div>
@@ -104,16 +104,23 @@
                                         
                                     </td>
                                         
-                                    <td data-field="name">{{$product->product->name}}</td>
-                                    @if ($product->product->category->name)
-                                    
-                                    <td data-field="price">{{$product->product->category->name}}</td>
-                                    @else
-                                    
-                                    <td data-field="price">{{$product->product->name}}</td>
-                                    @endif
+                                    <td data-field="name">
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $product->product->en_name }}
+                                        @else
+                                        {{ $product->product->name }}
+                                        @endif    
+                                    </td>
 
-                                    <td data-field="name">{{$product->price}}</td>
+                                    <td data-field="price">
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $product->product->category->en_name }}
+                                        @else
+                                        {{ $product->product->category->name }}
+                                        @endif
+                                    </td>
+
+                                    <td data-field="name">@money($product->price , 'OMR')</td>
 
                                     <td data-field="name">{{$product->quantity}}</td>
 

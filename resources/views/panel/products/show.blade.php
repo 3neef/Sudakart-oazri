@@ -1,5 +1,5 @@
 @extends('layouts.app2')
-@section('title', 'Products Show')
+@section('title',  __('adminBody.Products_Show'))
 @section('content')
 <div class="container-fluid">
     <div class="card">
@@ -32,7 +32,11 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="product-right product-description-box">
-                                <h2>{{$pro->name}}</h2>
+                                <h2>@if(app()->getLocale() == 'en')
+                                    {{ $pro->en_name }}
+                                    @else
+                                    {{ $pro->name }}
+                                    @endif</h2>
                                 <div class="rating-section">
                                     <div class="rating">
                                         @for ($i = 1; $i <= $pro->rate; $i++)
@@ -49,29 +53,41 @@
                                         @endfor
                                     </div>
                                 </div>
-                                <h3 class="price-detail">{{$pro->price}} OMR</h3>
+                                <h3 class="price-detail">@money($pro->price, 'OMR')</h3>
                                 <div class="row product-accordion">
                                     <div class="col-sm-12">
                                         <div class="accordion theme-accordion" id="accordionExample">
                                             <div class="card">
                                                 <div class="card-header" id="headingOne">
                                                     <h5 class="mb-0"><button class="btn btn-link" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                            aria-expanded="true" aria-controls="collapseOne">product
-                                                            description</button></h5>
+                                                            data-bs-toggle="collapse" data-bs-target="#"
+                                                            aria-expanded="true" aria-controls="">{{ __('body.Details') }}
+                                                            </button></h5>
                                                 </div>
                                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                                                     data-bs-parent="#accordionExample">
                                                     <div class="card-body">
-                                                        <p>{{$pro->description}}</p>
-                                                        <div class="single-product-tables detail-section">
+                                                        <p>
+                                                            @if(app()->getLocale() == 'en')
+                                                            {{ $pro->en_description }}
+                                                            @else
+                                                            {{ $pro->description }}
+                                                            @endif    
+                                                        </p>
+                                                        <div class="single-product-tables detail-section mt-3">
                                                             <table>
                                                                 <tbody>
                                                                     @foreach ($pro->attributes as $attribute)
                                                                     @foreach ($attribute->options as $option)
                                                                     <tr>
+                                                                        @if(app()->getLocale() == 'en')
+                                                                        <td>{{$option->attribute->en_name}}</td>
+                                                                        <td>{{$option->en_option}}</td>
+                                                                        @else
                                                                         <td>{{$option->attribute->name}}</td>
                                                                         <td>{{$option->option}}</td>
+                                                                        @endif
+                                                                       
                                                                     </tr>
                                                                     @endforeach
                                                                     @endforeach
@@ -79,8 +95,17 @@
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <span>Quantity : {{$pro->quantity > 0 ? $pro->quantity : 0 }}</span> <br>
-                                                    <span>SKU : {{$pro->sku}}</span>
+                                                    <div class="mt-3">
+                                                        <table class="table table-borderless">
+                                                            <tr>
+                                                                <td>{{ __('body.sku') }} :  {{ $pro->sku }}</td>
+                                                                
+                                                            </tr>
+                                                            <tr>
+                                                            <td>{{ __('body.weight') }} :  {{ $pro->weight }}</td>
+                                                            </tr>
+                                                        </table>
+                                                  </div>
                                                 </div>
                                             </div>
                                         </div>

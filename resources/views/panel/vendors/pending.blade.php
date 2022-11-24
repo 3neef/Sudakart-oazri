@@ -25,18 +25,39 @@
                         </td>
                         <td>{{$vendor->count}}</td>
                         @if ($vendor->shop)
+                        @if (app()->getLocale() == 'en')
                         <td>{{$vendor->shop->shop_en_name}}</td>
                         
                         @else
+                        <td>{{$vendor->shop->shop_name}}</td>
+                            
+                        @endif
+                        
+                        @else
+                        @if (app()->getLocale() == 'en')
+                            
                         <td>N/A</td>
+                        @else
+                        <td>لا يوجد متجر</td>
+                            
+                        @endif
                             
                         @endif
                         <td>{{ \Carbon\Carbon::createFromTimestamp(strtotime($vendor->created_at))->format('d-m-Y')}}</td>
-                        <td>@if($vendor->wallet){{$vendor->wallet->balance}}@endif</td>
+                        <td>@money($vendor->wallet ? $vendor->wallet->balance : '0', 'OMR')</td>
                         <td>
                             <div>
-                                <a href="{{route('admin.vendors.suspend', $vendor->id)}}">
-                                    <i class="fa fa-stop fa-2x" title="suspend"></i>
+                                <a href="{{route('admin.vendors.approved', $vendor->id)}}">
+                                    <i class="fa fa-stop fa-2x" 
+                                    @if (app()->getLocale() == 'en')
+                                            
+                                    title="unsuspend">
+                                    @else
+                                    title="فك الحجب">
+                                        
+                                    @endif
+                                    
+                                </i>
                                 </a>
                             </div>
                         </td>

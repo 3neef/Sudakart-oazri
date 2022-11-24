@@ -11,7 +11,7 @@
                         <div class="row g-4">
                             <div class="col-max">
                                 <div class="card-details-title">
-                                    <h3><?php echo e(__('adminBody.Your_Wallet_Balance_is')); ?>    <span><?php echo e($wallets->total_balance); ?> OMR</span></h3>
+                                    <h3><?php echo e(__('adminBody.Your_Wallet_Balance_is')); ?>    <span><?php echo money($wallets->total_balance, 'OMR'); ?></span></h3>
                                 </div>
                                 <div class="table-responsive table-desi">
                                     <table class="table trans-table all-package">
@@ -21,10 +21,9 @@
                                                 <th><?php echo e(__('adminBody.Transaction_Id')); ?></th>
                                                 <th><?php echo e(__('adminBody.date')); ?></th>
                                                 <th><?php echo e(__('adminBody.Type')); ?></th>
-                                                <th><?php echo e(__('adminBody.Wallet_Id')); ?></th>
                                                 <th><?php echo e(__('adminBody.Notes')); ?></th>
                                                 <th><?php echo e(__('adminBody.Amount')); ?></th>
-                                                <th><?php echo e(__('adminBody.Product_Id')); ?></th>
+                                                <th><?php echo e(__('adminBody.Product_Name')); ?></th>
                                             </tr>
                                         </thead>
             
@@ -37,19 +36,53 @@
             
                                                 <td><?php echo e(\Carbon\Carbon::createFromTimestamp(strtotime($transaction->created_at))->format('d-m-Y')); ?></td>
             
-                                                <td><?php echo e($transaction->type); ?></td>
-            
-                                                <td><?php echo e($transaction->wallet_id); ?></td>
-            
+                                                <td>
+                                                    <span
+                                                        class=" badge
+                                                        <?php if($transaction->type == 'refund'): ?>
+                                                            badge-danger
+                                                        <?php elseif($transaction->type == 'payment'): ?>
+                                                            badge-info
+                                                        <?php elseif($transaction->type == 'deposit'): ?>
+                                                            badge-success
+                                                        <?php elseif($transaction->type == 'withdraw'): ?>
+                                                            badge-primary
+                                                        <?php endif; ?>
+                                                            ">
+                                                            <?php if($transaction->type == 'refund' ): ?>
+                                                            <?php echo e(__('body.refund')); ?>
+
+                                                            <?php elseif($transaction->type == 'payment'): ?>
+                                                            <?php echo e(__('body.payment')); ?>
+
+                                                            <?php elseif($transaction->type == 'deposit'): ?>
+                                                            <?php echo e(__('body.deposit')); ?>
+
+                                                            <?php elseif($transaction->type == 'withdraw'): ?>
+                                                            <?php echo e(__('body.withdraw')); ?>
+
+                                                            <?php endif; ?>
+                                                    </span>
+                                                </td>
+                        
                                                 <td><?php echo e($transaction->notes); ?></td>
             
-                                                <td><?php echo e($transaction->amount); ?></td>
+                                                <td><?php echo money($transaction->amount, 'OMR'); ?></td>
                                                 <?php if($transaction->product_id == null): ?>
-                                                <td><?php echo e(__('Order related transaction')); ?></td>
+                                                <?php if(app()->getLocale() == 'en'): ?>
+                                                <td><?php echo e(__('Not product related transaction')); ?></td>
+                                                <?php else: ?>
+                                                <td><?php echo e(__('التحويلة عير مرتبطة بمنتج')); ?></td>
+                                                <?php endif; ?>
+                                                
                                                 
                                                 <?php else: ?>
-                                                    
+                                                <?php if(app()->getLocale() == 'en'): ?>
+                                                <td><?php echo e($transaction->product->en_name); ?></td>
+                                                <?php else: ?>
                                                 <td><?php echo e($transaction->product->name); ?></td>
+                                                <?php endif; ?>
+                                                
                                                 <?php endif; ?>
                                             </tr>
                                                 
@@ -99,7 +132,7 @@
 
                                     <td><?php echo e($wallet->accountable ? $wallet->accountable->first_name : 'invalid name'); ?></td>
 
-                                    <td><?php echo e($wallet->balance); ?>  OMR</td>
+                                    <td><?php echo money($wallet->balance, 'OMR'); ?></td>
 
                                     <td><?php echo e($wallet->created_at); ?></td>
                                     

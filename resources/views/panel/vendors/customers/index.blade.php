@@ -1,5 +1,5 @@
 @extends('layouts.app2')
-@section('title', 'Customers List')
+@section('title', __('adminNav.customer_list'))
 @section('content')
 <div class="container-fluid">
     <div class="card">
@@ -9,9 +9,9 @@
             <table class="display" id="basic-1">
                 <thead>
                     <tr>
-                        <th>Customer</th>
-                        <th>Order</th>
-                        <th>Create Date</th>
+                        <th>{{__('adminBody.customer_name')}}</th>
+                        <th>{{__('body.Orders')}}</th>
+                        <th>{{__('adminBody.Create_Date')}}</th>
                     </tr>
                 </thead>
                 <tbody>

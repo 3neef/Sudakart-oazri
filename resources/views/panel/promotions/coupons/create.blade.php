@@ -1,5 +1,5 @@
 @extends('layouts.app2')
-@section('title', 'Add New Coupon')
+@section('title', __('adminBody.new_coupon'))
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -9,7 +9,7 @@
                     <ul class="nav nav-tabs tab-coupon" id="myTab" role="tablist">
                         <li class="nav-item"><a class="nav-link active show" id="account-tab"
                                 data-bs-toggle="tab" href="#account" role="tab" aria-controls="account"
-                                aria-selected="true" data-original-title="" title="">New</a></li>
+                                aria-selected="true" data-original-title="" title="">{{__('adminBody.new_coupon')}}</a></li>
                     </ul>
                     @if ($errors->count() > 0)
                     {{$errors}}
@@ -20,10 +20,10 @@
                             aria-labelledby="account-tab">
                             <form method="POST" action="{{route('admin.coupons.store')}}" class="needs-validation user-add">
                                 @csrf
-                                <h4>New Coupon</h4>
+                                <h4>{{__('adminBody.new_coupon')}}</h4>
                                 <div class="form-group row">
                                     <label for="validationCustom0"
-                                        class="col-xl-3 col-md-4"><span>*</span>code</label>
+                                        class="col-xl-3 col-md-4"><span>*</span>{{__('adminBody.Code')}}</label>
                                     <div class="col-xl-8 col-md-7">
                                         <input class="form-control" id="code" name="code" type="text"
                                             required="">
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label for="validationCustom1"
-                                        class="col-xl-3 col-md-4"><span>*</span> Discount</label>
+                                        class="col-xl-3 col-md-4"><span>*</span> {{__('adminBody.Discount')}}</label>
                                     <div class="col-xl-8 col-md-7">
                                         <input class="form-control" id="discount" name="discount" type="number"
                                         step="0.01"
@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label for="validationCustom1"
-                                        class="col-xl-3 col-md-4"><span>*</span>Expire At</label>
+                                        class="col-xl-3 col-md-4"><span>*</span>{{__('adminBody.Expire_Date')}}</label>
                                     <div class="col-xl-8 col-md-7">
                                         <input class="form-control" id="expire_at" name="expire_at" type="date"
                                             required="">
@@ -62,7 +62,7 @@
                                 @endif
                                 </div>
                                 <div class="pull-right">
-                                    <input type="submit" class="btn btn-primary"></input>
+                                    <input type="submit" class="btn btn-primary" value="{{__('adminBody.save')}}"></input>
                                 </div>
                             </form>
                         </div>

@@ -1,5 +1,5 @@
 @extends('layouts.app2')
-@section('title', 'Create a new post')
+@section('title', __('adminBody.new_blog'))
 @section('content')
 <div class="container-fluid">
     <div class="card tab2-card">
@@ -7,26 +7,25 @@
             <ul class="nav nav-tabs tab-coupon" id="myTab" role="tablist">
                 <li class="nav-item"><a class="nav-link active show" id="general-tab"
                         data-bs-toggle="tab" href="#general" role="tab" aria-controls="general"
-                        aria-selected="true" data-original-title="" title="">New</a></li>
+                        aria-selected="true" data-original-title="" title="">{{__('adminBody.new_blog')}}</a></li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade active show" id="general" role="tabpanel"
                     aria-labelledby="general-tab">
                     <form method="POST" action="{{route('admin.blogs.store')}}" class="needs-validation user-add">
                         @csrf
-                        <h4>New Blog</h4>
                         <div class="form-group row">
                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
-                                Title</label>
+                                {{__('adminBody.Title')}}</label>
                             <div class="col-xl-8 col-md-7">
                                 <input class="form-control" id="title" name="title" type="text">
                             </div>
                         </div>
                         <div class="form-group row editor-label">
-                            <label class="col-xl-3 col-md-4"><span>*</span>Content</label>
+                            <label class="col-xl-3 col-md-4"><span>*</span> {{ __('adminBody.content') }}</label>
                             <div class="col-xl-8 col-md-7">
                                 <div class="editor-space">
-                                    <textarea id="content" name="content" cols="30"
+                                    <textarea id="editor1" name="content" cols="30"
                                         rows="10"></textarea>
                                 </div>
                             </div>
@@ -34,7 +33,7 @@
                         <div id="dynamicAddRemove" class="addandremove">
                             <div class="form-group row">
                                 <label for="validationCustom2"
-                                    class="col-xl-3 col-md-4"><span>*</span>Product</label>
+                                    class="col-xl-3 col-md-4"><span>*</span>{{__('body.product')}}</label>
                                 <div class="col-xl-8 col-md-7">
                                         <select class="custom-select w-100 form-control {{ $errors->has('brand') ? 'is-invalid' : '' }}" id="products[0][product_id]" name="products[0][product_id]" required>
                                             @foreach($products as $id => $entry)
@@ -49,9 +48,9 @@
                                 @endif
                             </div>
                         </div>
-                        <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add Product</button></td>
-                        <div class="pull-right">
-                            <input type="submit" class="btn btn-primary">Save</input>
+                        <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-info">{{__('adminBody.new_product')}}</button></td>
+                        <div class="form-group row mt-4">
+                            <input class="btn btn-primary" type="submit" value="{{__('adminBody.save')}}"></input>
                         </div>
                     </form>
                 </div>
@@ -73,7 +72,7 @@
         $("#dynamicAddRemove").append(`<section class="pt-1 border-top mt-3">
         <div class="form-group row">
             <label for="validationCustom2"
-                class="col-xl-3 col-md-4"><span>*</span>Product</label>
+                class="col-xl-3 col-md-4"><span>*</span>{{__('body.product')}}</label>
             <div class="col-xl-8 col-md-7">` +
                 '<select class="custom-select w-100 form-control {{ $errors->has('') ? '' : '' }}" id="products['+i+'][product_id]" name="products['+i+'][product_id]" required>'
                 + `

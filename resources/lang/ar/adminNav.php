@@ -48,7 +48,7 @@
 		'sales_reports' => 'تقرير المبيعات',
 		'wallet_report' => 'تقرير المحفظات',
 		'transactions_report' => 'تقرير العمليات',
-		'comm_report' => 'تقرير النسب',
+		'comm_report' => 'تقرير العمولات',
 		'expenses_report' => 'تقرير المنصرفات',
 		'profit_loss' => 'الارباح والخسائر',
 		'forgot_pass' => 'نسيت كلمة المرور',
@@ -58,7 +58,7 @@
 		'pending_vendors' => 'الباعة قيد الانتظار',
 		'category_requests' => 'طلبات التصنيفات',
 		'sus_vendors' => 'الباعة الموقوفون',
-
+		'regions' => 'المناطق',
 	];
 
  ?>

@@ -14,7 +14,7 @@
 
                     @if(auth()->user()->userable_type == 'App\Models\Vendor')
                     <a href="{{route('admin.coupons.create')}}" class="btn btn-primary mt-md-0 mt-2">
-                        {{ __('adminBody.new_Coupons') }}
+                        {{ __('adminBody.new_coupon') }}
                     </a>
                     @endif
                 </div>
@@ -39,7 +39,13 @@
                                 <tbody>
                                     @foreach ($coupons as $coupon)
                                     <tr data-row-id="1">
-                                        <td>{{$coupon->shop ? $coupon->shop->shop_name : 'oazri'}}</td>
+                                        @if (app()->getLocale() == 'en')
+                                        <td data-field="name">{{$coupon->shop ? $coupon->shop->shop_en_name : 'oazri'}}</td>
+                                        
+                                        @else
+                                        <td data-field="name">{{$coupon->shop ? $coupon->shop->shop_name : 'العزري'}}</td>
+                                            
+                                        @endif
 
                                         <td>{{$coupon->code}}</td>
 
@@ -67,14 +73,14 @@
                                                 @csrf
                                                 @method('Put')
                                                 <input type="number" value="1" name="stop" hidden>
-                                                <button type="submit" style="border:none"><i class="fa fa-stop"></i></button>
+                                                <button type="submit" style="border:none"><i class="fa fa-stop" title="{{__('body.stop')}}"></i></button>
                                             </form>
                                             @endcan
                                             @can('delete-coupon')
                                             <form action="{{route('admin.coupons.destroy', $coupon->id)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash"></i></button>
+                                                <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash" title="{{__('body.delete')}}"></i></button>
                                             </form>
                                             
                                             @endcan

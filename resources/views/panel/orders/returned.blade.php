@@ -38,15 +38,17 @@
 
 
                                     <td>
-                                      
                                         <img src="{{asset($product->product ? $product->product->first : 'images/placeholder.png')}}"
                                             data-field="image" alt="
                                             ">
-                                        
                                     </td>
                                     <td data-field="name">{{$product->orderProduct ? $product->orderProduct->order->customer->name : 'deleted customer' }}</td>
-
-                                    <td data-field="name">{{$product->product ? $product->product->name : '' }}</td>
+                                    @if(app()->getLocale() == 'en')
+                                    <td data-field="name">{{$product->product ? $product->product->en_name : 'deleted' }}</td>
+                                    @else
+                                    <td data-field="name">{{$product->product ? $product->product->name : 'محذوف' }}</td>
+                                    @endif 
+                                    
 
                                     <td>
                                         <a  href="javascript:void(0)">
@@ -64,7 +66,17 @@
                                                     badge-primary
                                                 @endif
                                                     asign-ticket">
-                                                {{$product->status}}
+                                                    @if ($product->status == 'pending' )
+                                                    {{ __('body.Pending') }}
+                                                    @elseif ($product->status == 'rejected')
+                                                    {{ __('body.rejected') }}
+                                                    @elseif ($product->status == 'refunded')
+                                                    {{ __('body.refunded') }}
+                                                    @elseif ($product->status == 'approved')
+                                                    {{ __('body.approved') }}
+                                                    @elseif ($product->status == 'returned')
+                                                    {{ __('body.returned') }}
+                                                    @endif    
                                             </span>
                                         </a>
                                     </td>
@@ -94,32 +106,32 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger" id="exampleModalLongTitle">Change order status</h5>
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle">{{__('adminBody.order_status')}}</h5>
             </div>
             <div class="modal-body">
                 <form id="asign-ticket" action="#" method="POST" id="return-order-form">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="">Change Status</label>
+                        <label for="">{{__('body.Choose')}}</label>
                         <div class="col-md-7">
                         <select class="mySelect2 form-control" name="status" required>
-                            <option value="rejected">rejected</option>
-                            <option value="refunded">refunded</option>
-                            <option value="approved">approved</option>
-                            <option value="returned">returned</option>
+                            <option value="rejected">{{__('body.rejected')}}</option>
+                            <option value="refunded">{{__('body.refunded')}}</option>
+                            <option value="approved">{{__('body.approved')}}</option>
+                            <option value="returned">{{__('body.returned')}}</option>
                         </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-outline-success">
+                        <input type="submit" value="{{__('adminBody.save')}}" class="btn btn-outline-success">
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" id="clsBtnFooter" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-primary" id="clsBtnFooter" data-dismiss="modal">{{__('body.Close')}}</button>
 
             </div>
         </div>

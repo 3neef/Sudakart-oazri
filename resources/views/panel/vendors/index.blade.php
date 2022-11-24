@@ -26,25 +26,54 @@
                         </td>
                         <td>{{$vendor->count}}</td>
                         @if ($vendor->shop)
+                        @if (app()->getLocale() == 'en')
                         <td>{{$vendor->shop->shop_en_name}}</td>
                         
                         @else
+                        <td>{{$vendor->shop->shop_name}}</td>
+                            
+                        @endif
+                        
+                        @else
+                        @if (app()->getLocale() == 'en')
+                            
                         <td>N/A</td>
+                        @else
+                        <td>لا يوجد متجر</td>
+                            
+                        @endif
                             
                         @endif
                         <td>{{ \Carbon\Carbon::createFromTimestamp(strtotime($vendor->created_at))->format('d-m-Y')}}</td>
-                        <td>{{$vendor->wallet ? $vendor->wallet->balance : '0'}}</td>
+                        <td>@money($vendor->wallet ? $vendor->wallet->balance : '0', 'OMR')</td>
                         <td>
                             <div>
                                 <a href="{{route('admin.vendors.suspend', $vendor->id)}}" class="{{ $vendor->suspended == 1 ? 'text-danger' : 'text-success' }}">
-                                    <i class="{{ $vendor->suspended == 1 ? 'fa fa-toggle-off fa-2x' : 'fa fa-toggle-on fa-2x' }}" title="{{ $vendor->suspended == 1 ? 'start' : 'stop' }}"></i>
+                                    <i class="{{ $vendor->suspended == 1 ? 'fa fa-toggle-off fa-2x' : 'fa fa-toggle-on fa-2x' }}" 
+                                        @if (app()->getLocale() == 'en')
+                                            
+                                        title="{{ $vendor->suspended == 1 ? 'start' : 'stop' }}">
+                                        @else
+                                        title="{{ $vendor->suspended == 1 ? 'فك الحجب' : 'حجب' }}">
+                                            
+                                        @endif
+                                    </i>
                                 </a>
                             </div>
                         </td>
                         <td>
                             <div>
                                 <a href="{{route('admin.vendors.approved', $vendor->id)}}" class="{{ $vendor->approved == 0 ? 'text-danger' : 'text-success' }}">
-                                    <i class="{{ $vendor->approved == 0 ? 'fa fa-times fa-2x' : 'fa fa-check fa-2x' }}" title="{{ $vendor->approved == 0 ? 'approve' : 'usurpation' }}"></i>
+                                    <i class="{{ $vendor->approved == 0 ? 'fa fa-times fa-2x' : 'fa fa-check fa-2x' }}" 
+                                        @if (app()->getLocale() == 'en')
+                                            
+                                        title="{{ $vendor->approved == 0 ? 'approve' : 'usurpation' }}">
+                                        @else
+                                        title="{{ $vendor->approved == 0 ? 'إعتماد' : 'الغاء الإعتماد' }}">
+                                            
+                                        @endif
+                                        
+                                    </i>
                                 </a>
                             </div>
                         </td>

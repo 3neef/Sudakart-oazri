@@ -18,6 +18,7 @@ use App\Models\UpSellProducts;
 use App\Services\ProductOptionsServices;
 use App\Services\UploadImageServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Print_;
@@ -55,8 +56,15 @@ class ProductsController extends Controller
     public function create()
     {
         $shop_categories = ShopCategory::where('shop_id', auth()->user()->userable->shop->id)->pluck('category_id');
-        $categories = Category::whereIn('id',$shop_categories )->pluck('name', 'id');
-        $options = Option::pluck('en_option', 'id');
+        if(App::getLocale() == 'en'){
+            $categories = Category::whereIn('id',$shop_categories )->pluck('en_name', 'id');
+            $options = Option::pluck('en_option', 'id');
+            
+        }else{
+            $categories = Category::whereIn('id',$shop_categories )->pluck('name', 'id');
+            $options = Option::pluck('option', 'id');
+
+        }
         return view('panel.products.create', compact(['options','categories']));
     }
 

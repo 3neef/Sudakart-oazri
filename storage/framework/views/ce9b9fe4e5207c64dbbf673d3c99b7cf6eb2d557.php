@@ -41,12 +41,11 @@
                             </td>
                             <td>
                                 <?php if($order->payment_method == 'online'): ?>
-                                    
-                                <span class="badge badge-secondary"><?php echo e($order->payment_method); ?></span>
+                                <span class="badge badge-secondary"><?php echo e(__('body.online')); ?></span>
                                 <?php elseif($order->payment_method == 'bank'): ?>
-                                <span class="badge badge-dark"><?php echo e($order->payment_method); ?></span>
+                                <span class="badge badge-dark"><?php echo e(__('body.bank_transfer')); ?></span>
                                 <?php else: ?>
-                                <span class="badge badge-danger"><?php echo e($order->payment_method); ?></span>
+                                <span class="badge badge-danger"><?php echo e(__('body.cash')); ?></span>
                                 <?php endif; ?>
                             </td>
                             <td><?php echo e($order->delivery_amount); ?></td>
@@ -64,13 +63,30 @@
                                             badge-primary
                                         <?php endif; ?>
                                             asign-ticket">
-                                        <?php echo e($order->status); ?>
+                                            <?php if($order->status == 'pending' ): ?>
+                                            <?php echo e(__('body.Pending')); ?>
 
+                                            <?php elseif($order->status == 'in progress'): ?>
+                                            <?php echo e(__('body.in_progress')); ?>
+
+                                            <?php elseif($order->status == 'completed'): ?>
+                                            <?php echo e(__('body.completed')); ?>
+
+                                            <?php elseif($order->status == 'canceled'): ?>
+                                            <?php echo e(__('body.canceled')); ?>
+
+                                            <?php endif; ?>
                                     </span>
                                 </a>
                             </td>
                             <td><?php echo e(\Carbon\Carbon::createFromTimestamp(strtotime($order->created_at))->format('d-m-Y')); ?></td>
-                            <td><?php echo money($order->total,'OMR'); ?></td>
+                            <td>
+                                <?php if(auth()->user()->userable_type == 'App\Models\Admin'): ?>
+                                <?php echo money($order->total,'OMR'); ?>
+                                <?php else: ?>
+                                <?php echo money($order->vendor_total , 'OMR'); ?>
+                                <?php endif; ?>
+                            </td>
                             <?php if($order->approved == true): ?>
                             <td class="td-check">
                                 <i data-feather="check-circle"></i>
@@ -104,31 +120,31 @@
                                 <div style="display: flex;">
                                 <?php if(auth()->user()->userable_type == 'App\Models\Admin' && $order->delivery_ref_id == null && $order->status != 'completed' && $order->status != 'canceled' && Str::contains($order->region_id, 'region_') == false): ?>
                                 <a class=" mx-1 btn btn-success" href="javascript:void(0)" style="padding: 5px 5px;">
-                                    <i  data-id="<?php echo e($order->id); ?>" class="fa fa-dot-circle-o px-1 status-ticket" title="change status"></i>
+                                    <i  data-id="<?php echo e($order->id); ?>" class="fa fa-dot-circle-o px-1 status-ticket" title="<?php echo e(__('adminBody.order_handling')); ?>"></i>
                                 </a>
                                 <?php endif; ?>
                                 <?php if(auth()->user()->userable_type == 'App\Models\Admin' && $order->approved == 0 && $order->status == 'completed'): ?>
                                 <a class=" mx-1 btn btn-success" href="<?php echo e(route('admin.orders.approve', $order->id)); ?>" aria-label="Approve Order" style="padding: 5px 5px;">
-                                    <i class="fa fa-check-circle px-1" aria-hidden="true" title="Approve Order"></i>
+                                    <i class="fa fa-check-circle px-1" aria-hidden="true" title="<?php echo e(__('adminBody.approve')); ?>"></i>
                                 </a>
                                 <?php endif; ?>
                                 <a class=" mx-1 btn btn-warning" href="<?php echo e(route('admin.orders.show', $order->id)); ?>" aria-label="Show Order" style="padding: 5px 5px;">
-                                    <i class="fa fa-eye  px-1" aria-hidden="true" title="Show Order"></i>
+                                    <i class="fa fa-eye  px-1" aria-hidden="true" title="<?php echo e(__('body.show')); ?>"></i>
                                 </a>
                                 <?php if(auth()->user()->userable_type == 'App\Models\Admin'): ?>
                                 <?php if($order->status == 'pending'): ?>
                                 <a class=" mx-1 btn btn-primary" href="<?php echo e(route('admin.orders.cancel', $order->id)); ?>" aria-label="Cancel Order" style="padding: 5px 5px;">
-                                    <i class="fa fa-ban  px-1" aria-hidden="true" title="Cancel Order"></i>
+                                    <i class="fa fa-ban  px-1" aria-hidden="true" title="<?php echo e(__('body.cancel_order')); ?>"></i>
                                 </a>
                                 <?php endif; ?>
                                 <?php if($order->status != 'canceled' && $order->handover == 1 && $order->delivery_ref_id == null && Str::contains($order->region_id, 'region_') == false): ?>
                                 <a class=" mx-1 btn btn-info" href="<?php echo e(route('admin.orders.sendtoDelivery', $order->id)); ?>" aria-label="Send Order To Delivery" style="padding: 5px 5px;">
-                                    <i class="fa fa-paper-plane  px-1" aria-hidden="true" title="Send Order To Delivery"></i>
+                                    <i class="fa fa-paper-plane  px-1" aria-hidden="true" title="<?php echo e(__('adminBody.delivery')); ?>"></i>
                                 </a>
                                 <?php endif; ?>
 
                                 <a class=" mx-1 btn btn-secondary" href="<?php echo e(route('admin.orders.print', $order->id)); ?>" aria-label="Order Recipt" style="padding: 5px 5px;">
-                                    <i class="fa fa-file-text-o  px-1" aria-hidden="true" title="Order Recipt"></i>
+                                    <i class="fa fa-file-text-o  px-1" aria-hidden="true" title="<?php echo e(__('adminBody.Download_Receipt')); ?>"></i>
                                 </a>
                                 <?php endif; ?>
 
@@ -156,31 +172,31 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger" id="exampleModalLongTitle">Change order status</h5>
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle"><?php echo e(__('adminBody.order_status')); ?></h5>
             </div>
             <div class="modal-body">
                 <form id="asign-ticket" action="#" method="POST" id="return-order-form">
                     <?php echo csrf_field(); ?>
                     <div class="form-group">
-                        <label for="">Change Status</label>
+                        <label for=""><?php echo e(__('body.Choose')); ?></label>
                         <div class="col-md-7">
                         <select class="mySelect2 form-control" name="status" required>
-                            <option value="completed">completed</option>
-                            <option value="canceled">canceled</option>
-                            <option value="in progress">in progress</option>
-                            <option value="pending">Pending</option>
+                            <option value="completed"><?php echo e(__('body.completed')); ?></option>
+                            <option value="canceled"><?php echo e(__('body.canceled')); ?></option>
+                            <option value="in progress"><?php echo e(__('body.in_progress')); ?></option>
+                            <option value="pending"><?php echo e(__('body.Pending')); ?></option>
                         </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-outline-success">
+                        <input type="submit" value="<?php echo e(__('adminBody.save')); ?>" class="btn btn-outline-success">
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" id="clsBtnFooter" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-primary" id="clsBtnFooter" data-dismiss="modal"><?php echo e(__('body.Close')); ?></button>
 
             </div>
         </div>
@@ -193,7 +209,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger" id="exampleModalLongTitle">Change the ticket status</h5>
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle"><?php echo e(__('adminBody.order_handling')); ?></h5>
             </div>
             <div class="modal-body">
                 <form id="status-ticket" action="#" method="POST" id="return-ticket-form">
@@ -201,7 +217,7 @@
                    <?php echo method_field('put'); ?>
 
                     <div class="form-group">
-                        <label for="">Choose a Status</label>
+                        <label for=""><?php echo e(__('body.Choose')); ?></label>
                         <div class="col-md-7">
                         <select class="mySelect2 form-control" name="handover" required>
                             <option value="0"><?php echo e(__('adminBody.self')); ?></option>
@@ -211,12 +227,11 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" value="Request" class="btn btn-success">
+                        <input type="submit" value="<?php echo e(__('adminBody.save')); ?>" class="btn btn-success">
                     </div>
 
                 </form>
             </div>
-            
         </div>
     </div>
 </div>

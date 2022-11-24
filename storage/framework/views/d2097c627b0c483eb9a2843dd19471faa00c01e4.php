@@ -41,9 +41,25 @@
                                         
                                     </td>
                                         
-                                    <td data-field="name"><?php echo e($product->name); ?></td>
+                                    <td data-field="name">
+                                        <?php if(app()->getLocale() == 'en'): ?>
+                                        <?php echo e($product->en_name); ?>
 
-                                    <td data-field="price"><?php if($product->category): ?><?php echo e($product->category->name); ?> <?php endif; ?></td>
+                                        <?php else: ?>
+                                        <?php echo e($product->name); ?>
+
+                                        <?php endif; ?>    
+                                    </td>
+
+                                    <td data-field="price">
+                                        <?php if(app()->getLocale() == 'en'): ?>
+                                        <?php echo e($product->category->en_name); ?>
+
+                                        <?php else: ?>
+                                        <?php echo e($product->category->name); ?>
+
+                                        <?php endif; ?>
+                                    </td>
 
                                     <td data-field="name"><?php echo e($product->price); ?></td>
 

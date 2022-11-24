@@ -20,6 +20,7 @@
                                     <th>{{ __('adminBody.date') }}</th>
                                     <th>{{ __('adminBody.Subject') }}</th>
                                     <th>{{ __('adminBody.Status') }}</th>
+                                    <th>{{ __('adminBody.Name') }}</th>
                                     <th>{{ __('adminBody.option') }}</th>
                                 </tr>
                             </thead>
@@ -33,33 +34,41 @@
 
                                     <td>{{$complaint->subject}}</td>
                                     @if ($complaint->status == 'pending')
-                                    <td class="order-pending">
-                                        
+                                        <td class="order-pending">
+                                        <span>{{__('body.Pending')}}</span>
                                         @elseif ($complaint->status == 'On-hold')
                                         <td class="order-warning">
+                                            <span>{{__('body.on_hold')}}</span>
                                         @elseif ($complaint->status == 'resolved')
                                         <td class="order-success">
+                                            <span>{{__('body.resolved')}}</span>
                                             @elseif ($complaint->status == 'canceled' || $complaint->status == 'returned')
                                             <td class="order-cancle">
-                                            @elseif ($complaint->status == 'packaging')
-                                            <td class="order-continue">
-                                        
+                                            <span>{{__('body.canceled')}}</span>
                                     @endif
-                                        <span>{{$complaint->status}}</span>
                                     </td>
                                     <td>{{$complaint->admin ? $complaint->admin->name : '' }}</td>
 
                                     <td>
                                         <a href="{{route('admin.complaints.show', $complaint->id)}}">
-                                            <i class="fa fa-edit" title="show"></i>
+                                            <i class="fa fa-eye" title="{{__('body.show')}}"></i>
                                         </a>
 
                                         <a  href="javascript:void(0)">
-                                            <i  data-id="{{$complaint->id}}" class="fa fa-check-square-o asign-ticket" title="Asgine an Admin"></i>
+                                            <i  data-id="{{$complaint->id}}" class="fa fa-check-square-o asign-ticket"
+                                                @if (app()->getLocale() == 'en')
+                                                title="Asgine an Admin">
+                                                
+                                                @else
+                                                title="إسناد إالى مشرف">
+                                                    
+                                                @endif
+                                                
+                                            </i>
                                         </a>
 
                                         <a  href="javascript:void(0)">
-                                            <i  data-id="{{$complaint->id}}" class="fa fa-dot-circle-o status-ticket" title="change status"></i>
+                                            <i  data-id="{{$complaint->id}}" class="fa fa-dot-circle-o status-ticket" title="{{__('body.status')}}"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -82,7 +91,15 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger" id="exampleModalLongTitle">Asign an Admin</h5>
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle">
+                    @if (app()->getLocale() == 'en')
+                                                Asgine an Admin
+                                                
+                                                @else
+                                                إسناد إالى مشرف
+                                                    
+                                                @endif
+                </h5>
             </div>
             <div class="modal-body">
                 <form id="asign-ticket" action="#" method="POST" id="return-order-form">
@@ -91,9 +108,9 @@
 
 
                     <div class="form-group">
-                        <label for="">Choose an Admin</label>
+                        <label for="">{{__('body.Choose')}}</label>
                         <div class="col-md-7">
-                        <select class="js-example-basic-multiple form-control" name="admin_id" required>
+                        <select class="form-control" name="admin_id" style="width: 100%" id="select2_modal" required>
                             <option value=""></option>
                             @foreach($admins as $id => $entry)
                             <option value="{{ $id }}">{{ $entry }}</option>
@@ -103,13 +120,13 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" value="Request" class="btn btn-success">
+                        <input type="submit" value="{{__('adminBody.save')}}" class="btn btn-success">
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="clsBtnFooter" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="clsBtnFooter" data-dismiss="modal">{{__('body.Close')}}</button>
 
             </div>
         </div>
@@ -122,7 +139,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger" id="exampleModalLongTitle">Change the ticket status</h5>
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle">{{__('adminBody.ticket_status')}}</h5>
             </div>
             <div class="modal-body">
                 <form id="status-ticket" action="#" method="POST" id="return-ticket-form">
@@ -131,25 +148,35 @@
 
 
                     <div class="form-group">
-                        <label for="">Choose a Status</label>
+                        <label for="">{{__('body.Choose')}}</label>
                         <div class="col-md-7">
-                        <select class="js-example-basic-multiple form-control" name="status" required>
+                        <select class="form-control" name="status" style="width: 100%" required>
                             <option value=""></option>
                             @foreach($statuses as $status)
-                            <option value="{{ $status }}">{{ $status }}</option>
+                            <option value="{{ $status }}">
+                                @if ($status == 'pending')
+                                        {{__('body.Pending')}}
+                                        @elseif ($status == 'On-hold')
+                                        {{__('body.on_hold')}}
+                                        @elseif ($status == 'resolved')
+                                        {{__('body.resolved')}}
+                                        @elseif ($status == 'canceled')
+                                        {{__('adminBody.cancel')}}
+                                @endif    
+                            </option>
                         @endforeach
                         </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" value="Request" class="btn btn-success">
+                        <input type="submit" value="{{__('adminBody.save')}}" class="btn btn-success">
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="clsBtnFooter" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="clsBtnFooter" data-dismiss="modal">{{__('body.Close')}}</button>
 
             </div>
         </div>
@@ -164,6 +191,23 @@
 
 @push('scripts')
     <script>
+        $(document).ready(function() {
+            
+            var dir = "{{app()->getLocale()}}";
+            var lang = "";
+
+            if(dir == 'en')
+            {
+                lang = 'ltr';
+            }else{
+                lang = 'rtl';
+            }
+
+        $('#select2_modal').select2({
+            dropdownParent: $('#return-order-modal'),
+            dir:lang 
+        });
+    });
         $('.asign-ticket').on('click',function () {  
         var id = $(this).data('id');
         console.log(id);

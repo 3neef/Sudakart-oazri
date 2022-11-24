@@ -28,9 +28,15 @@
                             <tbody>
                                 @foreach ($articles as $article)
                                 <tr data-row-id="1">
-                                     <td>{{$article->shop ? $article->shop->shop_en_name : 'admin' }} </td>
+                                    @if (app()->getLocale() == 'en')
+                                    <td>{{$article->shop ? $article->shop->shop_en_name : 'admin'}}</td>
+                                    
+                                    @else
+                                    <td>{{$article->shop ? $article->shop->shop_name : 'المشرف'}}</td>
+                                        
+                                    @endif
                                     <td>{{$article->title}} </td>
-                                    <td> {{Str::limit($article->content, 20)}}</td>
+                                    <td> {!!Str::limit($article->content, 20)!!}</td>
                                     <td class="list-date"> {{ \Carbon\Carbon::createFromTimestamp(strtotime($article->created_at))->format('d-m-Y')}}
                                     </td>
                                     <td>{{$article->views}}</td>

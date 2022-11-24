@@ -28,7 +28,25 @@
                         </td>
                         <td><?php echo e($vendor->count); ?></td>
                         <?php if($vendor->shop): ?>
+                        <?php if($vendor->shop): ?>
+                        <?php if(app()->getLocale() == 'en'): ?>
                         <td><?php echo e($vendor->shop->shop_en_name); ?></td>
+                        
+                        <?php else: ?>
+                        <td><?php echo e($vendor->shop->shop_name); ?></td>
+                            
+                        <?php endif; ?>
+                        
+                        <?php else: ?>
+                        <?php if(app()->getLocale() == 'en'): ?>
+                            
+                        <td>N/A</td>
+                        <?php else: ?>
+                        <td>لا يوجد متجر</td>
+                            
+                        <?php endif; ?>
+                            
+                        <?php endif; ?>
                         
                         <?php else: ?>
                         <td>N/A</td>

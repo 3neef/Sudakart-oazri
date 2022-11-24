@@ -35,7 +35,7 @@
 
                                     <td>{{$payment->notes}}</td>
 
-                                    <td>{{$payment->amount}}</td>
+                                    <td>@money($payment->amount, 'OMR')</td>
                                 </tr>
                                     
                                 @endforeach

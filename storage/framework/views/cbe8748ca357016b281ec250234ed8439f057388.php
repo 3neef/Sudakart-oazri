@@ -1,19 +1,12 @@
 
-<?php $__env->startSection('title', 'Categories'); ?>
+<?php $__env->startSection('title', __('adminNav.categories')); ?>
 <?php $__env->startSection('content'); ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <form class="form-inline search-form search-box">
-                        <div class="form-group">
-                            <input class="form-control-plaintext" type="search" placeholder="Search..">
-                        </div>
-                    </form>
-
-                    <a href="<?php echo e(route('admin.categories.create')); ?>" class="btn btn-primary add-row mt-md-0 mt-2">Add
-                        Category</a>
+                    <a href="<?php echo e(route('admin.categories.create')); ?>" class="btn btn-primary add-row mt-md-0 mt-2"><?php echo e(__('adminBody.NEW_Category')); ?></a>
                 </div>
 
                 <div class="card-body">
@@ -21,11 +14,12 @@
                         <table class="table all-package table-category " id="editableTable">
                             <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    <th>Commission</th>
-                                    <th>color</th>
-                                    <th>Option</th>
+                                    <th><?php echo e(__('adminBody.Image')); ?></th>
+                                    <th><?php echo e(__('body.name')); ?></th>
+                                    <th><?php echo e(__('form.en_name')); ?></th>
+                                    <th><?php echo e(__('body.commission')); ?></th>
+                                    <th><?php echo e(__('body.color')); ?></th>
+                                    <th><?php echo e(__('adminBody.Actions')); ?></th>
                                 </tr>
                             </thead>
 
@@ -38,22 +32,24 @@
                                             data-field="image" alt="">
                                     </td>
 
+                                    <td data-field="name"><?php echo e($category->name); ?></td>
+
                                     <td data-field="name"><?php echo e($category->en_name); ?></td>
 
                                     <td data-field="price"><?php echo e($category->commission); ?></td>
 
                                     <td>
-                                        <span style="background: <?php echo e($category->color); ?>; color: white">Category Color</span>
+                                        <span style="background: <?php echo e($category->color); ?>; color: white"><?php echo e(__('body.color')); ?></span>
                                     </td>
                                     <td>
                                         <a href="<?php echo e(route('admin.categories.edit', $category->id)); ?>">
-                                            <i class="fa fa-edit" title="Edit"></i>
+                                            <i class="fa fa-edit" title="<?php echo e(__('body.edit')); ?>"></i>
                                         </a>
 
                                         <form action="<?php echo e(route('admin.categories.destroy', $category->id)); ?>" method="POST">
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('DELETE'); ?>
-                                            <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash"></i></button>
+                                            <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash" title="<?php echo e(__('body.delete')); ?>"></i></button>
                                         </form>
                                     </td>
                                 </tr>

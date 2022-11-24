@@ -14,7 +14,7 @@
 
                     <?php if(auth()->user()->userable_type == 'App\Models\Vendor'): ?>
                     <a href="<?php echo e(route('admin.coupons.create')); ?>" class="btn btn-primary mt-md-0 mt-2">
-                        <?php echo e(__('adminBody.new_Coupons')); ?>
+                        <?php echo e(__('adminBody.new_coupon')); ?>
 
                     </a>
                     <?php endif; ?>
@@ -40,7 +40,13 @@
                                 <tbody>
                                     <?php $__currentLoopData = $coupons; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $coupon): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr data-row-id="1">
-                                        <td><?php echo e($coupon->shop ? $coupon->shop->shop_name : 'oazri'); ?></td>
+                                        <?php if(app()->getLocale() == 'en'): ?>
+                                        <td data-field="name"><?php echo e($coupon->shop ? $coupon->shop->shop_en_name : 'oazri'); ?></td>
+                                        
+                                        <?php else: ?>
+                                        <td data-field="name"><?php echo e($coupon->shop ? $coupon->shop->shop_name : 'العزري'); ?></td>
+                                            
+                                        <?php endif; ?>
 
                                         <td><?php echo e($coupon->code); ?></td>
 
@@ -69,14 +75,14 @@
                                                 <?php echo csrf_field(); ?>
                                                 <?php echo method_field('Put'); ?>
                                                 <input type="number" value="1" name="stop" hidden>
-                                                <button type="submit" style="border:none"><i class="fa fa-stop"></i></button>
+                                                <button type="submit" style="border:none"><i class="fa fa-stop" title="<?php echo e(__('body.stop')); ?>"></i></button>
                                             </form>
                                             <?php endif; ?>
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-coupon')): ?>
                                             <form action="<?php echo e(route('admin.coupons.destroy', $coupon->id)); ?>" method="POST">
                                                 <?php echo csrf_field(); ?>
                                                 <?php echo method_field('DELETE'); ?>
-                                                <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash"></i></button>
+                                                <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash" title="<?php echo e(__('body.delete')); ?>"></i></button>
                                             </form>
                                             
                                             <?php endif; ?>

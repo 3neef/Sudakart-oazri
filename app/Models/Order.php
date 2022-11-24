@@ -68,11 +68,20 @@ class Order extends Model
 
     public function newProduct()
     {
-       return $this->belongsToMany(Product::class,'order_products')
+        if (Auth::user() != null && Auth::user()->userable_type == 'App\Models\Vendor'){
+            return $this->belongsToMany(Product::class,'order_products')->wherePivot('shop_id', auth()->user()->userable->shop->id)
             ->withPivot('quantity')
             ->withPivot('id')
             ->withPivot('price')
             ->withTimeStamps();
+        }else{
+            return $this->belongsToMany(Product::class,'order_products')
+            ->withPivot('quantity')
+            ->withPivot('id')
+            ->withPivot('price')
+            ->withTimeStamps();
+        }
+      
     }
     public function payment() {
         return $this->hasOne(Payment::class);

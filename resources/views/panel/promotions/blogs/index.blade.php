@@ -35,9 +35,15 @@
                             <tbody>
                                 @foreach ($articles as $article)
                                 <tr data-row-id="1">
-                                     <td>{{$article->shop ? $article->shop->shop_en_name : 'admin' }} </td>
+                                    @if (app()->getLocale() == 'en')
+                                    <td>{{$article->shop ? $article->shop->shop_en_name : 'admin'}}</td>
+                                    
+                                    @else
+                                    <td>{{$article->shop ? $article->shop->shop_name : 'المشرف'}}</td>
+                                        
+                                    @endif
                                     <td>{{$article->title}} </td>
-                                    <td> {{Str::limit($article->content, 20)}}</td>
+                                    <td> {!!Str::limit($article->content, 20)!!}</td>
                                     <td class="list-date"> {{ \Carbon\Carbon::createFromTimestamp(strtotime($article->created_at))->format('d-m-Y')}}
                                     </td>
                                     <td>{{$article->views}}</td>
@@ -53,20 +59,25 @@
                                         </td>
                                         @endif
                                         <td>
+                                            <div style="display: flex;">
                                             <a href="{{route('admin.blogs.show', $article->id)}}">
-                                                <i class="fa fa-eye" title="approve"></i>
+                                                <i class="fa fa-eye" title="{{__('body.show')}}"></i>
+                                            </a>
+                                            <a href="{{route('admin.blogs.edit', $article->id)}}">
+                                                <i class="fa fa-edit" title="{{__('body.edit')}}"></i>
                                             </a>
                                             <form action="{{route('admin.blogs.approve', $article->id)}}" method="POST">
                                                 @csrf
                                                 @method('Put')
                                                 <input type="number" value="1" name="approved" hidden>
-                                                <button type="submit" style="border:none"><i class="fa fa-stop"></i></button>
+                                                <button type="submit" style="border:none"><i class="fa fa-stop" title="{{__('body.stop')}}"></i></button>
                                             </form>
                                             <form action="{{route('admin.blogs.destroy', $article->id)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash"></i></button>
+                                                <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash" title="{{__('body.delete')}}"></i></button>
                                             </form>
+                                            </div>
                                         </td>
                                 </tr>
                                     

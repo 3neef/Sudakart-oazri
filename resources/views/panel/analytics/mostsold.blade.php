@@ -45,9 +45,21 @@
                                         
                                     </td>
                                         
-                                    <td data-field="name">{{$product->name}}</td>
+                                    <td data-field="name">
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $product->en_name }}
+                                        @else
+                                        {{ $product->name }}
+                                        @endif    
+                                    </td>
 
-                                    <td data-field="price">@if($product->category){{$product->category->name}} @endif</td>
+                                    <td data-field="price">
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $product->category->en_name }}
+                                        @else
+                                        {{ $product->category->name }}
+                                        @endif
+                                    </td>
 
                                     <td data-field="name">{{$product->price}}</td>
 

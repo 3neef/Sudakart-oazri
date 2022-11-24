@@ -1,5 +1,5 @@
 @extends('layouts.app2')
-@section('title', 'Show a Post')
+@section('title', __('adminBody.blog_show'))
 @section('content')
 <div class="container-fluid">
     <div class="row">

@@ -33,12 +33,12 @@
 
                                     <td>
                                         <a href="{{route('admin.accounting.expensetypes.edit', $expense->id)}}">
-                                            <i class="fa fa-edit" title="Edit"></i>
+                                            <i class="fa fa-edit" title="{{__('body.edit')}}"></i>
                                         </a>
                                         <form action="{{route('admin.accounting.expensetypes.destroy', $expense->id)}}" method="POST">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="submit" class="fa fa-trash" value="Delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash" title="{{__('body.delete')}}"></i></button>
                                         </form>
                                     </td>
                                 </tr>

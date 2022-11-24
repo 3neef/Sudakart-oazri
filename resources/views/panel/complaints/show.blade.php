@@ -1,5 +1,5 @@
 @extends('layouts.app2')
-@section('title', 'Complaint')
+@section('title', __('adminBody.complaint'))
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -10,14 +10,26 @@
                         <div class="row g-4">
                             <div class="col-xl-8">
                                 <div class="card-details-title">
-                                    <h3>Complaint<span> {{$complaint->subject}}</span></h3>
+                                    <h3><span> {{$complaint->subject}}</span></h3>
                                 </div>
                                 <div class="table-responsive table-details">
                                     <table class="table cart-table table-borderless">
                                         <thead>
                                             <tr>
-                                                <th colspan="2">Complaint body</th>
-                                                <th colspan="2">{{$complaint->status}}</th>
+                                                <th colspan="2">{{__('adminBody.complaint')}}</th>
+                                                <th colspan="2">
+                                                    @if ($complaint->status == 'pending')
+                                        <span>{{__('body.Pending')}}</span>
+                                        @elseif ($complaint->status == 'On-hold')
+                                            <span>{{__('body.on_hold')}}</span>
+                                        @elseif ($complaint->status == 'resolved')
+                                        
+                                            <span>{{__('body.resolved')}}</span>
+                                            @elseif ($complaint->status == 'canceled' || $complaint->status == 'returned')
+                    
+                                            <span>{{__('body.canceled')}}</span>
+                                    @endif    
+                                                </th>
                                             </tr>
                                             
                                             

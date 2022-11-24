@@ -1,5 +1,5 @@
 @extends('layouts.app2')
-@section('title', 'Create A Products')
+@section('title', __('adminBody.create_a_product'))
 @section('content')
 <div class="container-fluid">
     @if ($errors->count() > 0)
@@ -11,23 +11,23 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>General</h5>
+                        <h5>{{__('form.general')}}</h5>
                     </div>
                     <div class="card-body">
                         <div class="digital-add needs-validation">
                             <div class="form-group">
                                 <label for="validationCustom01" class="col-form-label pt-0"><span>*</span>
-                                    Name</label>
+                                    {{__('adminBody.Name')}}</label>
                                 <input class="form-control" id="name" name="name" type="text" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom01" class="col-form-label pt-0"><span>*</span>
-                                    English Name</label>
+                                   {{__('form.en_name')}}</label>
                                 <input class="form-control"  id="en_name" name="en_name"  type="text" required="">
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label categories-basic"><span>*</span>
-                                    Categories</label>
+                                    {{__('form.categories')}}</label>
                                 <select class="custom-select form-control {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
                                     @foreach($categories as $id => $entry)
                                         <option value="{{ $id }}" {{ old('category_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
@@ -37,52 +37,52 @@
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Product Price</label>
+                                    {{__('body.price')}}</label>
                                 <input class="form-control"  id="price" name="price" step="0.1"  type="number" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Product SKU</label>
+                                    {{__('body.sku')}}</label>
                                 <input class="form-control"  id="sku" name="sku" type="text" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Product Cost</label>
+                                    {{__('form.cost')}}</label>
                                 <input class="form-control"  id="cost" name="cost"  type="number" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Product Quantity</label>
-                                <input class="form-control"  id="quantity" name="quantity"  type="number" required="">
+                                    {{__('body.quantity')}}</label>
+                                <input class="form-control"  id="quantity" name="quantity"  type="number" min="0" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Product Warranty</label>
+                                    {{__('form.warranty')}}</label>
                                 <input class="form-control"  id="warranty" name="warranty"  type="text" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Product weight</label>
+                                    {{__('body.weight')}}</label>
                                 <input class="form-control"  id="weight" name="weight"  type="text" required="">
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label"><span>*</span> Shipping</label>
+                                <label class="col-form-label"><span>*</span>{{__('body.free_shipping')}}</label>
                                 <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
                                     <label class="d-block" for="edo-ani">
                                         <input class="radio_animated" id="edo-ani" value="1" type="radio"
                                             name="frs">
-                                        Free
+                                        {{__('form.free')}}
                                     </label>
                                     <label class="d-block" for="edo-ani1">
                                         <input class="radio_animated" id="edo-ani1" value="0" type="radio"
                                             name="frs">
-                                        Regular
+                                        {{__('form.regular')}}
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span></span>
-                                    Product Images</label>
+                                    {{__('body.image')}}</label>
                                     <input class="form-control" type="file" id="formFileMultiple" id="images" name="images[]" multiple />
                             </div>
                         </div>
@@ -92,7 +92,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Add Description</h5>
+                        <h5>{{__('form.add_des')}}</h5>
                     </div>
                     <div class="card-body">
                         <div class="digital-add needs-validation">
@@ -106,7 +106,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h5>Add an English Description</h5>
+                        <h5>{{__('form.add_en_des')}}</h5>
                     </div>
                     <div class="card-body">
                         <div class="digital-add needs-validation">
@@ -120,13 +120,13 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h5>Options</h5>
+                        <h5>{{__('body.options')}}</h5>
                     </div>
                     <div class="card-body">
                         <div id="dynamicAddRemove" class="addandremove">
                             <div class="form-group row">
                                 <label for="validationCustom2"
-                                    class="col-xl-3 col-md-4"><span>*</span>Option</label>
+                                    class="col-xl-3 col-md-4"><span>*</span>{{__('adminBody.option')}}</label>
                                 <div class="col-xl-8 col-md-7">
                                         <select class="custom-select w-100 form-control {{ $errors->has('brand') ? 'is-invalid' : '' }}" id="options[0][option_id]" name="options[0][option_id]" required>
                                             @foreach($options as $id => $entry)
@@ -137,23 +137,23 @@
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Option Increment</label>
+                                    {{__('form.increment')}}</label>
                                 <input class="form-control"  id="options[0][increment]" name="options[0][increment]"  type="number" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Option Quantity</label>
+                                    {{__('body.quantity')}}</label>
                                 <input class="form-control"  id="options[0][quantity]" name="options[0][quantity]"  type="number" required="">
                             </div>
                         </div>
-                        <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add another Option</button></td>
+                        <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">{{__('form.add_other_op')}}</button></td>
                     </div>
                 </div>
             </div>
         </div>
         <div class="form-group mb-0">
             <div class="product-buttons">
-                <input type="submit" class="btn btn-primary"></input>
+                <button type="submit" class="btn btn-outline-primary">{{__('adminBody.save')}}</button>
             </div>
         </div>
     </form>
@@ -172,7 +172,7 @@
         $("#dynamicAddRemove").append(`<section class="pt-1 border-top mt-3">
         <div class="form-group row">
             <label for="validationCustom2"
-                class="col-xl-3 col-md-4"><span>*</span>Product</label>
+                class="col-xl-3 col-md-4"><span>*</span>{{__('adminBody.option')}}</label>
             <div class="col-xl-8 col-md-7">` +
                 '<select class="custom-select w-100 form-control {{ $errors->has('') ? '' : '' }}" id="options['+i+'][option_id]" name="options['+i+'][option_id]" required>'
                 + `
@@ -184,12 +184,12 @@
         </div>
         <div class="form-group">
             <label for="validationCustom02" class="col-form-label"><span>*</span>
-                Option Increment</label>
+                {{__('form.increment')}}</label>
                     <input class="form-control"  id="options[`+i+`][increment]" name="options[`+i+`][increment]"  type="number" required="">
         </div>
         <div class="form-group">
             <label for="validationCustom02" class="col-form-label"><span>*</span>
-                Option Quantity</label>
+                {{__('body.quantity')}}</label>
             <input class="form-control"  id="options[`+i+`][quantity]" name="options[`+i+`][quantity]"  type="number" required="">
         </div>
                             ` + '<div style="text-align: right; cursor: pointer; margin-right: 5.7rem" class="remove-input-field"><i class="fa fa-trash-o text-danger h5" aria-hidden="true"></i> </div></section>'); 

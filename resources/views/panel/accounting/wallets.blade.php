@@ -11,7 +11,7 @@
                         <div class="row g-4">
                             <div class="col-max">
                                 <div class="card-details-title">
-                                    <h3>{{ __('adminBody.Your_Wallet_Balance_is') }}    <span>{{$wallets->total_balance}} OMR</span></h3>
+                                    <h3>{{ __('adminBody.Your_Wallet_Balance_is') }}    <span>@money($wallets->total_balance, 'OMR')</span></h3>
                                 </div>
                                 <div class="table-responsive table-desi">
                                     <table class="table trans-table all-package">
@@ -21,10 +21,9 @@
                                                 <th>{{ __('adminBody.Transaction_Id') }}</th>
                                                 <th>{{ __('adminBody.date') }}</th>
                                                 <th>{{ __('adminBody.Type') }}</th>
-                                                <th>{{ __('adminBody.Wallet_Id') }}</th>
                                                 <th>{{ __('adminBody.Notes') }}</th>
                                                 <th>{{ __('adminBody.Amount') }}</th>
-                                                <th>{{ __('adminBody.Product_Id') }}</th>
+                                                <th>{{ __('adminBody.Product_Name') }}</th>
                                             </tr>
                                         </thead>
             
@@ -37,19 +36,49 @@
             
                                                 <td>{{ \Carbon\Carbon::createFromTimestamp(strtotime($transaction->created_at))->format('d-m-Y')}}</td>
             
-                                                <td>{{$transaction->type}}</td>
-            
-                                                <td>{{$transaction->wallet_id}}</td>
-            
+                                                <td>
+                                                    <span
+                                                        class=" badge
+                                                        @if ($transaction->type == 'refund')
+                                                            badge-danger
+                                                        @elseif($transaction->type == 'payment')
+                                                            badge-info
+                                                        @elseif ($transaction->type == 'deposit')
+                                                            badge-success
+                                                        @elseif ($transaction->type == 'withdraw')
+                                                            badge-primary
+                                                        @endif
+                                                            ">
+                                                            @if ($transaction->type == 'refund' )
+                                                            {{ __('body.refund') }}
+                                                            @elseif ($transaction->type == 'payment')
+                                                            {{ __('body.payment') }}
+                                                            @elseif ($transaction->type == 'deposit')
+                                                            {{ __('body.deposit') }}
+                                                            @elseif ($transaction->type == 'withdraw')
+                                                            {{ __('body.withdraw') }}
+                                                            @endif
+                                                    </span>
+                                                </td>
+                        
                                                 <td>{{$transaction->notes}}</td>
             
-                                                <td>{{$transaction->amount}}</td>
+                                                <td>@money($transaction->amount, 'OMR')</td>
                                                 @if ($transaction->product_id == null)
-                                                <td>{{__('Order related transaction')}}</td>
+                                                @if(app()->getLocale() == 'en')
+                                                <td>{{__('Not product related transaction')}}</td>
+                                                @else
+                                                <td>{{__('التحويلة عير مرتبطة بمنتج')}}</td>
+                                                @endif
+                                                
                                                 
                                                 @else
-                                                    
+                                                @if(app()->getLocale() == 'en')
+                                                <td>{{$transaction->product->en_name}}</td>
+                                                @else
                                                 <td>{{$transaction->product->name}}</td>
+                                                @endif
+                                                
                                                 @endif
                                             </tr>
                                                 
@@ -99,7 +128,7 @@
 
                                     <td>{{$wallet->accountable ? $wallet->accountable->first_name : 'invalid name'}}</td>
 
-                                    <td>{{$wallet->balance}}  OMR</td>
+                                    <td>@money($wallet->balance, 'OMR')</td>
 
                                     <td>{{$wallet->created_at}}</td>
                                     

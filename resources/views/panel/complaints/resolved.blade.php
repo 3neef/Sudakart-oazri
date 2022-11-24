@@ -33,24 +33,22 @@
 
                                     <td>{{$complaint->subject}}</td>
                                     @if ($complaint->status == 'pending')
-                                    <td class="order-pending">
-                                        
+                                        <td class="order-pending">
+                                        <span>{{__('body.Pending')}}</span>
                                         @elseif ($complaint->status == 'On-hold')
                                         <td class="order-warning">
+                                            <span>{{__('body.on_hold')}}</span>
                                         @elseif ($complaint->status == 'resolved')
                                         <td class="order-success">
+                                            <span>{{__('body.resolved')}}</span>
                                             @elseif ($complaint->status == 'canceled' || $complaint->status == 'returned')
                                             <td class="order-cancle">
-                                            @elseif ($complaint->status == 'packaging')
-                                            <td class="order-continue">
-                                        
+                                            <span>{{__('body.canceled')}}</span>
                                     @endif
-                                     <span>{{$complaint->status}}</span>
                                     </td>
-
                                     <td>
                                         <a href="{{route('admin.complaints.show', $complaint->id)}}">
-                                            <i class="fa fa-edit" title="show"></i>
+                                            <i class="fa fa-eye" title="{{__('body.show')}}"></i>
                                         </a>
                                     </td>
                                 </tr>

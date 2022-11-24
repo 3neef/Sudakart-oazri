@@ -33,19 +33,50 @@
 
                                     <td><?php echo e($transaction->created_at); ?></td>
 
-                                    <td><?php echo e($transaction->type); ?></td>
+                                    <td>
+                                        <span
+                                            class=" badge
+                                            <?php if($transaction->type == 'refund'): ?>
+                                                badge-danger
+                                            <?php elseif($transaction->type == 'payment'): ?>
+                                                badge-info
+                                            <?php elseif($transaction->type == 'deposit'): ?>
+                                                badge-success
+                                            <?php elseif($transaction->type == 'withdraw'): ?>
+                                                badge-primary
+                                            <?php endif; ?>
+                                                asign-ticket">
+                                                <?php if($transaction->type == 'refund' ): ?>
+                                                <?php echo e(__('body.refund')); ?>
+
+                                                <?php elseif($transaction->type == 'payment'): ?>
+                                                <?php echo e(__('body.payment')); ?>
+
+                                                <?php elseif($transaction->type == 'deposit'): ?>
+                                                <?php echo e(__('body.deposit')); ?>
+
+                                                <?php elseif($transaction->type == 'withdraw'): ?>
+                                                <?php echo e(__('body.withdraw')); ?>
+
+                                                <?php endif; ?>
+                                        </span>
+                                    </td>
 
                                     <td><?php echo e($transaction->wallet ? $transaction->wallet->accountable->first_name : $transaction->wallet->accountable->name); ?></td>
 
                                     <td><?php echo e($transaction->notes); ?></td>
 
-                                    <td><?php echo e($transaction->amount); ?></td>
+                                    <td><?php echo money($transaction->amount, 'OMR'); ?></td>
                                     <?php if($transaction->product_id == null): ?>
                                     <td><?php echo e(__('Not product related transaction')); ?></td>
                                     
                                     <?php else: ?>
-                                        
+                                    <?php if(app()->getLocale() == 'en'): ?>
+                                    <td><?php echo e($transaction->product->en_name); ?></td>
+                                    <?php else: ?>
                                     <td><?php echo e($transaction->product->name); ?></td>
+                                    <?php endif; ?>
+                                    
                                     <?php endif; ?>
                                 </tr>
                                     

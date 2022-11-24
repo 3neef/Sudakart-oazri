@@ -10,7 +10,7 @@
                 
                 <div class="card-body">
                     <div class="card-details-title">
-                        <h3>This is the Wallet history for <span>{{$transactions->first()->wallet ? $transactions->first()->wallet->accountable->first_name : $transactions->first()->wallet->accountable->name}}</span></h3>
+                        <h3>{{__('body.wallet_records')}} <span>{{$transactions->first()->wallet ? $transactions->first()->wallet->accountable->first_name : $transactions->first()->wallet->accountable->name}}</span></h3>
                     </div>
                    <div class="card-body order-datatable">
                     <table class="display" id="basic-1">
@@ -20,7 +20,6 @@
                                     <th>{{ __('adminBody.Transaction_Id') }}</th>
                                     <th>{{ __('adminBody.date') }}</th>
                                     <th>{{ __('adminBody.Type') }}</th>
-                                    <th>{{ __('adminBody.Account_Owner') }}</th>
                                     <th>{{ __('adminBody.Notes') }}</th>
                                     <th>{{ __('adminBody.Amount') }}</th>
                                     <th>{{ __('adminBody.Product_Id') }}</th>
@@ -36,19 +35,49 @@
 
                                     <td>{{$transaction->created_at}}</td>
 
-                                    <td>{{$transaction->type}}</td>
-
-                                    <td>{{$transaction->wallet ? $transaction->wallet->accountable->first_name : $transaction->wallet->accountable->name}}</td>
+                                    <td>
+                                        <span
+                                            class=" badge
+                                            @if ($transaction->type == 'refund')
+                                                badge-danger
+                                            @elseif($transaction->type == 'payment')
+                                                badge-info
+                                            @elseif ($transaction->type == 'deposit')
+                                                badge-success
+                                            @elseif ($transaction->type == 'withdraw')
+                                                badge-primary
+                                            @endif
+                                                ">
+                                                @if ($transaction->type == 'refund' )
+                                                {{ __('body.refund') }}
+                                                @elseif ($transaction->type == 'payment')
+                                                {{ __('body.payment') }}
+                                                @elseif ($transaction->type == 'deposit')
+                                                {{ __('body.deposit') }}
+                                                @elseif ($transaction->type == 'withdraw')
+                                                {{ __('body.withdraw') }}
+                                                @endif
+                                        </span>
+                                    </td>
 
                                     <td>{{$transaction->notes}}</td>
 
-                                    <td>{{$transaction->amount}}</td>
+                                    <td>@money($transaction->amount, 'OMR')</td>
                                     @if ($transaction->product_id == null)
-                                    <td>{{__('Order related transaction')}}</td>
+                                    @if(app()->getLocale() == 'en')
+                                    <td>{{__('Not product related transaction')}}</td>
+                                    @else
+                                    <td>{{__('التحويلة عير مرتبطة بمنتج')}}</td>
+                                    @endif
+                                    
                                     
                                     @else
-                                        
+                                    @if(app()->getLocale() == 'en')
+                                    <td>{{$transaction->product->en_name}}</td>
+                                    @else
                                     <td>{{$transaction->product->name}}</td>
+                                    @endif
+                                    
                                     @endif
                                 </tr>
                                     

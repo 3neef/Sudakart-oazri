@@ -33,19 +33,46 @@
 
                                     <td>{{$transaction->created_at}}</td>
 
-                                    <td>{{$transaction->type}}</td>
+                                    <td>
+                                        <span
+                                            class=" badge
+                                            @if ($transaction->type == 'refund')
+                                                badge-danger
+                                            @elseif($transaction->type == 'payment')
+                                                badge-info
+                                            @elseif ($transaction->type == 'deposit')
+                                                badge-success
+                                            @elseif ($transaction->type == 'withdraw')
+                                                badge-primary
+                                            @endif
+                                                ">
+                                                @if ($transaction->type == 'refund' )
+                                                {{ __('body.refund') }}
+                                                @elseif ($transaction->type == 'payment')
+                                                {{ __('body.payment') }}
+                                                @elseif ($transaction->type == 'deposit')
+                                                {{ __('body.deposit') }}
+                                                @elseif ($transaction->type == 'withdraw')
+                                                {{ __('body.withdraw') }}
+                                                @endif
+                                        </span>
+                                    </td>
 
                                     <td>{{$transaction->wallet ? $transaction->wallet->accountable->first_name : $transaction->wallet->accountable->name}}</td>
 
                                     <td>{{$transaction->notes}}</td>
 
-                                    <td>{{$transaction->amount}}</td>
+                                    <td>@money($transaction->amount, 'OMR')</td>
                                     @if ($transaction->product_id == null)
                                     <td>{{__('Not product related transaction')}}</td>
                                     
                                     @else
-                                        
+                                    @if(app()->getLocale() == 'en')
+                                    <td>{{$transaction->product->en_name}}</td>
+                                    @else
                                     <td>{{$transaction->product->name}}</td>
+                                    @endif
+                                    
                                     @endif
                                 </tr>
                                     

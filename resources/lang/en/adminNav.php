@@ -58,6 +58,7 @@
 		'pending_vendors' => 'Pendding Vendors',
 		'category_requests' => 'Category Requests',
 		'sus_vendors' => 'Suspended Vendors',
+		'regions' => 'Regions',
 
 	];
 

@@ -39,14 +39,27 @@
                             <tbody>
                                 <?php $__empty_1 = true; $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <tr>
-                                    <td data-field="name"><?php echo e($category->shop ? $category->shop->shop_name : 'oazri'); ?></td>
+                                    
+                                        <?php if(app()->getLocale() == 'en'): ?>
+                                        <td data-field="name"><?php echo e($category->shop ? $category->shop->shop_en_name : 'oazri'); ?></td>
+                                        
+                                        <?php else: ?>
+                                        <td data-field="name"><?php echo e($category->shop ? $category->shop->shop_name : 'العزري'); ?></td>
+                                            
+                                        <?php endif; ?>                
+
                                     <td>
                                         <img src="<?php echo e(asset($category->category ? $category->category->image :
                                              'http://88.198.145.31/images/placeholder.png')); ?>"
                                         data-field="image" alt="">
                                     </td>
-
-                                    <td data-field="name"><?php echo e($category->category ? $category->category->en_name : ''); ?></td>
+                                        <?php if(app()->getLocale() == 'en'): ?>
+                                        <td data-field="name"><?php echo e($category->category ? $category->category->en_name : ''); ?></td>
+                                        
+                                        <?php else: ?>
+                                        <td data-field="name"><?php echo e($category->category ? $category->category->name : ''); ?></td>
+                                            
+                                        <?php endif; ?>  
 
                                     <td data-field="price"><?php echo e($category->reason); ?></td>
 
@@ -54,12 +67,12 @@
 
                                     <?php if($category->approved == true): ?>
                                     <td class="order-success" data-field="status">
-                                        <span>approved</span>
+                                        <span><?php echo e(__('adminBody.Approved')); ?></span>
                                     </td>
                                     
                                     <?php else: ?>
                                     <td class="order-cancle" data-field="status">
-                                        <span>Pending</span>
+                                        <span><?php echo e(__('body.Pending')); ?></span>
                                     </td>
                                         
                                     <?php endif; ?>
@@ -68,14 +81,14 @@
                                         <?php if(auth()->user()->userable_type == 'App\Models\Admin' && $category->approved == false): ?>
                                             
                                         <a href="<?php echo e(route('admin.vendors.pending.approvedcategory', $category->id)); ?>">
-                                            <i class="fa fa-check" title="approve"></i>
+                                            <i class="fa fa-check" title="<?php echo e(__('adminBody.approve')); ?>"></i>
                                         </a>
                                         <?php endif; ?>
 
                                         <form action="<?php echo e(route('admin.vendors.pending.destroycategory', $category->id)); ?>" method="POST">
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('DELETE'); ?>
-                                            <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash"></i></button>
+                                            <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash" title="<?php echo e(__('body.delete')); ?>"></i></button>
                                         </form>
                                     </td>
                                 </tr>

@@ -15,6 +15,7 @@ use App\Models\UpSell;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class PromotionsController extends Controller
 {
@@ -30,7 +31,13 @@ class PromotionsController extends Controller
     }
     public function Createoffers()
     {
-        $products = Product::where('shop_id', auth()->user()->userable->shop->id)->pluck('name', 'id');
+        if(App::getLocale() == 'en'){
+            $products = Product::where('shop_id', auth()->user()->userable->shop->id)->pluck('en_name', 'id');
+            
+        }else{
+            $products = Product::where('shop_id', auth()->user()->userable->shop->id)->pluck('name', 'id');
+
+        }
         return view('panel.promotions.offers.create', compact('products'));
     }
     public function coupons(Request $request)
@@ -63,9 +70,21 @@ class PromotionsController extends Controller
     public function Createblogs()
     {
         if (auth()->user()->userable_type == 'App\Models\Vendor'){
-            $products = Product::where('shop_id', auth()->user()->userable->shop->id)->pluck('name', 'id');
+            if(App::getLocale() == 'en'){
+                $products = Product::where('shop_id', auth()->user()->userable->shop->id)->pluck('en_name', 'id');
+                
+            }else{
+                $products = Product::where('shop_id', auth()->user()->userable->shop->id)->pluck('name', 'id');
+    
+            }
         }else{
-            $products = Product::pluck('name', 'id');
+            if(App::getLocale() == 'en'){
+                $products = Product::pluck('en_name', 'id');
+                
+            }else{
+                $products = Product::pluck('name', 'id');
+    
+            }
         }
         return view('panel.promotions.blogs.create', compact('products'));
     }
@@ -96,7 +115,13 @@ class PromotionsController extends Controller
     }
     public function adscreate()
     {
-        $products = Product::where('stop', 0)->pluck('en_name', 'id');
+        if(App::getLocale() == 'en'){
+            $products = Product::where('stop', 0)->pluck('en_name', 'id');
+            
+        }else{
+            $products = Product::where('stop', 0)->pluck('name', 'id');
+
+        }
         // dd($products);
         return view('panel.promotions.ads.create', compact('products'));
     }
@@ -188,9 +213,26 @@ class PromotionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Article $article)
     {
-        //
+        if (auth()->user()->userable_type == 'App\Models\Vendor'){
+            if(App::getLocale() == 'en'){
+                $products = Product::where('shop_id', auth()->user()->userable->shop->id)->pluck('en_name', 'id');
+                
+            }else{
+                $products = Product::where('shop_id', auth()->user()->userable->shop->id)->pluck('name', 'id');
+    
+            }
+        }else{
+            if(App::getLocale() == 'en'){
+                $products = Product::pluck('en_name', 'id');
+                
+            }else{
+                $products = Product::pluck('name', 'id');
+    
+            }
+        }
+        return view('panel.promotions.blogs.edit', compact(['products', 'article']));
     }
 
     /**

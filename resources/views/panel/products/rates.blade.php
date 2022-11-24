@@ -1,5 +1,5 @@
 @extends('layouts.app2')
-@section('title', 'Products Reviews')
+@section('title', __('adminBody.Products_Reviews'))
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -31,7 +31,13 @@
                                         <tr>
                                             <td>{{$rate->id}}</td>
                                             <td>@if($rate->customer){{$rate->customer->name}}@endif</td>
-                                            <td>{{$rate->product->en_name}}</td>
+                                            <td>
+                                                @if(app()->getLocale() == 'en')
+                                                {{ $rate->product->en_name }}
+                                                @else
+                                                {{ $rate->product->name }}
+                                                @endif    
+                                            </td>
                                             <td>{{$rate->product->created_at}}</td>
                                             <td>
                                                 <ul class="rating">
@@ -55,11 +61,11 @@
                                 
                                     @endforeach
                                 </tbody>
-                                <div class="d-flex justify-content-center">
-                                    {!! $rates->links() !!}
-                                </div>
                             </table>
                         </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        {!! $rates->links() !!}
                     </div>
                 </div>
             </div>

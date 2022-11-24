@@ -59,15 +59,31 @@
 
                                     </td>
 
-                                    <td data-field="name"><?php echo e($product->name); ?></td>
+                                    <td data-field="name">
+                                        <?php if(app()->getLocale() == 'en'): ?>
+                                        <?php echo e($product->en_name); ?>
 
-                                    <td data-field="price"><?php echo e($product->category->name); ?></td>
+                                        <?php else: ?>
+                                        <?php echo e($product->name); ?>
+
+                                        <?php endif; ?>    
+                                    </td>
+
+                                    <td data-field="price">
+                                        <?php if(app()->getLocale() == 'en'): ?>
+                                        <?php echo e($product->category->en_name); ?>
+
+                                        <?php else: ?>
+                                        <?php echo e($product->category->name); ?>
+
+                                        <?php endif; ?>
+                                    </td>
 
                                     <td data-field="name"><?php echo e($product->quantity > 0 ? $product->quantity : 0); ?></td>
 
                                     <td data-field="name"><?php echo e($product->sku); ?></td>
 
-                                    <td data-field="name"><?php echo e($product->price); ?></td>
+                                    <td data-field="name"><?php echo money($product->price, 'OMR'); ?></td>
                                     <?php if($product->stop == false): ?>
                                     <td class="td-check">
                                         <i data-feather="check-circle"></i>
@@ -83,23 +99,23 @@
                                     <td>
                                         
                                         <a href="<?php echo e(route('admin.products.show', $product->id)); ?>">
-                                            <i class="fa fa-eye" title="show"></i>
+                                            <i class="fa fa-eye" title="<?php echo e(__('body.show')); ?>"></i>
                                         </a>
                                         
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-product')): ?>
                                         
                                         <a href="<?php echo e(route('admin.products.edit', $product->id)); ?>">
-                                            <i class="fa fa-edit" title="edit"></i>
+                                            <i class="fa fa-edit" title="<?php echo e(__('body.edit')); ?>"></i>
                                         </a>
                                         <?php endif; ?>
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-product')): ?>
                                         <a href="<?php echo e(route('admin.products.stop', $product->id)); ?>">
-                                            <i class="fa fa-stop" title="stop"></i>
+                                            <i class="fa fa-stop" title="<?php echo e(__('body.stop')); ?>"></i>
                                         </a>
                                         <form action="<?php echo e(route('admin.products.destroy', $product->id)); ?>" method="POST">
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('DELETE'); ?>
-                                            <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash"></i></button>
+                                            <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash" title="<?php echo e(__('body.delete')); ?>"></i></button>
                                         </form>
                                         <?php endif; ?>
                                     </td>

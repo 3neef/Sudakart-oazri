@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title', 'Create A Products'); ?>
+<?php $__env->startSection('title', __('adminBody.create_a_product')); ?>
 <?php $__env->startSection('content'); ?>
 <div class="container-fluid">
     <?php if($errors->count() > 0): ?>
@@ -12,23 +12,23 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>General</h5>
+                        <h5><?php echo e(__('form.general')); ?></h5>
                     </div>
                     <div class="card-body">
                         <div class="digital-add needs-validation">
                             <div class="form-group">
                                 <label for="validationCustom01" class="col-form-label pt-0"><span>*</span>
-                                    Name</label>
+                                    <?php echo e(__('adminBody.Name')); ?></label>
                                 <input class="form-control" id="name" name="name" type="text" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom01" class="col-form-label pt-0"><span>*</span>
-                                    English Name</label>
+                                   <?php echo e(__('form.en_name')); ?></label>
                                 <input class="form-control"  id="en_name" name="en_name"  type="text" required="">
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label categories-basic"><span>*</span>
-                                    Categories</label>
+                                    <?php echo e(__('form.categories')); ?></label>
                                 <select class="custom-select form-control <?php echo e($errors->has('category') ? 'is-invalid' : ''); ?>" name="category_id" id="category_id" required>
                                     <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $entry): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($id); ?>" <?php echo e(old('category_id') == $id ? 'selected' : ''); ?>><?php echo e($entry); ?></option>
@@ -38,42 +38,54 @@
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Product Price</label>
+                                    <?php echo e(__('body.price')); ?></label>
                                 <input class="form-control"  id="price" name="price" step="0.1"  type="number" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Product SKU</label>
+                                    <?php echo e(__('body.sku')); ?></label>
                                 <input class="form-control"  id="sku" name="sku" type="text" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Product Quantity</label>
-                                <input class="form-control"  id="quantity" name="quantity"  type="number" required="">
+                                    <?php echo e(__('form.cost')); ?></label>
+                                <input class="form-control"  id="cost" name="cost"  type="number" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Product weight</label>
+                                    <?php echo e(__('body.quantity')); ?></label>
+                                <input class="form-control"  id="quantity" name="quantity"  type="number" min="0" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                    <?php echo e(__('form.warranty')); ?></label>
+                                <input class="form-control"  id="warranty" name="warranty"  type="text" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                    <?php echo e(__('body.weight')); ?></label>
                                 <input class="form-control"  id="weight" name="weight"  type="text" required="">
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label"><span>*</span> Shipping</label>
+                                <label class="col-form-label"><span>*</span><?php echo e(__('body.free_shipping')); ?></label>
                                 <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
                                     <label class="d-block" for="edo-ani">
                                         <input class="radio_animated" id="edo-ani" value="1" type="radio"
                                             name="frs">
-                                        Free
+                                        <?php echo e(__('form.free')); ?>
+
                                     </label>
                                     <label class="d-block" for="edo-ani1">
                                         <input class="radio_animated" id="edo-ani1" value="0" type="radio"
                                             name="frs">
-                                        Regular
+                                        <?php echo e(__('form.regular')); ?>
+
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span></span>
-                                    Product Images</label>
+                                    <?php echo e(__('body.image')); ?></label>
                                     <input class="form-control" type="file" id="formFileMultiple" id="images" name="images[]" multiple />
                             </div>
                         </div>
@@ -83,7 +95,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Add Description</h5>
+                        <h5><?php echo e(__('form.add_des')); ?></h5>
                     </div>
                     <div class="card-body">
                         <div class="digital-add needs-validation">
@@ -97,7 +109,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h5>Add an English Description</h5>
+                        <h5><?php echo e(__('form.add_en_des')); ?></h5>
                     </div>
                     <div class="card-body">
                         <div class="digital-add needs-validation">
@@ -111,13 +123,13 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h5>Options</h5>
+                        <h5><?php echo e(__('body.options')); ?></h5>
                     </div>
                     <div class="card-body">
                         <div id="dynamicAddRemove" class="addandremove">
                             <div class="form-group row">
                                 <label for="validationCustom2"
-                                    class="col-xl-3 col-md-4"><span>*</span>Option</label>
+                                    class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('adminBody.option')); ?></label>
                                 <div class="col-xl-8 col-md-7">
                                         <select class="custom-select w-100 form-control <?php echo e($errors->has('brand') ? 'is-invalid' : ''); ?>" id="options[0][option_id]" name="options[0][option_id]" required>
                                             <?php $__currentLoopData = $options; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $entry): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -128,23 +140,23 @@
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Option Increment</label>
+                                    <?php echo e(__('form.increment')); ?></label>
                                 <input class="form-control"  id="options[0][increment]" name="options[0][increment]"  type="number" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                    Option Quantity</label>
+                                    <?php echo e(__('body.quantity')); ?></label>
                                 <input class="form-control"  id="options[0][quantity]" name="options[0][quantity]"  type="number" required="">
                             </div>
                         </div>
-                        <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add another Option</button></td>
+                        <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary"><?php echo e(__('form.add_other_op')); ?></button></td>
                     </div>
                 </div>
             </div>
         </div>
         <div class="form-group mb-0">
             <div class="product-buttons">
-                <input type="submit" class="btn btn-primary"></input>
+                <button type="submit" class="btn btn-outline-primary"><?php echo e(__('adminBody.save')); ?></button>
             </div>
         </div>
     </form>
@@ -163,7 +175,7 @@
         $("#dynamicAddRemove").append(`<section class="pt-1 border-top mt-3">
         <div class="form-group row">
             <label for="validationCustom2"
-                class="col-xl-3 col-md-4"><span>*</span>Product</label>
+                class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('adminBody.option')); ?></label>
             <div class="col-xl-8 col-md-7">` +
                 '<select class="custom-select w-100 form-control <?php echo e($errors->has('') ? '' : ''); ?>" id="options['+i+'][option_id]" name="options['+i+'][option_id]" required>'
                 + `
@@ -175,12 +187,12 @@
         </div>
         <div class="form-group">
             <label for="validationCustom02" class="col-form-label"><span>*</span>
-                Option Increment</label>
+                <?php echo e(__('form.increment')); ?></label>
                     <input class="form-control"  id="options[`+i+`][increment]" name="options[`+i+`][increment]"  type="number" required="">
         </div>
         <div class="form-group">
             <label for="validationCustom02" class="col-form-label"><span>*</span>
-                Option Quantity</label>
+                <?php echo e(__('body.quantity')); ?></label>
             <input class="form-control"  id="options[`+i+`][quantity]" name="options[`+i+`][quantity]"  type="number" required="">
         </div>
                             ` + '<div style="text-align: right; cursor: pointer; margin-right: 5.7rem" class="remove-input-field"><i class="fa fa-trash-o text-danger h5" aria-hidden="true"></i> </div></section>'); 

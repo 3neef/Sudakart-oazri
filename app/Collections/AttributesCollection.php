@@ -17,6 +17,7 @@ class AttributesCollection
         $defaultSelect = [
             'id',
             'name',
+            'en_name',
             'created_at',
             'updated_at',
         ];

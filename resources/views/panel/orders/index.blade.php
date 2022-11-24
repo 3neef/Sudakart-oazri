@@ -41,12 +41,11 @@
                             </td>
                             <td>
                                 @if ($order->payment_method == 'online')
-                                    
-                                <span class="badge badge-secondary">{{$order->payment_method}}</span>
+                                <span class="badge badge-secondary">{{ __('body.online') }}</span>
                                 @elseif($order->payment_method == 'bank')
-                                <span class="badge badge-dark">{{$order->payment_method}}</span>
+                                <span class="badge badge-dark">{{ __('body.bank_transfer') }}</span>
                                 @else
-                                <span class="badge badge-danger">{{$order->payment_method}}</span>
+                                <span class="badge badge-danger">{{ __('body.cash') }}</span>
                                 @endif
                             </td>
                             <td>{{$order->delivery_amount}}</td>
@@ -64,12 +63,26 @@
                                             badge-primary
                                         @endif
                                             asign-ticket">
-                                        {{$order->status}}
+                                            @if ($order->status == 'pending' )
+                                            {{ __('body.Pending') }}
+                                            @elseif ($order->status == 'in progress')
+                                            {{ __('body.in_progress') }}
+                                            @elseif ($order->status == 'completed')
+                                            {{ __('body.completed') }}
+                                            @elseif ($order->status == 'canceled')
+                                            {{ __('body.canceled') }}
+                                            @endif
                                     </span>
                                 </a>
                             </td>
                             <td>{{ \Carbon\Carbon::createFromTimestamp(strtotime($order->created_at))->format('d-m-Y')}}</td>
-                            <td>@money($order->total,'OMR')</td>
+                            <td>
+                                @if (auth()->user()->userable_type == 'App\Models\Admin')
+                                @money($order->total,'OMR')
+                                @else
+                                @money($order->vendor_total , 'OMR')
+                                @endif
+                            </td>
                             @if ($order->approved == true)
                             <td class="td-check">
                                 <i data-feather="check-circle"></i>
@@ -101,31 +114,31 @@
                                 <div style="display: flex;">
                                 @if (auth()->user()->userable_type == 'App\Models\Admin' && $order->delivery_ref_id == null && $order->status != 'completed' && $order->status != 'canceled' && Str::contains($order->region_id, 'region_') == false)
                                 <a class=" mx-1 btn btn-success" href="javascript:void(0)" style="padding: 5px 5px;">
-                                    <i  data-id="{{$order->id}}" class="fa fa-dot-circle-o px-1 status-ticket" title="change status"></i>
+                                    <i  data-id="{{$order->id}}" class="fa fa-dot-circle-o px-1 status-ticket" title="{{__('adminBody.order_handling')}}"></i>
                                 </a>
                                 @endif
                                 @if (auth()->user()->userable_type == 'App\Models\Admin' && $order->approved == 0 && $order->status == 'completed')
                                 <a class=" mx-1 btn btn-success" href="{{route('admin.orders.approve', $order->id)}}" aria-label="Approve Order" style="padding: 5px 5px;">
-                                    <i class="fa fa-check-circle px-1" aria-hidden="true" title="Approve Order"></i>
+                                    <i class="fa fa-check-circle px-1" aria-hidden="true" title="{{__('adminBody.approve')}}"></i>
                                 </a>
                                 @endif
                                 <a class=" mx-1 btn btn-warning" href="{{route('admin.orders.show', $order->id)}}" aria-label="Show Order" style="padding: 5px 5px;">
-                                    <i class="fa fa-eye  px-1" aria-hidden="true" title="Show Order"></i>
+                                    <i class="fa fa-eye  px-1" aria-hidden="true" title="{{__('body.show')}}"></i>
                                 </a>
                                 @if (auth()->user()->userable_type == 'App\Models\Admin')
                                 @if ($order->status == 'pending')
                                 <a class=" mx-1 btn btn-primary" href="{{route('admin.orders.cancel', $order->id)}}" aria-label="Cancel Order" style="padding: 5px 5px;">
-                                    <i class="fa fa-ban  px-1" aria-hidden="true" title="Cancel Order"></i>
+                                    <i class="fa fa-ban  px-1" aria-hidden="true" title="{{__('body.cancel_order')}}"></i>
                                 </a>
                                 @endif
                                 @if ($order->status != 'canceled' && $order->handover == 1 && $order->delivery_ref_id == null && Str::contains($order->region_id, 'region_') == false)
                                 <a class=" mx-1 btn btn-info" href="{{route('admin.orders.sendtoDelivery', $order->id)}}" aria-label="Send Order To Delivery" style="padding: 5px 5px;">
-                                    <i class="fa fa-paper-plane  px-1" aria-hidden="true" title="Send Order To Delivery"></i>
+                                    <i class="fa fa-paper-plane  px-1" aria-hidden="true" title="{{__('adminBody.delivery')}}"></i>
                                 </a>
                                 @endif
 
                                 <a class=" mx-1 btn btn-secondary" href="{{route('admin.orders.print', $order->id)}}" aria-label="Order Recipt" style="padding: 5px 5px;">
-                                    <i class="fa fa-file-text-o  px-1" aria-hidden="true" title="Order Recipt"></i>
+                                    <i class="fa fa-file-text-o  px-1" aria-hidden="true" title="{{__('adminBody.Download_Receipt')}}"></i>
                                 </a>
                                 @endif
 
@@ -152,31 +165,31 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger" id="exampleModalLongTitle">Change order status</h5>
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle">{{__('adminBody.order_status')}}</h5>
             </div>
             <div class="modal-body">
                 <form id="asign-ticket" action="#" method="POST" id="return-order-form">
                     @csrf
                     <div class="form-group">
-                        <label for="">Change Status</label>
+                        <label for="">{{__('body.Choose')}}</label>
                         <div class="col-md-7">
                         <select class="mySelect2 form-control" name="status" required>
-                            <option value="completed">completed</option>
-                            <option value="canceled">canceled</option>
-                            <option value="in progress">in progress</option>
-                            <option value="pending">Pending</option>
+                            <option value="completed">{{__('body.completed')}}</option>
+                            <option value="canceled">{{__('body.canceled')}}</option>
+                            <option value="in progress">{{__('body.in_progress')}}</option>
+                            <option value="pending">{{__('body.Pending')}}</option>
                         </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-outline-success">
+                        <input type="submit" value="{{__('adminBody.save')}}" class="btn btn-outline-success">
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" id="clsBtnFooter" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-primary" id="clsBtnFooter" data-dismiss="modal">{{__('body.Close')}}</button>
 
             </div>
         </div>
@@ -189,7 +202,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger" id="exampleModalLongTitle">Change the ticket status</h5>
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle">{{__('adminBody.order_handling')}}</h5>
             </div>
             <div class="modal-body">
                 <form id="status-ticket" action="#" method="POST" id="return-ticket-form">
@@ -197,7 +210,7 @@
                    @method('put')
 
                     <div class="form-group">
-                        <label for="">Choose a Status</label>
+                        <label for="">{{__('body.Choose')}}</label>
                         <div class="col-md-7">
                         <select class="mySelect2 form-control" name="handover" required>
                             <option value="0">{{ __('adminBody.self') }}</option>
@@ -207,15 +220,11 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" value="Request" class="btn btn-success">
+                        <input type="submit" value="{{__('adminBody.save')}}" class="btn btn-success">
                     </div>
 
                 </form>
             </div>
-            {{-- <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="clsBtnFooter" data-dismiss="modal">Close</button>
-
-            </div> --}}
         </div>
     </div>
 </div>

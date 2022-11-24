@@ -28,7 +28,25 @@
                         </td>
                         <td>{{$vendor->count}}</td>
                         @if ($vendor->shop)
+                        @if ($vendor->shop)
+                        @if (app()->getLocale() == 'en')
                         <td>{{$vendor->shop->shop_en_name}}</td>
+                        
+                        @else
+                        <td>{{$vendor->shop->shop_name}}</td>
+                            
+                        @endif
+                        
+                        @else
+                        @if (app()->getLocale() == 'en')
+                            
+                        <td>N/A</td>
+                        @else
+                        <td>لا يوجد متجر</td>
+                            
+                        @endif
+                            
+                        @endif
                         
                         @else
                         <td>N/A</td>

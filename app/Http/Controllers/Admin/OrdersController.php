@@ -17,6 +17,7 @@ use App\Models\CanceledOrder;
 use App\Models\Driver;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\OrderProductOption;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Reason;
@@ -31,6 +32,7 @@ use App\Services\Delivery\Dotman;
 use App\Services\Payments\Thawani;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Namshi\JOSE\Signer\OpenSSL\RSA;
 
 class OrdersController extends Controller
 {
@@ -388,6 +390,123 @@ class OrdersController extends Controller
         }
         return redirect()->back();
 
+    }
+
+
+    public function getProducts(Request $request)
+    {
+        if($request->search == ''){
+            $products = Product::orderBy('id','desc')->limit(5)->get();
+        }else {
+            $products = Product::orderBy('id','desc')
+            ->where('en_name', 'like', "%$request->search%")
+            ->orWhere('name', 'like', "%$request->search%")
+            ->get();
+        }
+
+        $response = array();
+
+        foreach ($products as $product) {
+            $response[] = array(
+                'id' => $product->id ,
+                'text' => $product->en_name.' - '.$product->name
+            );
+        }
+
+        echo json_encode($response);
+        
+        
+    }
+
+    public function getOptions(Request $request){
+        $product = Product::findorfail($request->product_id);
+        $view = view('panel.orders.options', compact('product'))->render();
+        echo $view;
+        // echo $request->product_id;
+    }
+
+
+    public function newItem(Request $request){
+        $product = Product::findorfail($request->product_id);
+        $order = Order::findorfail($request->order_id);
+        $options = []; 
+        
+        DB::beginTransaction();
+            $price  = $product->price;
+            $order_product = $order->products()->create([
+                'product_id' => $product->id,
+                'quantity' => $request->quantity,
+                'price' => $price,
+                'shop_id' => $product->shop_id,
+            ]);
+
+            if($request->has('options')){
+
+                if(count($request->options) > 0){
+                    foreach ($request->options as $key => $value) {
+                        if($value){
+                            $op = $product->getIncrement($value);
+                            array_push($options,  ['product_option_id' => $op->product_option_id,]);
+        
+                            $price += $product->getIncrement($value)->increment;
+                            $order_product->options()->create([
+                                'product_option_id' => $op->product_option_id,
+                                'increment' => $product->getIncrement($value)->increment
+                            ]);
+
+                        }
+                    }
+                }
+            }
+            if($product->frs == 0){
+                $delivery = $order->delivery_amount;
+            }else{
+                $delivery = 0;
+            }
+
+            $mob = $order->update([
+                'total' => $order->total + $price * $request->quantity + $delivery,
+                'amount' => $order->amount + $price * $request->quantity,
+            ]);
+            
+            if($mob){
+                DB::commit();
+                return redirect()->route('admin.orders.show', $order->id)->with('success','order product added successfully');
+                
+            }else {
+                DB::rollBack();
+            }
+    
+
+
+    }
+
+    public function deleteItem($id){
+        $order_product = OrderProduct::findorfail($id);
+        $product = $order_product->product;
+        $order = $order_product->order;
+        DB::beginTransaction();
+        $options = OrderProductOption::where('order_product_id' , $order_product->id)->delete();
+        if($product->frs == 0){
+            $delivery = $order->delivery_amount;
+        }else{
+            $delivery = 0;
+        }
+
+        $mob = $order->update([
+            'total' => $order->total  - $order_product->price * $order_product->quantity - $delivery,
+            'amount' => $order->amount -  $order_product->price * $order_product->quantity,
+        ]);
+
+        
+        if($mob){
+            DB::commit();
+            $order_product->delete();
+            return redirect()->route('admin.orders.show', $order->id)->with('error',__('msg.orderDeleted'));
+            
+        }else {
+            DB::rollBack();
+        }
     }
 
 

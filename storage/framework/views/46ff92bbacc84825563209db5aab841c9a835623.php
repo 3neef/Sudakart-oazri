@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title', 'Products Reviews'); ?>
+<?php $__env->startSection('title', __('adminBody.Products_Reviews')); ?>
 <?php $__env->startSection('content'); ?>
 <div class="container-fluid">
     <div class="row">
@@ -27,7 +27,15 @@
                                         <tr>
                                             <td><?php echo e($rate->id); ?></td>
                                             <td><?php if($rate->customer): ?><?php echo e($rate->customer->name); ?><?php endif; ?></td>
-                                            <td><?php echo e($rate->product->en_name); ?></td>
+                                            <td>
+                                                <?php if(app()->getLocale() == 'en'): ?>
+                                                <?php echo e($rate->product->en_name); ?>
+
+                                                <?php else: ?>
+                                                <?php echo e($rate->product->name); ?>
+
+                                                <?php endif; ?>    
+                                            </td>
                                             <td><?php echo e($rate->product->created_at); ?></td>
                                             <td>
                                                 <ul class="rating">
@@ -51,12 +59,12 @@
                                 
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
-                                <div class="d-flex justify-content-center">
-                                    <?php echo $rates->links(); ?>
-
-                                </div>
                             </table>
                         </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <?php echo $rates->links(); ?>
+
                     </div>
                 </div>
             </div>

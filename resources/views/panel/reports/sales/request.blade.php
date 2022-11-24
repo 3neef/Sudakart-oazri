@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div class="pull-right">
-                                    <input type="submit" class="btn btn-primary"></input>
+                                    <input type="submit" class="btn btn-primary" value="{{__('adminBody.save')}}"></input>
                                 </div>
                             </form>
                         </div>

@@ -17,6 +17,8 @@
     <title>Oazri | <?php echo $__env->yieldContent('title'); ?></title>
 
     <?php echo $__env->make('partials.styles', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
 </head>
 
 <body class="<?php echo e(app()->getLocale() == 'ar' ? 'rtl' : ''); ?>">
@@ -55,7 +57,7 @@
                             <div class="col-lg-6">
                                 <div class="page-header-left">
                                     <h3><?php echo $__env->yieldContent('title'); ?>
-                                        <small>Oazri Admin panel</small>
+                                        <small><?php echo e(__('footer.oazri_online_store')); ?></small>
                                     </h3>
                                 </div>
                             </div>
@@ -113,7 +115,20 @@
     $('.js-example-basic-multiple > option').prop("selected", false);
     $('.js-example-basic-multiple').trigger("change");
     }
-    </script>
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                toastr.options.timeOut = 1000;
+                <?php if(Session::has('error')): ?>
+                    toastr.error('<?php echo e(Session::get('error')); ?>');
+                <?php elseif(Session::has('success')): ?>
+                    toastr.success('<?php echo e(Session::get('success')); ?>');
+                <?php endif; ?>
+            });
+    
+        </script>
 </body>
 
 </html><?php /**PATH C:\Users\10\Desktop\oazri\suda\resources\views/layouts/app2.blade.php ENDPATH**/ ?>

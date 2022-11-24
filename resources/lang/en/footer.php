@@ -13,4 +13,8 @@ return [
 	'return_policies' => 'Return Policies',
 	'about_oazari' => 'A group of Omani youth, we launched this to facilitate shopping in the Sultanate.',
 	'oazri_online_store' => 'Oazri Online Store',
+	'copyright' => 'Copyright',
+	'allright' => 'Oazri All rights reserved.',
+	'flix' => 'Flix Technology',
+	'made_with' => 'Hand crafted & made by',
 ];

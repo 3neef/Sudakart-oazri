@@ -33,18 +33,20 @@
 
 
                                     <td>
-                                      
                                         <img src="<?php echo e(asset($product->product ? $product->product->first : 'images/placeholder.png')); ?>"
                                             data-field="image" alt="
                                             ">
-                                        
                                     </td>
                                     <td data-field="name"><?php echo e($product->orderProduct ? $product->orderProduct->order->customer->name : 'deleted customer'); ?></td>
-
-                                    <td data-field="name"><?php echo e($product->product ? $product->product->name : ''); ?></td>
+                                    <?php if(app()->getLocale() == 'en'): ?>
+                                    <td data-field="name"><?php echo e($product->product ? $product->product->en_name : 'deleted'); ?></td>
+                                    <?php else: ?>
+                                    <td data-field="name"><?php echo e($product->product ? $product->product->name : 'محذوف'); ?></td>
+                                    <?php endif; ?> 
+                                    
 
                                     <td>
-                                        <a  href="javascript:void(0)" >
+                                        <a  href="javascript:void(0)">
                                             <span data-id="<?php echo e($product->id); ?>" 
                                                 class=" badge
                                                 <?php if($product->status == 'pending'): ?>
@@ -59,8 +61,22 @@
                                                     badge-primary
                                                 <?php endif; ?>
                                                     asign-ticket">
-                                                <?php echo e($product->status); ?>
+                                                    <?php if($product->status == 'pending' ): ?>
+                                                    <?php echo e(__('body.Pending')); ?>
 
+                                                    <?php elseif($product->status == 'rejected'): ?>
+                                                    <?php echo e(__('body.rejected')); ?>
+
+                                                    <?php elseif($product->status == 'refunded'): ?>
+                                                    <?php echo e(__('body.refunded')); ?>
+
+                                                    <?php elseif($product->status == 'approved'): ?>
+                                                    <?php echo e(__('body.approved')); ?>
+
+                                                    <?php elseif($product->status == 'returned'): ?>
+                                                    <?php echo e(__('body.returned')); ?>
+
+                                                    <?php endif; ?>    
                                             </span>
                                         </a>
                                     </td>
@@ -91,32 +107,32 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger" id="exampleModalLongTitle">Change order status</h5>
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle"><?php echo e(__('adminBody.order_status')); ?></h5>
             </div>
             <div class="modal-body">
                 <form id="asign-ticket" action="#" method="POST" id="return-order-form">
                     <?php echo csrf_field(); ?>
                     <?php echo method_field('PUT'); ?>
                     <div class="form-group">
-                        <label for="">Change Status</label>
+                        <label for=""><?php echo e(__('body.Choose')); ?></label>
                         <div class="col-md-7">
                         <select class="mySelect2 form-control" name="status" required>
-                            <option value="rejected">rejected</option>
-                            <option value="refunded">refunded</option>
-                            <option value="approved">approved</option>
-                            <option value="returned">returned</option>
+                            <option value="rejected"><?php echo e(__('body.rejected')); ?></option>
+                            <option value="refunded"><?php echo e(__('body.refunded')); ?></option>
+                            <option value="approved"><?php echo e(__('body.approved')); ?></option>
+                            <option value="returned"><?php echo e(__('body.returned')); ?></option>
                         </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-outline-success">
+                        <input type="submit" value="<?php echo e(__('adminBody.save')); ?>" class="btn btn-outline-success">
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" id="clsBtnFooter" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-primary" id="clsBtnFooter" data-dismiss="modal"><?php echo e(__('body.Close')); ?></button>
 
             </div>
         </div>

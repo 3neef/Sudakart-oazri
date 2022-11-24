@@ -1,13 +1,13 @@
 @extends('layouts.app2')
 @section('content')
-@section('title', 'Offers List')
+@section('title', __('adminBody.offers_list'))
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
                     @can('create-offer')
-                        <a href="{{route('admin.offers.create')}}" class="btn btn-primary mt-md-0 mt-2">Add New Offer</a>
+                        <a href="{{route('admin.offers.create')}}" class="btn btn-primary mt-md-0 mt-2">{{__('adminBody.New_Offer')}}</a>
                     @endcan
                 </div>
 
@@ -17,10 +17,10 @@
                             <table class="all-package coupon-table table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>English Name</th>
-                                        <th>Discount</th>
-                                        <th>Status</th>
+                                        <th>{{__('body.name')}}</th>
+                                        <th>{{__('form.en_name')}}</th>
+                                        <th>{{__('adminBody.Discount')}}</th>
+                                        <th>{{__('adminBody.Created_On')}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,7 +40,7 @@
                                             <form action="{{route('admin.offers.destroy', $offer->id)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash"></i></button>
+                                                <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash" title="{{__('body.delete')}}"></i></button>
                                             </form>
                                         </td>
                                         @endcan

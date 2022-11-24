@@ -8,8 +8,8 @@
                 <!-- <div class="card-header">
                     <h5>Manage Order</h5>
                 </div> -->
-                <div class="card-body order-datatable">
-                    <table class="display" id="basic-1">
+                <div class="table-responsive table-desi">
+                    <table class="table all-package">
                         <thead>
                             <tr>
                                 <th><?php echo e(__('adminBody.Ref_No')); ?></th>
@@ -28,7 +28,7 @@
                             <td>#<?php echo e($order->id); ?></td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <?php $__currentLoopData = $order->products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php $__currentLoopData = $order->products->take(3); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <img src="<?php echo e(asset($product->product->first)); ?>" alt=""
                                             class="img-fluid img-30 me-2 blur-up lazyloaded">
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -36,17 +36,44 @@
                             </td>
                             <td>
                                 <?php if($order->payment_method == 'online'): ?>
-                                    
-                                <span class="badge badge-secondary"><?php echo e($order->payment_method); ?></span>
+                                <span class="badge badge-secondary"><?php echo e(__('body.online')); ?></span>
+                                <?php elseif($order->payment_method == 'bank'): ?>
+                                <span class="badge badge-dark"><?php echo e(__('body.bank_transfer')); ?></span>
                                 <?php else: ?>
-                                
-                                <span class="badge badge-danger"><?php echo e($order->payment_method); ?></span>
+                                <span class="badge badge-danger"><?php echo e(__('body.cash')); ?></span>
                                 <?php endif; ?>
                             </td>
                             <td><?php echo e($order->delivery_amount); ?></td>
-                            <td><span class="badge badge-danger"><?php echo e($order->status); ?></span></td>
+                            <td>
+                                <span data-id="<?php echo e($order->id); ?>" 
+                                    class=" badge
+                                    <?php if($order->status == 'pending'): ?>
+                                        badge-danger
+                                    <?php elseif($order->status == 'in progress'): ?>
+                                        badge-info
+                                    <?php elseif($order->status == 'completed'): ?>
+                                        badge-success
+                                    <?php elseif($order->status == 'canceled'): ?>
+                                        badge-primary
+                                    <?php endif; ?>
+                                        asign-ticket">
+                                        <?php if($order->status == 'pending' ): ?>
+                                        <?php echo e(__('body.Pending')); ?>
+
+                                        <?php elseif($order->status == 'in progress'): ?>
+                                        <?php echo e(__('body.in_progress')); ?>
+
+                                        <?php elseif($order->status == 'completed'): ?>
+                                        <?php echo e(__('body.completed')); ?>
+
+                                        <?php elseif($order->status == 'canceled'): ?>
+                                        <?php echo e(__('body.canceled')); ?>
+
+                                        <?php endif; ?>
+                                </span>    
+                            </td>
                             <td><?php echo e(\Carbon\Carbon::createFromTimestamp(strtotime($order->created_at))->format('d-m-Y')); ?></td>
-                            <td><?php echo e($order->total); ?> OMR</td>
+                            <td><?php echo money($order->total, 'OMR'); ?></td>
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>

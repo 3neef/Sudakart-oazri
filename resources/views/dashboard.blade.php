@@ -206,8 +206,26 @@
                                 <tr>
                                     <td>{{$order->id}}</td>
                                     <td class="digits">{{$order->amount}}</td>
-                                    <td class="font-danger">{{$order->payment_method}}</td>
-                                    <td class="digits">{{$order->status}}</td>
+                                    <td class="font-danger">
+                                        @if ($order->payment_method == 'bank' )
+                                        {{ __('body.bank_transfer') }}
+                                        @elseif ($order->payment_method == 'cash')
+                                        {{ __('body.cash') }}
+                                        @elseif ($order->payment_method == 'online')
+                                        {{ __('body.online') }}
+                                        @endif
+                                    </td>
+                                    <td class="digits">
+                                        @if ($order->status == 'pending' )
+                                        {{ __('body.Pending') }}
+                                        @elseif ($order->status == 'in progress')
+                                        {{ __('body.in_progress') }}
+                                        @elseif ($order->status == 'completed')
+                                        {{ __('body.completed') }}
+                                        @elseif ($order->status == 'canceled')
+                                        {{ __('body.canceled') }}
+                                        @endif    
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -250,7 +268,19 @@
                                 <tr>
                                     <td>{{$r_product->id}}</td>
                                     <td class="digits">@if($r_product->product){{$r_product->product->name}}@endif</td>
-                                    <td class="font-danger">{{$r_product->status}}</td>
+                                    <td class="font-danger">
+                                        @if ($r_product->status == 'pending' )
+                                        {{ __('body.Pending') }}
+                                        @elseif ($r_product->status == 'rejected')
+                                        {{ __('body.rejected') }}
+                                        @elseif ($r_product->status == 'refunded')
+                                        {{ __('body.refunded') }}
+                                        @elseif ($r_product->status == 'approved')
+                                        {{ __('body.approved') }}
+                                        @elseif ($r_product->status == 'returned')
+                                        {{ __('body.returned') }}
+                                        @endif    
+                                    </td>
                                     <td class="digits">{{$r_product->reason}}</td>
                                     <td class="digits">#{{$r_product->order_id}}</td>
                                 </tr>

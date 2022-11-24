@@ -206,8 +206,33 @@
                                 <tr>
                                     <td><?php echo e($order->id); ?></td>
                                     <td class="digits"><?php echo e($order->amount); ?></td>
-                                    <td class="font-danger"><?php echo e($order->payment_method); ?></td>
-                                    <td class="digits"><?php echo e($order->status); ?></td>
+                                    <td class="font-danger">
+                                        <?php if($order->payment_method == 'bank' ): ?>
+                                        <?php echo e(__('body.bank_transfer')); ?>
+
+                                        <?php elseif($order->payment_method == 'cash'): ?>
+                                        <?php echo e(__('body.cash')); ?>
+
+                                        <?php elseif($order->payment_method == 'online'): ?>
+                                        <?php echo e(__('body.online')); ?>
+
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="digits">
+                                        <?php if($order->status == 'pending' ): ?>
+                                        <?php echo e(__('body.Pending')); ?>
+
+                                        <?php elseif($order->status == 'in progress'): ?>
+                                        <?php echo e(__('body.in_progress')); ?>
+
+                                        <?php elseif($order->status == 'completed'): ?>
+                                        <?php echo e(__('body.completed')); ?>
+
+                                        <?php elseif($order->status == 'canceled'): ?>
+                                        <?php echo e(__('body.canceled')); ?>
+
+                                        <?php endif; ?>    
+                                    </td>
                                 </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
@@ -250,7 +275,24 @@
                                 <tr>
                                     <td><?php echo e($r_product->id); ?></td>
                                     <td class="digits"><?php if($r_product->product): ?><?php echo e($r_product->product->name); ?><?php endif; ?></td>
-                                    <td class="font-danger"><?php echo e($r_product->status); ?></td>
+                                    <td class="font-danger">
+                                        <?php if($r_product->status == 'pending' ): ?>
+                                        <?php echo e(__('body.Pending')); ?>
+
+                                        <?php elseif($r_product->status == 'rejected'): ?>
+                                        <?php echo e(__('body.rejected')); ?>
+
+                                        <?php elseif($r_product->status == 'refunded'): ?>
+                                        <?php echo e(__('body.refunded')); ?>
+
+                                        <?php elseif($r_product->status == 'approved'): ?>
+                                        <?php echo e(__('body.approved')); ?>
+
+                                        <?php elseif($r_product->status == 'returned'): ?>
+                                        <?php echo e(__('body.returned')); ?>
+
+                                        <?php endif; ?>    
+                                    </td>
                                     <td class="digits"><?php echo e($r_product->reason); ?></td>
                                     <td class="digits">#<?php echo e($r_product->order_id); ?></td>
                                 </tr>

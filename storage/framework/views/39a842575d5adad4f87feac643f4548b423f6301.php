@@ -25,18 +25,38 @@
                         </td>
                         <td><?php echo e($vendor->count); ?></td>
                         <?php if($vendor->shop): ?>
+                        <?php if(app()->getLocale() == 'en'): ?>
                         <td><?php echo e($vendor->shop->shop_en_name); ?></td>
                         
                         <?php else: ?>
+                        <td><?php echo e($vendor->shop->shop_name); ?></td>
+                            
+                        <?php endif; ?>
+                        
+                        <?php else: ?>
+                        <?php if(app()->getLocale() == 'en'): ?>
+                            
                         <td>N/A</td>
+                        <?php else: ?>
+                        <td>لا يوجد متجر</td>
+                            
+                        <?php endif; ?>
                             
                         <?php endif; ?>
                         <td><?php echo e(\Carbon\Carbon::createFromTimestamp(strtotime($vendor->created_at))->format('d-m-Y')); ?></td>
-                        <td><?php echo e($vendor->wallet->balance); ?></td>
+                        <td><?php echo money($vendor->wallet ? $vendor->wallet->balance : '0', 'OMR'); ?></td>
                         <td>
                             <div>
                                 <a href="<?php echo e(route('admin.vendors.suspend', $vendor->id)); ?>" class="<?php echo e($vendor->suspended == 1 ? 'text-success' : 'text-success'); ?>">
-                                    <i class="<?php echo e($vendor->suspended == 1 ? 'fa fa-check fa-2x' : 'fa fa-toggle-on fa-2x'); ?>" title="<?php echo e($vendor->suspended == 1 ? 'unsuspend' : 'stop'); ?>"></i>
+                                    <i class="<?php echo e($vendor->suspended == 1 ? 'fa fa-check fa-2x' : 'fa fa-toggle-on fa-2x'); ?>"
+                                        <?php if(app()->getLocale() == 'en'): ?>
+                                            
+                                        title="<?php echo e($vendor->suspended == 1 ? 'start' : 'stop'); ?>">
+                                        <?php else: ?>
+                                        title="<?php echo e($vendor->suspended == 1 ? 'فك الحجب' : 'حجب'); ?>">
+                                            
+                                        <?php endif; ?> 
+                                    </i>
                                 </a>
                             </div>
                         </td>

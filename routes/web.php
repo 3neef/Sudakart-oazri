@@ -68,6 +68,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::put('/products/edit/{product}',[ControllersProductsController::class, 'update'])->name('products.update')->middleware('can:edit-product');
     Route::get('/products/suspended',[ProductsController::class, 'stoped'])->name('products.stoped')->middleware('can:delete-product');
     Route::get('/products/rates',[ProductsController::class, 'rates'])->name('products.rates')->middleware('can:view-product-reviews');
+    Route::get('/products/getProducts',[OrdersController::class, 'getProducts'])->name('products.getProducts');
+    Route::get('/products/getOptions',[OrdersController::class, 'getOptions'])->name('products.getOptions');
+    Route::put('/order/newItem',[OrdersController::class, 'newItem'])->name('products.newItem');
+    Route::get('/order/deleteItem/{id}',[OrdersController::class, 'deleteItem'])->name('products.deleteItem');
 
     //notifications
     // Route::get('notifications',[NotifcationsController::class, 'index'])->name('notifications.all');

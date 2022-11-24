@@ -25,18 +25,39 @@
                         </td>
                         <td><?php echo e($vendor->count); ?></td>
                         <?php if($vendor->shop): ?>
+                        <?php if(app()->getLocale() == 'en'): ?>
                         <td><?php echo e($vendor->shop->shop_en_name); ?></td>
                         
                         <?php else: ?>
+                        <td><?php echo e($vendor->shop->shop_name); ?></td>
+                            
+                        <?php endif; ?>
+                        
+                        <?php else: ?>
+                        <?php if(app()->getLocale() == 'en'): ?>
+                            
                         <td>N/A</td>
+                        <?php else: ?>
+                        <td>لا يوجد متجر</td>
+                            
+                        <?php endif; ?>
                             
                         <?php endif; ?>
                         <td><?php echo e(\Carbon\Carbon::createFromTimestamp(strtotime($vendor->created_at))->format('d-m-Y')); ?></td>
-                        <td><?php if($vendor->wallet): ?><?php echo e($vendor->wallet->balance); ?><?php endif; ?></td>
+                        <td><?php echo money($vendor->wallet ? $vendor->wallet->balance : '0', 'OMR'); ?></td>
                         <td>
                             <div>
-                                <a href="<?php echo e(route('admin.vendors.suspend', $vendor->id)); ?>">
-                                    <i class="fa fa-stop fa-2x" title="suspend"></i>
+                                <a href="<?php echo e(route('admin.vendors.approved', $vendor->id)); ?>">
+                                    <i class="fa fa-stop fa-2x" 
+                                    <?php if(app()->getLocale() == 'en'): ?>
+                                            
+                                    title="unsuspend">
+                                    <?php else: ?>
+                                    title="فك الحجب">
+                                        
+                                    <?php endif; ?>
+                                    
+                                </i>
                                 </a>
                             </div>
                         </td>
