@@ -9,6 +9,18 @@
                         href="#restriction" role="tab" aria-controls="restriction" aria-selected="false"
                         data-original-title="" title="">{{__('form.add_expense')}}</a></li>
             </ul>
+                @if($errors->any())
+                <section class="col-lg-12">
+                
+                    @foreach($errors->all() as $error)
+                        <div class="alert alert-danger d-flex justify-content-between align-items-center">
+                            {{$error}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endforeach
+                
+                </section>
+                @endif
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade active show" id="restriction" role="tabpanel"
                     aria-labelledby="restriction-tabs">

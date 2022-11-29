@@ -9,6 +9,19 @@
                         href="#restriction" role="tab" aria-controls="restriction" aria-selected="false"
                         data-original-title="" title=""><?php echo e(__('form.add_expense_type')); ?></a></li>
             </ul>
+                <?php if($errors->any()): ?>
+                <section class="col-lg-12">
+                
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="alert alert-danger d-flex justify-content-between align-items-center">
+                            <?php echo e($error); ?>
+
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                
+                </section>
+                <?php endif; ?>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade active show" id="restriction" role="tabpanel"
                     aria-labelledby="restriction-tabs">
