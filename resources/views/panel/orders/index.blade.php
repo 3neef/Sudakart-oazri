@@ -5,10 +5,19 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <!-- <div class="card-header">
-                    <h5>Manage Order</h5>
-                </div> -->
-                 <div class="table-responsive table-desi">
+                <div class="card-header">
+                    
+                    <form action="{{ route('admin.order.search') }}" method="get" class="search-form" role="search" style="position: relative;">
+                        <div class="input-group mb-3">
+                            <input type="search" name="q"  placeholder="{{ __('labels.order_search') }}" class="input-group-field" 
+                                autocomplete="off"> 
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="submit">{{ __('body.search-btn') }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                    <div class="table-responsive table-desi">
                         <table class="table all-package">
                         <thead>
                             <tr>

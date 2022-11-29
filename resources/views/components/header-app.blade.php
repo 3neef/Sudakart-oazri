@@ -40,7 +40,7 @@
                     <span class="badge badge-pill badge-primary pull-right notification-badge">{{ $notifications->where('is_opened', 0)->count() }}</span>
                     <span class="dot"></span>
                     <ul class="notification-dropdown onhover-show-div p-0">
-                        <li>Notification <span class="badge badge-pill badge-primary pull-right">{{ $notifications->where('is_opened', 0)->count() }}</span></li>
+                        <li>{{__('body.notifications')}} <span class="badge badge-pill badge-primary pull-right">{{ $notifications->where('is_opened', 0)->count() }}</span></li>
                         @forelse ($notifications->where('is_opened', 0)->take(3) as $notification)
                         <li>
                             <div class="media">
@@ -57,10 +57,10 @@
                             
                         @empty
                             <li>
-                                <p>you have no notifications</p>
+                                <p>{{__('adminBody.no_notifications')}}</p>
                             </li> 
                         @endforelse
-                        <li class="txt-dark"><a href="{{route('admin.pushnotifications')}}">All</a> notification</li>
+                        <li class="txt-dark"><a href="{{route('admin.pushnotifications')}}">{{__('adminBody.all')}}</a> {{__('body.notifications')}}</li>
                     </ul>
                 </li>
                 <li class="onhover-dropdown">

@@ -33,31 +33,7 @@ class OrderProduct extends Model
     }
     protected function getTotalAttribute()
     { 
-        // $offer = $this->offer->discount;
-        if($this->offer == null){
-            $offer = 0;
-        }else{
-            $offer = $this->offer->discount;
-        }
-        $quantity = $this->quantity;
-        
-        // $commission = $this->product->category->commission;
-        if ($this->coupon_id != NULL){
-            $coupon = OrderServices::hasCoupon($this);
-        }else{
-            $coupon = 0;
-        }
-
-        $product_option = OrderProductOption::where('order_product_id', $this->product_id)->first();
-
-        // $increment = ProductOption::findorfail($product_option->product_option_id);
-        // if($increment){
-        //     $increment = $increment->increment - ($increment->increment * $offer);
-        // }else{
-        //     $increment = 0;
-        // }
-
-        $total = (($this->price) * $quantity) -  (($this->price) * $quantity * $coupon);
+        $total = $this->price * $this->quantity;
         return $total;
     }
 
@@ -72,6 +48,10 @@ class OrderProduct extends Model
     }
     public function product () {
         return $this->belongsTo(Product::class)->withTrashed();
+    }
+
+    public function shop () {
+        return $this->belongsTo(Shop::class);
     }
 
     public function order () {

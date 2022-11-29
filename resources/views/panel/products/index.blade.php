@@ -6,24 +6,15 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    {{-- <form class="form-inline search-form search-box">
-                        <div class="form-group">
-                            <input class="form-control-plaintext" type="search" placeholder="Search..">
+                    <form action="{{ route('admin.products.search') }}" method="get" class="search-form" role="search" style="position: relative;">
+                        <div class="input-group mb-3">
+                            <input type="search" name="q"  placeholder="{{ __('labels.search') }}" class="input-group-field" 
+                                autocomplete="off"> 
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="button">{{ __('body.search-btn') }}</button>
+                            </div>
                         </div>
-                    </form> --}}
-                    <form action="{{ route('admin.products.search') }}" method="get" class="form-inline search-form search-box" role="search" style="position: relative;">
-                  
-                        <input type="search" name="q"  placeholder="{{ __('labels.search') }}" class="input-group-field" 
-                            aria-label="Search our product" autocomplete="off"> 
-                        <span class="input-group-btn search-submit-wrap">
-                            <button type="submit" class="btn search-submit icon-fallback-text" style="z-index:0;">
-                           
-                            <span class="fallback-text">{{ __('body.search-btn') }}</span>
-                            </button>
-                        </span>
-                        
-                        </form>
-
+                    </form>
                     
                     @can('create-product', auth()->user())
                     <a href="{{route('admin.products.create')}}" class="btn btn-primary mt-md-0 mt-2">

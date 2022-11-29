@@ -25,6 +25,7 @@ use App\Http\Controllers\ReturnedController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UpSellsController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,19 +41,18 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::redirect('/admin', 'admin/login');
-Route::get('admin/login', function(){
-    return view('auth.login');
-})->name('login.view');
 
 Route::post('register/vendor', [RegisterVendorController::class, 'register'])->name('admin.register.vendor');
 Route::post('complete/register/vendor', [RegisterVendorController::class, 'completeRegistration'])->name('admin.complete.register.vendor');
-Route::get('complete/register/vendor/{id}', [RegisterVendorController::class, 'completepage'])->name('admin.complete-register.vendor');
 Route::group(
     [
-            'prefix' => LaravelLocalization::setLocale(),
-            'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
     ], function(){ //...
-    
+        Route::get('admin/login', function(){
+            return view('auth.login');
+        })->name('login.view');
+        Route::get('complete/register/vendor/{id}', [RegisterVendorController::class, 'completepage'])->name('admin.complete-register.vendor');
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth:web', 'approved_vendor']], function () {
     Route::get('/dashboard',[AdminHomeController::class, 'index'])->name('dashboard');
 
@@ -78,6 +78,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('read-all', [NotificationController::class, 'readAll'])->name('readAll');
     //orders routes
     Route::get('/orders',[OrdersController::class, 'index'])->name('orders.index')->middleware('can:view-orders');
+    Route::get('/orders/search',[OrdersController::class, 'getOrder'])->name('order.search')->middleware('can:view-orders');
     Route::get('/orders/inbound',[OrdersController::class, 'inbound'])->name('orders.inbound')->middleware('can:view-orders');
     Route::get('/orders/inbound/status/{id}',[OrdersController::class, 'inboundedit'])->name('orders.inbound.edit')->middleware('can:view-orders');
     Route::put('/orders/inbound/status/{id}',[OrdersController::class, 'inboundstatus'])->name('orders.inbound.status')->middleware('can:view-orders');

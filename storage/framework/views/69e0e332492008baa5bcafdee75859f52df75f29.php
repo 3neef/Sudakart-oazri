@@ -6,20 +6,15 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    
-                    <form action="<?php echo e(route('admin.products.search')); ?>" method="get" class="form-inline search-form search-box" role="search" style="position: relative;">
-                  
-                        <input type="search" name="q"  placeholder="<?php echo e(__('labels.search')); ?>" class="input-group-field" 
-                            aria-label="Search our product" autocomplete="off"> 
-                        <span class="input-group-btn search-submit-wrap">
-                            <button type="submit" class="btn search-submit icon-fallback-text" style="z-index:0;">
-                           
-                            <span class="fallback-text"><?php echo e(__('body.search-btn')); ?></span>
-                            </button>
-                        </span>
-                        
-                        </form>
-
+                    <form action="<?php echo e(route('admin.products.search')); ?>" method="get" class="search-form" role="search" style="position: relative;">
+                        <div class="input-group mb-3">
+                            <input type="search" name="q"  placeholder="<?php echo e(__('labels.search')); ?>" class="input-group-field" 
+                                autocomplete="off"> 
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="button"><?php echo e(__('body.search-btn')); ?></button>
+                            </div>
+                        </div>
+                    </form>
                     
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create-product', auth()->user())): ?>
                     <a href="<?php echo e(route('admin.products.create')); ?>" class="btn btn-primary mt-md-0 mt-2">

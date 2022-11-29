@@ -40,7 +40,7 @@ class ComplaintsController extends Controller
                 'status' => $request->status
             ]);
         }
-        return redirect()->back();
+        return redirect()->back()->with('success', __('toastr.asigned'));
     }
 
     public function resolved(Request $request)
@@ -76,7 +76,7 @@ class ComplaintsController extends Controller
             'body' => $request->body,
         ]);
 
-        return redirect()->route('admin.complaints.ticket');
+        return redirect()->route('admin.complaints.ticket')->with('success', __('toastr.added'));
     }
 
     /**

@@ -108,6 +108,7 @@ return [
     'allready_reg' => 'Already registered?',
     'Second_Phone' => 'Second Phone',
     'Orders' => 'Orders',
+    'register' => 'Register',
     'bank_transfer' => 'Bank Transfer',
     'bank_title' => 'Bank Inforamtion',
     'Close' => 'Close',

@@ -388,7 +388,7 @@ class OrdersController extends Controller
         }else{
             $order->update($request->validated());
         }
-        return redirect()->back();
+        return redirect()->back()->with('success', __('toastr.status_change'));
 
     }
 
@@ -417,6 +417,7 @@ class OrdersController extends Controller
         
         
     }
+
 
     public function getOptions(Request $request){
         $product = Product::findorfail($request->product_id);
@@ -471,7 +472,7 @@ class OrdersController extends Controller
             
             if($mob){
                 DB::commit();
-                return redirect()->route('admin.orders.show', $order->id)->with('success','order product added successfully');
+                return redirect()->route('admin.orders.show', $order->id)->with('success', __('toastr.added'));
                 
             }else {
                 DB::rollBack();
@@ -502,10 +503,43 @@ class OrdersController extends Controller
         if($mob){
             DB::commit();
             $order_product->delete();
-            return redirect()->route('admin.orders.show', $order->id)->with('error',__('msg.orderDeleted'));
+            return redirect()->route('admin.orders.show', $order->id)->with('error',__('toastr.deleted'));
             
         }else {
             DB::rollBack();
+        }
+    }
+
+
+    public function getOrder(Request $request){
+        if($request->has('q')){
+            if(Auth::user() != null && Auth::user()->userable_type == 'App\Models\Vendor'){
+                $vendor =  Vendor::where('id',auth()->user()->userable->id)->first();
+                $perPage = $request->limit  ? $request->limit : 10;
+                $ordersProduct  = OrderProduct::where('shop_id', $vendor->shop->id)
+                ->with('product','order')
+                ->distinct('order_id')
+        
+                ->pluck('order_id');
+                
+                $search = Order::whereIn('id',$ordersProduct)
+                ->where('id', $request->q)
+                ->paginate($perPage);
+                $orders =  OrderResource::collection($search);
+            }else {
+                $search = Order::where('id', $request->q)
+                ->orWhereHas('customer', function ($customer) use($request) {
+                    $customer->where('name', 'like', "%$request->q%")
+                    ->orwhereHas('user', function ($user) use($request) {
+                        $user->where('phone', 'like', "%$request->q%");
+                    });
+                })
+                ->paginate(10);
+                
+                $orders =  OrderResource::collection($search);
+            }
+
+            return view('panel.orders.index', compact('orders'));
         }
     }
 

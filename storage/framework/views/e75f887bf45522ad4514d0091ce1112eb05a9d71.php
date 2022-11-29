@@ -6,10 +6,12 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
+                    <?php if(auth()->user()->userable_type == 'App\Models\Admin'): ?>
                     <a href="javascript:void(0)" class="btn btn-primary mt-md-0 mt-2 asign-ticket">
                         <?php echo e(__('adminBody.new_product')); ?>
 
                     </a>
+                    <?php endif; ?>
                 </div>
                 <section class="section-b-space pt-0 ratio_asos">
                     <div class="container">
@@ -70,7 +72,7 @@
                                                     </td>
                                                     <td>
                                                         <a href="<?php echo e(route('admin.products.deleteItem', $one->pivot->id)); ?>">
-                                                            <i style="color: red;" class="fa fa-trash" title="<?php echo e(__('body.stop')); ?>"></i>
+                                                            <i style="color: red;" class="fa fa-trash" title="<?php echo e(__('body.delete')); ?>"></i>
                                                         </a>
                                                     </td>
                                                     <?php endif; ?>

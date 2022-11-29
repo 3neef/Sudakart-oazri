@@ -25,51 +25,30 @@ trait Notification
         self::updated(function ($model) {
             if ($model->approved == 1) {
                 $order_id = $model->id;
-                // $driver = User::where('userable_id', $model->delivered_by)->where('userable_type', 'App\Models\Driver')->first();
-                // $wallet = $driver->userable->wallet;
-                // $method = DeliveryMethod::findOrFail($model->delivery_method_id);
-                // $amount = $method->price * 0.1;
-                // $payment_amount = $method->price;
-                // $notes = "commission withdrawal from driver";
-                // $payment_notes = "Driver order payment";
-                $ordersProducts  = OrderProduct::where('order_id', $model->id)
+                $products  = OrderProduct::where('order_id', $order_id)
                     ->where('approved', 0)
-                    ->distinct('product_id')
-                    ->pluck('product_id');
-                $products = Product::whereIn('id', $ordersProducts)->get();
-                // $product_id = null;
-                // if ($products->count() >= 1) {
-                //     WalletServices::withdraw($wallet, $amount, $notes, $order_id, $product_id);
-                //     WalletServices::payment($wallet, $payment_amount, $payment_notes, $order_id, $product_id);
-                //     Log::info("driver transaction went through");
-                // }
+                    ->get();
+
                 foreach ($products as $product) {
-                    $product_id = $product->id;
-                    $orders_product = OrderProduct::where('order_id', $model->id)
-                        ->where('product_id', $product->id)->first();
-                    $commission = $product->category->commission;
-                    $coupon = Coupon::where('id', $orders_product->coupon_id)->where('shop_id',  $orders_product->shop_id )->where('stop', 0)->first();
-                    if ($coupon) {
-                        $discount = $coupon->discount;
-                    } else {
-                        $discount = 0;
-                    }
-                    $increment = OrderServices::returnoptions($orders_product, $orders_product->options);
-                    $price = $orders_product->price + $increment - $discount * ($orders_product->price + $increment);
-                    $payment_amount =  $price * $orders_product->quantity;
+                    $product_id = $product->product_id;
+                    $commission = $product->product->category->commission;
+                    $price = $product->price;
+                    $payment_amount =  $price * $product->quantity;
                     $amount = $commission * $payment_amount;
                     $user_id = $product->shop->vendor->user->id;
                     $wallet = User::findOrFail($user_id)->userable->wallet;
-                    $notes = "commission withdrawal from vendor";
-                    $payment_notes = "vendor order product payment";
+                    $notes = "سحب عمولة منتج من التاجر";
+                    $payment_notes = "إيداع قيمة المنتج في حساب التاجر";
                     DB::transaction(function () use ($wallet, $amount, $notes, $order_id, $payment_amount, $payment_notes, $product_id) {
                         WalletServices::withdraw($wallet, $amount, $notes, $order_id, $product_id);
                         WalletServices::payment($wallet, $payment_amount, $payment_notes, $order_id, $product_id);
                     });
-                    $orders_product->update(['approved' => 1]);
+                    $product->update(['approved' => 1]);
                 }
             }
         });
+
+        
         self::updated(function ($model) {
             $id = $model->customer_id;
             $user = User::where('userable_id', $id)->where('userable_type', 'App\Models\Customer')->first();

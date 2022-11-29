@@ -138,7 +138,7 @@
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php $component->withAttributes(['class' => 'ml-3']); ?>
-                    <?php echo e(__('Log in')); ?>
+                    <?php echo e(__('body.login')); ?>
 
                  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>

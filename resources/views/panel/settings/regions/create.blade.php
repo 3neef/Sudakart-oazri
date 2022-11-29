@@ -29,7 +29,7 @@
                                     <label for="validationCustom1"
                                         class="col-xl-3 col-md-4"><span>*</span>{{__('body.delivary_price')}}</label>
                                     <div class="col-xl-8 col-md-7">
-                                        <input class="form-control" id="region_delivery_fee" name="region_delivery_fee" type="number"
+                                        <input class="form-control" id="region_delivery_fee" name="region_delivery_fee" type="number" step=".1"
                                             required="">
                                     </div>
                                 </div>

@@ -40,7 +40,7 @@
                     <span class="badge badge-pill badge-primary pull-right notification-badge"><?php echo e($notifications->where('is_opened', 0)->count()); ?></span>
                     <span class="dot"></span>
                     <ul class="notification-dropdown onhover-show-div p-0">
-                        <li>Notification <span class="badge badge-pill badge-primary pull-right"><?php echo e($notifications->where('is_opened', 0)->count()); ?></span></li>
+                        <li><?php echo e(__('body.notifications')); ?> <span class="badge badge-pill badge-primary pull-right"><?php echo e($notifications->where('is_opened', 0)->count()); ?></span></li>
                         <?php $__empty_1 = true; $__currentLoopData = $notifications->where('is_opened', 0)->take(3); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <li>
                             <div class="media">
@@ -58,10 +58,10 @@
                             
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <li>
-                                <p>you have no notifications</p>
+                                <p><?php echo e(__('adminBody.no_notifications')); ?></p>
                             </li> 
                         <?php endif; ?>
-                        <li class="txt-dark"><a href="<?php echo e(route('admin.pushnotifications')); ?>">All</a> notification</li>
+                        <li class="txt-dark"><a href="<?php echo e(route('admin.pushnotifications')); ?>"><?php echo e(__('adminBody.all')); ?></a> <?php echo e(__('body.notifications')); ?></li>
                     </ul>
                 </li>
                 <li class="onhover-dropdown">

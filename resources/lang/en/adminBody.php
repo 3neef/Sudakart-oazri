@@ -151,8 +151,8 @@
         'update_attr' => 'Update an Attribute',
         'new_reason' => 'Add a new Reason',
         'update_reason' => 'Update an Reason',
-        '' => '',
-        '' => '',
+        'no_notifications' => 'There are no notifications to show',
+        'all' => ' all',
 
 
 

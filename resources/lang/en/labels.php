@@ -12,6 +12,7 @@
         'product' => 'Product',
         'new_product' => 'New Product',
         'search' => 'Search our product',
+        'order_search' => 'Search on the Orders',
         'no_categoy' => 'No Categories to show',
         'no_result' => 'No Result For Your Search Term',
         'select_payment' => 'Select a payment method',

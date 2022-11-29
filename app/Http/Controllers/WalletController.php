@@ -72,7 +72,7 @@ class WalletController extends Controller
             $user_id = $request->user_id;
         }
         if($request->notes == null){
-            $notes = 'Top-UP';
+            $notes = 'تعبئة رصيد';
         }else{
             $notes = $request->notes;
         }

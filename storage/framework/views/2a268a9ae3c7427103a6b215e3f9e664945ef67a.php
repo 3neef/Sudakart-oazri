@@ -10,8 +10,8 @@
     <meta name="keywords"
         content="admin template, Multikart admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="assets/images/dashboard/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/images/dashboard/favicon.png" type="image/x-icon">
+    <link rel="icon" href="<?php echo e(asset('main/images/new_logo.png')); ?>" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo e(asset('main/images/new_logo.png')); ?>" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <?php echo $__env->yieldPushContent('styles'); ?>
     <title>Oazri | <?php echo $__env->yieldContent('title'); ?></title>
@@ -125,6 +125,8 @@
                     toastr.error('<?php echo e(Session::get('error')); ?>');
                 <?php elseif(Session::has('success')): ?>
                     toastr.success('<?php echo e(Session::get('success')); ?>');
+                <?php elseif(Session::has('warning')): ?>
+                    toastr.warning('<?php echo e(Session::get('warning')); ?>');
                 <?php endif; ?>
             });
     
