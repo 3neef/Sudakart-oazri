@@ -47,7 +47,7 @@ class UpdateProductRequest extends FormRequest
             'en_name'           => [ 'string'],
             'sku'               => ['string'],
             'weight'            => ['nullable', 'string'],
-            'frs'               => ['boolean'],
+            'frs'               => ['required','boolean'],
             'price'             => [ 'numeric'],
             'image'             => ['nullable', 'image'],
             'quantity'          => [ 'numeric', 'min:1'],

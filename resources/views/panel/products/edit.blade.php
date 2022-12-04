@@ -2,9 +2,18 @@
 @section('title', __('adminBody.update_a_product'))
 @section('content')
 <div class="container-fluid">
-    @if ($errors->count() > 0)
-        {{$errors}}
-    @endif
+                @if($errors->any())
+                <section class="col-lg-12">
+                
+                    @foreach($errors->all() as $error)
+                        <div class="alert alert-danger d-flex justify-content-between align-items-center">
+                            {{$error}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endforeach
+                
+                </section>
+                @endif
     <form method="POST" action="{{route('admin.products.update', $pro->id)}}" enctype="multipart/form-data">
         @csrf
        @method('PUT')
@@ -59,24 +68,24 @@
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
                                     {{__('form.warranty')}}</label>
-                                <input class="form-control"  value="{{$pro->warranty}}" name="warranty"  type="text" required="">
+                                <input class="form-control"  value="{{$pro->warranty}}" name="warranty"  type="text">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom02" class="col-form-label"><span>*</span>
                                     {{__('body.weight')}}</label>
-                                <input class="form-control"  id="weight" name="weight" value="{{$pro->weight}}" type="number" required="">
+                                <input class="form-control"  id="weight" name="weight" value="{{$pro->weight}}" type="number">
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label"><span>*</span>{{__('body.free_shipping')}}</label>
                                 <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
                                     <label class="d-block" for="edo-ani">
                                         <input class="radio_animated" id="edo-ani" value="1" type="radio"
-                                            name="frs">
+                                            name="frs" {{$pro->frs == 1 ? 'checked' : ''}}>
                                         {{__('form.free')}}
                                     </label>
                                     <label class="d-block" for="edo-ani1">
                                         <input class="radio_animated" id="edo-ani1" value="0" type="radio"
-                                            name="frs">
+                                            name="frs" {{$pro->frs == 0 ? 'checked' : ''}}>
                                         {{__('form.regular')}}
                                     </label>
                                 </div>

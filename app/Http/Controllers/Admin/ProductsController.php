@@ -92,7 +92,7 @@ class ProductsController extends Controller
                 'stop' => 1
             ]);
         }
-        return redirect()->route('admin.products.index');
+        return redirect()->back();
 
     }
 

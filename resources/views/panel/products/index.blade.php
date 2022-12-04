@@ -11,11 +11,11 @@
                             <input type="search" name="q"  placeholder="{{ __('labels.search') }}" class="input-group-field" 
                                 autocomplete="off"> 
                             <div class="input-group-append">
-                                <button class="btn btn-outline-primary" type="button">{{ __('body.search-btn') }}</button>
+                                <button class="btn btn-outline-primary" type="submit">{{ __('body.search-btn') }}</button>
                             </div>
                         </div>
                     </form>
-                    
+
                     @can('create-product', auth()->user())
                     <a href="{{route('admin.products.create')}}" class="btn btn-primary mt-md-0 mt-2">
                         {{ __('adminBody.new_product') }}
@@ -76,38 +76,39 @@
                                     <td data-field="name">@money($product->price, 'OMR')</td>
                                     @if ($product->stop == false)
                                     <td class="td-check">
-                                        <i data-feather="check-circle"></i>
+                                        <i data-feather="check-circle"  class="text-success"></i>
                                     </td>
 
                                     @else
 
                                     <td class="td-cross">
-                                        <i data-feather="x-circle"></i>
+                                        <i data-feather="x-circle"  class="text-danger"></i>
                                     </td>
                                     @endif
 
                                     <td>
-                                        
-                                        <a href="{{route('admin.products.show', $product->id)}}">
-                                            <i class="fa fa-eye" title="{{ __('body.show') }}"></i>
+                                        <div style="display: flex;">
+                                        <a class="mx-1" href="{{route('admin.products.show', $product->id)}}">
+                                            <i class="fa fa-eye text-warning" title="{{ __('body.show') }}"></i>
                                         </a>
                                         
                                         @can('edit-product')
                                         
-                                        <a href="{{route('admin.products.edit', $product->id)}}">
-                                            <i class="fa fa-edit" title="{{ __('body.edit') }}"></i>
+                                        <a class="mx-1" href="{{route('admin.products.edit', $product->id)}}">
+                                            <i class="fa fa-edit text-primary" title="{{ __('body.edit') }}"></i>
                                         </a>
                                         @endcan
                                         @can('delete-product')
-                                        <a href="{{route('admin.products.stop', $product->id)}}">
+                                        <a class="mx-1" href="{{route('admin.products.stop', $product->id)}}">
                                             <i class="fa fa-stop" title="{{ __('body.stop') }}"></i>
                                         </a>
                                         <form action="{{route('admin.products.destroy', $product->id)}}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash" title="{{ __('body.delete') }}"></i></button>
+                                            <button type="submit" value="Delete" style="border:none"><i class="fa fa-trash text-danger" title="{{ __('body.delete') }}" ></i></button>
                                         </form>
                                         @endcan
+                                        </div>
                                     </td>
                                 </tr>
                                 @empty
