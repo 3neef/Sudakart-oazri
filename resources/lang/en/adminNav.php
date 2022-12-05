@@ -59,6 +59,10 @@
 		'category_requests' => 'Category Requests',
 		'sus_vendors' => 'Suspended Vendors',
 		'regions' => 'Regions',
+		'markets' => 'Markets',
+		'Inbound' => 'Inbound Orders',
+		'Outbound' => 'Outbound Orders',
+		'scheduled' => 'Scheduled Orders',
 
 	];
 

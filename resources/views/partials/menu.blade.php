@@ -69,7 +69,7 @@ $user = Auth::user();
                         </a>
                     </li>
 
-                    {{-- <li>
+                    <li>
                                     <a href="{{route('admin.orders.inbound')}}">
                     <i class="fa fa-circle"></i>
                     <span>{{ __('adminNav.dashboard') }}</span>
@@ -77,18 +77,25 @@ $user = Auth::user();
             </li>
 
             <li>
+                <a href="{{route('admin.orders.inbound')}}">
+                    <i class="fa fa-circle"></i>
+                    <span>{{__('adminNav.Inbound')}}</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="{{route('admin.orders.outbound')}}">
                     <i class="fa fa-circle"></i>
-                    <span>Outbound Orders</span>
+                    <span>{{__('adminNav.Outbound')}}</span>
                 </a>
             </li>
 
             <li>
                 <a href="{{route('admin.orders.scheduled')}}">
                     <i class="fa fa-circle"></i>
-                    <span>Schedueld Orders</span>
+                    <span>{{__('adminNav.scheduled')}}</span>
                 </a>
-            </li> --}}
+            </li>
 
             <li>
                 <a href="{{route('admin.orders.canceled')}}">
@@ -288,29 +295,6 @@ $user = Auth::user();
             </a>
         </li>
         @endcan
-
-
-        {{-- <li>
-                            <a class="sidebar-header" href="javascript:void(0)">
-                                <i data-feather="chrome"></i>
-                                <span>Localization</span>
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li>
-                                    <a href="translations.html"><i class="fa fa-circle"></i>Translations
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="currency-rates.html"><i class="fa fa-circle"></i>Currency Rates
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="taxes.html"><i class="fa fa-circle"></i>Taxes
-                                    </a>
-                                </li>
-                            </ul>
-                        </li> --}}
         @can('view-support-tickets', $user)
 
         <li>
@@ -393,6 +377,10 @@ $user = Auth::user();
                 </li>
                 <li>
                     <a href="{{route('admin.reasons')}}"><i class="fa fa-circle"></i>{{ __('adminNav.reasons') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('admin.markets')}}"><i class="fa fa-circle"></i>{{ __('adminNav.markets') }}
                     </a>
                 </li>
                 <li>

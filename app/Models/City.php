@@ -18,4 +18,8 @@ class City extends Model
     public function state () {
         return $this->belongsTo(State::class);
     }
+
+    public function market () {
+        return $this->hasMany(Market::class);
+    }
 }

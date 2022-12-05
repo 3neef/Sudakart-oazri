@@ -153,6 +153,9 @@
         'update_reason' => 'Update an Reason',
         'no_notifications' => 'There are no notifications to show',
         'all' => ' all',
+        'city' => ' City',
+        'new_market' => 'Add a new Market',
+        'update_market' => 'Update a Market',
 
 
 

@@ -81,6 +81,17 @@ class OrdersController extends Controller
         return redirect()->route('admin.orders.inbound');
     } 
 
+    public function inbounddrivers(Request $request)
+    {
+        if($request->ids > 0){
+            $products = OrderProduct::whereIn('id',$request->ids)->get();
+        }
+        dd($products);
+        // $product->update($request->validated());
+        return redirect()->route('admin.orders.inbound');
+
+    } 
+
     public function outboundstatus(Request $request, $id)
     {
         

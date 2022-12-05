@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Collections\AttributesCollection;
 use App\Collections\CategoriesCollection;
+use App\Collections\MarketsCollection;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOrUpdateAttributeRequest;
 use App\Http\Requests\CreateOrUpdateCategoryRequest;
@@ -11,7 +12,9 @@ use App\Http\Requests\CreateOrUpdateDeliveryMethodRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Attribute;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\DeliveryMethod;
+use App\Models\Market;
 use App\Models\Option;
 use App\Models\Reason;
 use App\Services\OptionsServices;
@@ -247,22 +250,49 @@ class SettingsController extends Controller
         $role->delete();
         return redirect()->back()->withSuccess('Role Deleted Successfully');
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function markets(Request $request)
     {
-        //
+        $markets =  MarketsCollection::collection($request);
+        return view('panel.settings.markets.index', compact('markets'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function marketscreate()
+    {
+        return view('panel.settings.markets.create');
+    }
+
+    public function marketsedit(Market $market)
+    {
+        return view('panel.settings.markets.edit', compact('market'));
+    }
+
+    public function getcities(Request $request)
+    {
+        if($request->search == ''){
+            $cities = City::orderBy('id','desc')->limit(5)->get();
+        }else {
+            $cities = City::orderBy('id','desc')
+            ->where('en_name', 'like', "%$request->search%")
+            ->orWhere('name', 'like', "%$request->search%")
+            ->get();
+        }
+
+        $response = array();
+
+        foreach ($cities as $city) {
+            $response[] = array(
+                'id' => $city->id ,
+                'text' => $city->en_name.' - '.$city->name
+            );
+        }
+
+        echo json_encode($response);
+        
+        
+    }
+
+    
     public function store(Request $request)
     {
         //

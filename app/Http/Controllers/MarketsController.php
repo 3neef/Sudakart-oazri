@@ -27,7 +27,14 @@ class MarketsController extends Controller
      */
     public function store(CreateOrUpdateMarketRequest $request)
     {
-        return Market::updateOrCreate(['id' => $request->id], $request->validated());
+        Market::create($request->validated());
+        return redirect()->route('admin.markets')->with('success', __('toastr.added'));
+    }
+
+    public function update(CreateOrUpdateMarketRequest $request, Market $market)
+    {
+        $market->update($request->validated());
+        return redirect()->route('admin.markets')->with('success', __('toastr.updated'));
     }
 
     /**
@@ -36,9 +43,12 @@ class MarketsController extends Controller
      * @param  int  $id
      * @return mixed
      */
-    public function destroy(Market $market)
+    public function destroy(Market $market, Request $request)
     {
         $market->delete();
+        if (! $request->expectsJson()) {
+            return redirect()->route('admin.markets')->with('error', __('toastr.deleted'));
+        }
         return response(['message' => __('market has been deleted')]);
     }
 }

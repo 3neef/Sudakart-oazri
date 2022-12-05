@@ -27,6 +27,7 @@ class CreateOrUpdateMarketRequest extends FormRequest
             'id' => ['nullable', 'exists:markets,id'],
             'city_id' => ['required', 'exists:cities,id'],
             'name' => ['required', 'string'],
+            'en_name' => ['required', 'string'],
             'lat' => ['nullable', 'string'],
             'long' => ['nullable', 'string'],
         ];

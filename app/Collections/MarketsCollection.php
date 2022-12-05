@@ -20,6 +20,7 @@ class MarketsCollection
             'id',
             'name',
             'en_name',
+            'city_id',
             'lat',
             'long',
             'created_at',
@@ -46,12 +47,13 @@ class MarketsCollection
         ];
 
 
-        $perPage = $request->limit  ? $request->limit : 100;
+        $perPage = $request->limit  ? $request->limit : 10;
 
         return QueryBuilder::for(Market::class)
             ->select($defaultSelect)
             ->allowedFilters($allowedFilters)
             ->allowedSorts($allowedSorts)
+            ->with('city')
             ->allowedIncludes($allowedIncludes)
             ->defaultSort($defaultSort)
             ->paginate($perPage);

@@ -18,6 +18,7 @@ use App\Http\Controllers\CategoryRequestController;
 use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ExpenseTypeController;
+use App\Http\Controllers\MarketsController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\ProductsController as ControllersProductsController;
@@ -80,6 +81,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/orders',[OrdersController::class, 'index'])->name('orders.index')->middleware('can:view-orders');
     Route::get('/orders/search',[OrdersController::class, 'getOrder'])->name('order.search')->middleware('can:view-orders');
     Route::get('/orders/inbound',[OrdersController::class, 'inbound'])->name('orders.inbound')->middleware('can:view-orders');
+    Route::post('/orders/inbound/drivers',[OrdersController::class, 'inbounddrivers'])->name('orders.inbound.drivers');
     Route::get('/orders/inbound/status/{id}',[OrdersController::class, 'inboundedit'])->name('orders.inbound.edit')->middleware('can:view-orders');
     Route::put('/orders/inbound/status/{id}',[OrdersController::class, 'inboundstatus'])->name('orders.inbound.status')->middleware('can:view-orders');
     Route::get('/orders/outbound',[OrdersController::class, 'outbound'])->name('orders.outbound')->middleware('can:view-orders');
@@ -266,6 +268,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('regions/edit/{region}',[RegionsController::class, 'edit'])->name('region.edit');
     Route::put('regions/edit/{region}',[RegionsController::class, 'update'])->name('region.update');
     Route::delete('regions/destroy/{region}',[RegionsController::class, 'destroy'])->name('region.destroy');
+
+
+    Route::get('markets', [SettingsController::class, 'markets'])->name('markets');
+    Route::get('markets/create', [SettingsController::class, 'marketscreate'])->name('markets.create');
+    Route::get('markets/edit/{market}', [SettingsController::class, 'marketsedit'])->name('markets.edit');
+    Route::post('markets/create', [MarketsController::class, 'store'])->name('markets.store');
+    Route::put('markets/edit/{market}', [MarketsController::class, 'update'])->name('markets.update');
+    Route::get('markets/getcities', [SettingsController::class, 'getcities'])->name('markets.getcities');
+    Route::delete('markets/destroy/{market}',[MarketsController::class, 'destroy'])->name('markets.destroy');
+
 });
 
 });
