@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title', 'Inbounds List'); ?>
+<?php $__env->startSection('title', __('adminNav.Inbound')); ?>
 <?php $__env->startSection('content'); ?>
 <div class="container-fluid">
     <div class="row">
@@ -9,7 +9,7 @@
                     <ul class="nav nav-tabs tab-coupon" id="myTab" role="tablist">
                         <li class="nav-item"><a class="nav-link active show" id="account-tab"
                                 data-bs-toggle="tab" href="#account" role="tab" aria-controls="account"
-                                aria-selected="true" data-original-title="" title=""><?php echo e(__('adminNav.expenses_report')); ?></a></li>
+                                aria-selected="true" data-original-title="" title=""><?php echo e(__('adminNav.markets')); ?></a></li>
                     </ul>
                     <?php if($errors->count() > 0): ?>
                     <?php echo e($errors); ?>
@@ -19,17 +19,18 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="account" role="tabpanel"
                             aria-labelledby="account-tab">
-                            <form method="GET" action="<?php echo e(route('admin.expenses-report.request')); ?>" class="needs-validation user-add">
+                            <form method="GET" action="<?php echo e(route('admin.orders.MarketInbound')); ?>" class="needs-validation user-add">
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('body.expense_type')); ?></label>
+                                    <label class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('adminNav.markets')); ?></label>
                                     <div class="col-md-7">
-                                        <select class="js-example-basic-multiple form-control" name="driver_id" multiple="multiple">
-                                            
+                                            <select class="form-control" name="market_id" style="width: 100%" id="marketId" required>
+                                                <option value=""></option>
+                                            </select>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="pull-right">
-                                    <input type="submit" class="btn btn-primary" value="<?php echo e(__('adminBody.save')); ?>"></input>
+                                    <input type="submit" class="btn btn-primary" value="<?php echo e(__('body.search-btn')); ?>"></input>
                                 </div>
                             </form>
                         </div>
@@ -45,13 +46,16 @@
                                 <thead>
                                     <tr>
                                         <th><input id="selectAll" type="checkbox"></th>
-                                        <th>Order Image</th>
-                                        <th>Order Code</th>
-                                        <th>Date</th>
-                                        <th>Payment Method</th>
-                                        <th>Delivery Status</th>
-                                        <th>Amount</th>
-                                        <th>Option</th>
+                                        <th><?php echo e(__('adminDash.order_ref')); ?></th>
+                                        <th><?php echo e(__('adminBody.Image')); ?></th>
+                                        <th><?php echo e(__('body.name')); ?></th>
+                                        <th><?php echo e(__('adminBody.Vendor')); ?></th>
+                                        <th><?php echo e(__('adminBody.date')); ?></th>
+                                        <th><?php echo e(__('body.payment_method')); ?></th>
+                                        <th><?php echo e(__('adminBody.Amount')); ?></th>
+                                        <th><?php echo e(__('adminBody.dirvers')); ?></th>
+                                        <th><?php echo e(__('body.status')); ?></th>
+                                        <th><?php echo e(__('adminBody.Actions')); ?></th>
                                     </tr>
                                 </thead>
 
@@ -59,11 +63,20 @@
                                     <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td><input name="ids[]" value="<?php echo e($order->id); ?>" type="checkbox" ></td>
+                                        <td data-field="number">+<?php echo e($order->order_id); ?></td>
                                         <td>
                                             <img src="<?php echo e(asset($order->product->first)); ?>" alt="pics">
                                         </td>
+                                        <td>
+                                            <?php echo e($order->product->name); ?>
 
-                                        <td data-field="number">+<?php echo e($order->order_id); ?></td>
+                                        </td>
+
+                                        <td>
+                                            <?php echo e($order->shop->vendor->first_name); ?>
+
+                                        </td>
+
 
                                         <td data-field="date"><?php echo e(\Carbon\Carbon::createFromTimestamp(strtotime($order->created_at))->format('d-m-Y')); ?></td>
 
@@ -76,6 +89,11 @@
                                             <span class="badge badge-danger"><?php echo e(__('body.cash')); ?></span>
                                             <?php endif; ?>  
                                         </td>
+                    
+                                        <td data-field="number"><?php echo money($order->price ,'OMR'); ?></td>
+
+                                        <td data-field="number"><?php echo e($order->driver ? $order->driver->name : ''); ?></td>
+
                                         <?php if($order->status == 'pending'): ?>
                                         <td class="order-pending">
                                             
@@ -92,8 +110,6 @@
                                             <span><?php echo e($order->status); ?></span>
                                         </td>
 
-                                        <td data-field="number"><?php echo money($order->price ,'OMR'); ?></td>
-
                                         <td>
                                             <a href="<?php echo e(route('admin.orders.inbound.edit', $order->id)); ?>">
                                                 <i class="fa fa-edit" title="Edit"></i>
@@ -108,13 +124,22 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="form-group row mt-5">
+                            <label class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('adminBody.dirvers')); ?></label>
+                            <div class="col-md-7">
+                                    <select class="form-control" name="driver_id" style="width: 100%" id="driverId" required>
+                                        <option value=""></option>
+                                    </select>
+                                </select>
+                            </div>
+                        </div>
                         <div class="pull-right">
                             <button type="submit" class="btn btn-primary"><?php echo e(__('adminBody.save')); ?></button>
                         </div>
                     </form>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <?php echo $orders->links(); ?>
+                    <?php echo $orders->withQueryString()->links(); ?>
 
                 </div>
             </div>
@@ -125,6 +150,59 @@
 
 
 <?php $__env->startPush('scripts'); ?>
+    <script>
+        $(document).ready(function() {
+            
+            var dir = "<?php echo e(app()->getLocale()); ?>";
+            var lang = "";
+
+            if(dir == 'en')
+            {
+                lang = 'ltr';
+            }else{
+                lang = 'rtl';
+            }
+
+            $('#marketId').select2({
+            dir:lang, 
+            ajax : {
+                url: "<?php echo e(route('admin.markets.getMarkets')); ?>",
+                type : "get" ,
+                dataType : "json",
+                data : function (params) {
+                    return {
+                        search : params.term
+                    };
+                } ,
+                processResults: function (response) {
+                    return{
+                    results : response
+                    };
+                },
+                cache: true
+                }
+            });
+            $('#driverId').select2({
+            dir:lang, 
+            ajax : {
+                url: "<?php echo e(route('admin.markets.getdrivers')); ?>",
+                type : "get" ,
+                dataType : "json",
+                data : function (params) {
+                    return {
+                        search : params.term
+                    };
+                } ,
+                processResults: function (response) {
+                    return{
+                    results : response
+                    };
+                },
+                cache: true
+                }
+            });
+        });
+    </script>
     <script>
         $("#selectAll").click(function() {
             $("input[type=checkbox]").prop("checked", $(this).prop("checked"));

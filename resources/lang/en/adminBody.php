@@ -156,6 +156,7 @@
         'city' => ' City',
         'new_market' => 'Add a new Market',
         'update_market' => 'Update a Market',
+        'dirvers' => 'Dirvers',
 
 
 

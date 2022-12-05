@@ -113,6 +113,7 @@ Route::get('payment/cancel/{id}', [PaymentsCallbackController::class, 'cancel'])
 Route::get('payment/top/cancel/{id}', [PaymentsCallbackController::class, 'topcancel'])->name('api.payment.top.cancel');
 Route::get('payment/pay-now/{id}',[PaymentsCallbackController::class,'payNow'])->name('api.payment.top.paynow');
 
+Route::post('register/driver', [RegisterDriverController::class, 'register']);
 Route::put('outbound/{id}', [OrdersController::class, 'Outboundupdate']);
 Route::post('deposit', [WalletController::class, 'deposit'])->name('deposit');
 Route::post('withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
@@ -124,7 +125,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::put('profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::put('profile/update-phone', [ProfileController::class, 'updatePhone'])->name('profile.update-phone');
 
-    Route::post('register/driver', [RegisterDriverController::class, 'register']);
 
 
     Route::apiResource('delivery-methods', DeliveryMethodsController::class)->except(['show', 'update']);

@@ -81,6 +81,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/orders',[OrdersController::class, 'index'])->name('orders.index')->middleware('can:view-orders');
     Route::get('/orders/search',[OrdersController::class, 'getOrder'])->name('order.search')->middleware('can:view-orders');
     Route::get('/orders/inbound',[OrdersController::class, 'inbound'])->name('orders.inbound')->middleware('can:view-orders');
+    Route::get('/orders/MarketInbound',[OrdersController::class, 'MarketInbound'])->name('orders.MarketInbound')->middleware('can:view-orders');
     Route::post('/orders/inbound/drivers',[OrdersController::class, 'inbounddrivers'])->name('orders.inbound.drivers');
     Route::get('/orders/inbound/status/{id}',[OrdersController::class, 'inboundedit'])->name('orders.inbound.edit')->middleware('can:view-orders');
     Route::put('/orders/inbound/status/{id}',[OrdersController::class, 'inboundstatus'])->name('orders.inbound.status')->middleware('can:view-orders');
@@ -97,6 +98,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/orders/canceled',[OrdersController::class, 'canceled'])->name('orders.canceled')->middleware('can:view-canceled-orders');
     Route::get('/orders/returned',[OrdersController::class, 'returned'])->name('orders.returned')->middleware('can:view-returned-products');
     Route::put('/orders/returned/{id}',[ReturnedController::class, 'update'])->name('orders.returned.update')->middleware('can:view-returned-products');
+    Route::get('orders/getdrivers', [OrdersController::class, 'getdrivers'])->name('markets.getdrivers');
 
     //accounting routes
     Route::group(['middleware' => ['can:view-payments']], function () {
@@ -277,6 +279,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::put('markets/edit/{market}', [MarketsController::class, 'update'])->name('markets.update');
     Route::get('markets/getcities', [SettingsController::class, 'getcities'])->name('markets.getcities');
     Route::delete('markets/destroy/{market}',[MarketsController::class, 'destroy'])->name('markets.destroy');
+    Route::get('markets/getMarkets', [OrdersController::class, 'getMarkets'])->name('markets.getMarkets');
+    
 
 });
 

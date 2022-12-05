@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterDriverRequest;
 use App\Http\Requests\CompleteDriverRegisterationRequest;
 use App\Models\Driver;
+use App\Models\User;
 use App\Services\UploadImageServices;
 use App\Services\UsersServices;
 use App\Services\CodesServices;
@@ -41,7 +42,7 @@ class RegisterDriverController extends Controller
     }
 
     public function completeRegistration (CompleteDriverRegisterationRequest $request) {
-        $user = CodesServices::verifyCode($request->code);
+        $user = User::where('phone', $request->phone)->first();
         if ($user) {
             return DB::transaction(function () use ($request, $user) {
                 $driver = Driver::find($user->userable_id);

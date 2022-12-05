@@ -15,6 +15,7 @@ use App\Http\Resources\OrderResource;
 use App\Http\Resources\ReturnedsResource;
 use App\Models\CanceledOrder;
 use App\Models\Driver;
+use App\Models\Market;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\OrderProductOption;
@@ -85,10 +86,11 @@ class OrdersController extends Controller
     {
         if($request->ids > 0){
             $products = OrderProduct::whereIn('id',$request->ids)->get();
+            foreach($products as $product){
+                $product->update(['driver_id' => $request->driver_id]);
+            }
         }
-        dd($products);
-        // $product->update($request->validated());
-        return redirect()->route('admin.orders.inbound');
+        return redirect()->back()->with('success', __('toastr.asigned'));
 
     } 
 
@@ -102,7 +104,7 @@ class OrdersController extends Controller
     public function outbound(Request $request)
     {
         $perPage = $request->limit  ? $request->limit : 10;
-        $orders = Order::where('delivered_by', '!=', null)->with('products')->orderBy('created_at', 'desc')->paginate($perPage);
+        $orders = Order::where('delivered_by', null)->with('products')->orderBy('created_at', 'desc')->paginate($perPage);
         return view('panel.orders.outbound', compact('orders'));
     }
 
@@ -551,6 +553,76 @@ class OrdersController extends Controller
             }
 
             return view('panel.orders.index', compact('orders'));
+        }
+    }
+
+
+    public function getMarkets(Request $request)
+    {
+        if($request->search == ''){
+            $markets = Market::orderBy('id','desc')->limit(5)->get();
+        }else {
+            $markets = Market::orderBy('id','desc')
+            ->where('en_name', 'like', "%$request->search%")
+            ->orWhere('name', 'like', "%$request->search%")
+            ->get();
+        }
+
+        $response = array();
+
+        foreach ($markets as $market) {
+            $response[] = array(
+                'id' => $market->id ,
+                'text' => $market->en_name.' - '.$market->name
+            );
+        }
+
+        echo json_encode($response);
+        
+        
+    }
+
+    public function getdrivers(Request $request)
+    {
+        if($request->search == ''){
+            $drivers = Driver::orderBy('id','desc')->limit(5)->get();
+        }else {
+            $drivers = Driver::orderBy('id','desc')
+            ->where('name', 'like', "%$request->search%")
+            ->whereHas('user', function ($user) use($request) {
+                $user->where('phone', 'like', "%$request->search%");
+            })
+            ->get();
+        }
+
+        $response = array();
+
+        foreach ($drivers as $driver) {
+            $response[] = array(
+                'id' => $driver->id ,
+                'text' => $driver->name.' - '.$driver->vehicle
+            );
+        }
+
+        echo json_encode($response);
+        
+        
+    }
+
+    public function MarketInbound(Request $request)
+    {
+        $id = $request->market_id;
+        $market = Market::findorfail($id);
+
+        if($market){
+            $orders = OrderProduct::whereHas('shop', function ($shop) use ($market){
+                $shop->whereHas('market', function ($mark) use($market) {
+                    $mark->where('id', $market->id);
+                });
+            })
+            ->paginate(10);
+
+            return view('panel.orders.inbound', compact('orders'));
         }
     }
 

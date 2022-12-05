@@ -43,4 +43,8 @@ class Shop extends Model
     public function coupons () {
         return $this->hasMany(Coupon::class);
     }
+
+    public function market () {
+        return $this->belongsTo(Market::class);
+    }
 }

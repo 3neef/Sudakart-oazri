@@ -1,5 +1,5 @@
 @extends('layouts.app2')
-@section('title', 'Inbounds List')
+@section('title', __('adminNav.Inbound'))
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -9,7 +9,7 @@
                     <ul class="nav nav-tabs tab-coupon" id="myTab" role="tablist">
                         <li class="nav-item"><a class="nav-link active show" id="account-tab"
                                 data-bs-toggle="tab" href="#account" role="tab" aria-controls="account"
-                                aria-selected="true" data-original-title="" title="">{{__('adminNav.expenses_report')}}</a></li>
+                                aria-selected="true" data-original-title="" title="">{{__('adminNav.markets')}}</a></li>
                     </ul>
                     @if ($errors->count() > 0)
                     {{$errors}}
@@ -18,19 +18,18 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="account" role="tabpanel"
                             aria-labelledby="account-tab">
-                            <form method="GET" action="{{route('admin.expenses-report.request')}}" class="needs-validation user-add">
+                            <form method="GET" action="{{route('admin.orders.MarketInbound')}}" class="needs-validation user-add">
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-md-4"><span>*</span>{{__('body.expense_type')}}</label>
+                                    <label class="col-xl-3 col-md-4"><span>*</span>{{__('adminNav.markets')}}</label>
                                     <div class="col-md-7">
-                                        <select class="js-example-basic-multiple form-control" name="driver_id" multiple="multiple">
-                                            {{-- @foreach($types as $id => $entry)
-                                            <option value="{{ $id }}" {{ old('type_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                        @endforeach --}}
+                                            <select class="form-control" name="market_id" style="width: 100%" id="marketId" required>
+                                                <option value=""></option>
+                                            </select>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="pull-right">
-                                    <input type="submit" class="btn btn-primary" value="{{__('adminBody.save')}}"></input>
+                                    <input type="submit" class="btn btn-primary" value="{{__('body.search-btn')}}"></input>
                                 </div>
                             </form>
                         </div>
@@ -46,13 +45,16 @@
                                 <thead>
                                     <tr>
                                         <th><input id="selectAll" type="checkbox"></th>
-                                        <th>Order Image</th>
-                                        <th>Order Code</th>
-                                        <th>Date</th>
-                                        <th>Payment Method</th>
-                                        <th>Delivery Status</th>
-                                        <th>Amount</th>
-                                        <th>Option</th>
+                                        <th>{{__('adminDash.order_ref')}}</th>
+                                        <th>{{__('adminBody.Image')}}</th>
+                                        <th>{{__('body.name')}}</th>
+                                        <th>{{__('adminBody.Vendor')}}</th>
+                                        <th>{{__('adminBody.date')}}</th>
+                                        <th>{{__('body.payment_method')}}</th>
+                                        <th>{{__('adminBody.Amount')}}</th>
+                                        <th>{{__('adminBody.dirvers')}}</th>
+                                        <th>{{__('body.status')}}</th>
+                                        <th>{{__('adminBody.Actions')}}</th>
                                     </tr>
                                 </thead>
 
@@ -60,11 +62,18 @@
                                     @foreach($orders as $order)
                                     <tr>
                                         <td><input name="ids[]" value="{{ $order->id }}" type="checkbox" ></td>
+                                        <td data-field="number">+{{$order->order_id}}</td>
                                         <td>
                                             <img src="{{asset($order->product->first)}}" alt="pics">
                                         </td>
+                                        <td>
+                                            {{$order->product->name}}
+                                        </td>
 
-                                        <td data-field="number">+{{$order->order_id}}</td>
+                                        <td>
+                                            {{$order->shop->vendor->first_name}}
+                                        </td>
+
 
                                         <td data-field="date">{{ \Carbon\Carbon::createFromTimestamp(strtotime($order->created_at))->format('d-m-Y')}}</td>
 
@@ -77,6 +86,11 @@
                                             <span class="badge badge-danger">{{ __('body.cash') }}</span>
                                             @endif  
                                         </td>
+                    
+                                        <td data-field="number">@money($order->price ,'OMR')</td>
+
+                                        <td data-field="number">{{$order->driver ? $order->driver->name : '' }}</td>
+
                                         @if ($order->status == 'pending')
                                         <td class="order-pending">
                                             
@@ -93,8 +107,6 @@
                                             <span>{{$order->status}}</span>
                                         </td>
 
-                                        <td data-field="number">@money($order->price ,'OMR')</td>
-
                                         <td>
                                             <a href="{{route('admin.orders.inbound.edit', $order->id)}}">
                                                 <i class="fa fa-edit" title="Edit"></i>
@@ -109,13 +121,22 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="form-group row mt-5">
+                            <label class="col-xl-3 col-md-4"><span>*</span>{{__('adminBody.dirvers')}}</label>
+                            <div class="col-md-7">
+                                    <select class="form-control" name="driver_id" style="width: 100%" id="driverId" required>
+                                        <option value=""></option>
+                                    </select>
+                                </select>
+                            </div>
+                        </div>
                         <div class="pull-right">
                             <button type="submit" class="btn btn-primary">{{__('adminBody.save')}}</button>
                         </div>
                     </form>
                 </div>
                 <div class="d-flex justify-content-center">
-                    {!! $orders->links() !!}
+                    {!! $orders->withQueryString()->links() !!}
                 </div>
             </div>
         </div>
@@ -125,6 +146,59 @@
 
 
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            
+            var dir = "{{app()->getLocale()}}";
+            var lang = "";
+
+            if(dir == 'en')
+            {
+                lang = 'ltr';
+            }else{
+                lang = 'rtl';
+            }
+
+            $('#marketId').select2({
+            dir:lang, 
+            ajax : {
+                url: "{{ route('admin.markets.getMarkets') }}",
+                type : "get" ,
+                dataType : "json",
+                data : function (params) {
+                    return {
+                        search : params.term
+                    };
+                } ,
+                processResults: function (response) {
+                    return{
+                    results : response
+                    };
+                },
+                cache: true
+                }
+            });
+            $('#driverId').select2({
+            dir:lang, 
+            ajax : {
+                url: "{{ route('admin.markets.getdrivers') }}",
+                type : "get" ,
+                dataType : "json",
+                data : function (params) {
+                    return {
+                        search : params.term
+                    };
+                } ,
+                processResults: function (response) {
+                    return{
+                    results : response
+                    };
+                },
+                cache: true
+                }
+            });
+        });
+    </script>
     <script>
         $("#selectAll").click(function() {
             $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
