@@ -30,7 +30,7 @@ class PaymentController extends Controller
                 //     "address" => $payment->order->address,
                 //     "cod" => 0,
                 //     "order_id" => $payment->order->id,
-                //     "ecom_ref_no" => "refnofromcom"
+                //     "ecom_ref_no" => "oazricom"
                 // ];
                 
                 try {

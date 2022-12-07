@@ -52,7 +52,7 @@ class PaymentsCallbackController extends Controller
                     "address" => $order->address,
                     "cod" => 0,
                     // "order_id" => $payment->order->id,
-                    "ecom_ref_no" => "refnofromcom"
+                    "ecom_ref_no" => "oazricom"
                 ];
                 $delivery_order = $delivery_order->createOrder($data);
                 // update order delivery ref id for the api 

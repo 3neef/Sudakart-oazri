@@ -169,7 +169,7 @@ class OrdersController extends Controller
                             "region_id" => $order->region_id,
                             "address" => $order->address,
                             "cod" => 0,
-                            "ecom_ref_no" => "refnofromcom"
+                            "ecom_ref_no" => "oazricom"
                         ];
                         $delivery_order = $delivery_order->createOrder($data);
                         // update order delivery ref id for the api 
@@ -189,7 +189,7 @@ class OrdersController extends Controller
                                 "region_id" => $order->region_id,
                                 "address" => $order->address,
                                 "cod" => $order->total,
-                                "ecom_ref_no" => "refnofromcom"
+                                "ecom_ref_no" => "oazricom"
                             ];
     
                         }elseif($order->payment_method == 'bank'){
@@ -199,7 +199,7 @@ class OrdersController extends Controller
                                 "region_id" => $order->region_id,
                                 "address" => $order->address,
                                 "cod" => 0,
-                                "ecom_ref_no" => "refnofromcom"
+                                "ecom_ref_no" => "oazricom"
                             ];
                         }
                         

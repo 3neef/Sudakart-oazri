@@ -8,6 +8,7 @@ use App\Http\Requests\updateProfileRequest;
 use App\Models\User;
 use App\Services\UsersServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -28,13 +29,6 @@ class ProfileController extends Controller
         return User::where('id', $id)->with('userable')->firstOrFail();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  updateProfileRequest  $request
-     * @param  int  $id
-     * @return mixed
-     */
     public function update(updateProfileRequest $request, $id)
     {
         if (auth()->user() && auth()->user()->userable_type != 'App\Models\Admin') {
@@ -70,6 +64,12 @@ class ProfileController extends Controller
             });
         }
         // response(['message' => __('old password is wrong')], 422);
+    }
+
+    public function deactivateaccount(){
+        if (Auth::user() != null && Auth::user()->userable_type == 'App\Models\Vendor' || Auth::user() != null && Auth::user()->userable_type == 'App\Models\Customer'){
+            Auth::user()->userable->update(['suspended'=> 1 ]);
+        }
     }
 
 

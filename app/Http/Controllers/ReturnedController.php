@@ -65,7 +65,7 @@ class ReturnedController extends Controller
                     "region_id" => $order->region_id,
                     "address" => $order->address,
                     "cod" => 0,
-                    "ecom_ref_no" => "refnofromcom"
+                    "ecom_ref_no" => "oazricom"
                 ];
                 $delivery_order = $delivery_order->createOrder($data);
                 $Product = ReturnedProducts::findorfail($id);

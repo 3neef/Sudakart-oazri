@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCouponRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\ProductOffer;
 use App\Models\UpSellProducts;
 use App\Services\ProductOptionsServices;
@@ -114,6 +115,10 @@ class ProductsController extends Controller
             'en_description' => $request->en_description
         ]);
 
+        if ($request->images) {
+            ProductImage::where('product_id', $product->id)->delete();
+            UploadImageServices::productImages($request, $product);
+        }
 
         if ($request->options && $request->options[0]['increment'] != null) {
             $options = ProductOptionsServices::addProductOption($request->options, $product->id);

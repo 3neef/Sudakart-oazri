@@ -22,6 +22,10 @@ class VerifyVendorApproval
                 if(Auth::user()->userable->approved == 0 || Auth::user()->userable->suspended == 1 ){
                     abort('401', __('You Are suspended or not approved yet.'));
                 }
+            }elseif(Auth::user() != null && Auth::user()->userable_type == 'App\Models\Customer'){
+                if(Auth::user()->userable->suspended == 1 ){
+                    abort('401', __('You Are suspended or not approved yet.'));
+                }
             }
         }
         return $next($request);

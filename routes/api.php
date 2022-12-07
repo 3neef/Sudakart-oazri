@@ -122,6 +122,8 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::put('products/stop/{product}', [ProductsController::class, 'stopProduct']);
     Route::get('products/stoped',[ProductsController::class, 'stoped']);
 
+    Route::get('suspend-user',[ProfileController::class, 'deactivateaccount']);
+
     Route::put('profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::put('profile/update-phone', [ProfileController::class, 'updatePhone'])->name('profile.update-phone');
 
