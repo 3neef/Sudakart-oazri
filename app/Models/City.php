@@ -22,4 +22,9 @@ class City extends Model
     public function market () {
         return $this->hasMany(Market::class);
     }
+
+    public function delivery () {
+        return $this->belongsToMany(DeliveryMethod::class, 'cities_delivery_methods', 'city_id', 'delivery_method_id')
+        ->withPivot('delivery_amount');
+    }
 }

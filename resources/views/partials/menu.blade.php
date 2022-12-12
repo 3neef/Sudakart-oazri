@@ -372,7 +372,7 @@ $user = Auth::user();
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('admin.commissions')}}"><i class="fa fa-circle"></i>{{ __('adminNav.commissions') }}
+                    <a href="{{route('admin.cities')}}"><i class="fa fa-circle"></i>{{ __('adminNav.cities') }}
                     </a>
                 </li>
                 <li>

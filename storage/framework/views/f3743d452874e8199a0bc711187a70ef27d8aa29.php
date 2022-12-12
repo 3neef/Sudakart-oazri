@@ -404,7 +404,7 @@ $user = Auth::user();
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo e(route('admin.commissions')); ?>"><i class="fa fa-circle"></i><?php echo e(__('adminNav.commissions')); ?>
+                    <a href="<?php echo e(route('admin.cities')); ?>"><i class="fa fa-circle"></i><?php echo e(__('adminNav.cities')); ?>
 
                     </a>
                 </li>

@@ -25,6 +25,7 @@
                                 <th><?php echo e(__('adminBody.customer_name')); ?></th>
                                 <th><?php echo e(__('adminBody.Product_Name')); ?></th>
                                 <th><?php echo e(__('adminDash.payment_method')); ?></th>
+                                <th><?php echo e(__('body.payment_status')); ?></th>
                                 <th><?php echo e(__('adminBody.delivery_amount')); ?></th>
                                 <th><?php echo e(__('adminBody.order_status')); ?></th>
                                 <th><?php echo e(__('adminBody.date')); ?></th>
@@ -55,6 +56,19 @@
                                 <span class="badge badge-dark"><?php echo e(__('body.bank_transfer')); ?></span>
                                 <?php else: ?>
                                 <span class="badge badge-danger"><?php echo e(__('body.cash')); ?></span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php if($order->payment): ?>
+                                <?php if($order->payment->status == 'success'): ?>
+                                <span class="badge badge-success"><?php echo e(__('body.payment_success')); ?></span>
+                                <?php elseif($order->payment->status == 'failed'): ?>
+                                <span class="badge badge-primary"><?php echo e(__('body.payment_failed')); ?></span>
+                                <?php else: ?>
+                                <span class="badge badge-danger"><?php echo e(__('body.payment_pending')); ?></span>
+                                <?php endif; ?>
+                                <?php else: ?>
+                                <span class="badge badge-danger"><?php echo e(__('body.payment_pending')); ?></span>
                                 <?php endif; ?>
                             </td>
                             <td><?php echo e($order->delivery_amount); ?></td>

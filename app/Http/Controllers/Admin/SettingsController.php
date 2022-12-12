@@ -8,6 +8,7 @@ use App\Collections\MarketsCollection;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOrUpdateAttributeRequest;
 use App\Http\Requests\CreateOrUpdateCategoryRequest;
+use App\Http\Requests\CreateOrUpdateCityRequest;
 use App\Http\Requests\CreateOrUpdateDeliveryMethodRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Attribute;
@@ -207,9 +208,56 @@ class SettingsController extends Controller
     }
 
 
-    public function commissions()
+    public function cities()
     {
-        return view('panel.settings.commissions');
+        $cities = City::paginate(10);
+        return view('panel.settings.cities.index', compact('cities'));
+    }
+
+    public function createcity()
+    {
+        $methods = DeliveryMethod::all();
+        return view('panel.settings.cities.create', compact('methods'));
+    }
+
+    public function storecity(CreateOrUpdateCityRequest $request)
+    {
+        $city = City::create($request->validated());
+        if ($request->methods) {
+            foreach($request->methods as $id => $method ) {
+                $city->delivery()->attach($id, ['delivery_amount' => $method]);
+            }
+        }
+        return redirect()->route('admin.cities')->with('success', __('toastr.added'));
+    }
+
+    public function editcity(City $city) 
+    {
+        $p = [];
+        $methods = DeliveryMethod::all();
+        $deliveries = $city->delivery;
+        // dd($city->delivery[0]);
+        foreach ($methods[0]->city as $man){
+            if($man->pivot->city_id == $city->id && $man->pivot->delivery_method_id == $methods[0]->id){
+
+                $p[] = $man->pivot->delivery_method_id;
+            }
+            
+        }
+        // dd($p);
+        return view('panel.settings.cities.edit', compact('methods', 'city', 'deliveries'));
+    }
+
+    public function updatecity(CreateOrUpdateCityRequest $request, City $city)
+    {
+        $city->update($request->validated());
+        if ($request->methods) {
+            $city->delivery()->detach();
+            foreach($request->methods as $id => $method ) {
+                $city->delivery()->attach($id, ['delivery_amount' => $method]);
+            }
+        }
+        return redirect()->route('admin.cities')->with('success', __('toastr.updated'));
     }
 
     public function roles() {

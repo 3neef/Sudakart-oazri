@@ -152,9 +152,10 @@ return [
     'month' => 'الشهر',
     'commission' => 'العمولة',
     'color' => 'اللون',
-    '' => '',
-    '' => '',
-    '' => '',
+    'payment_success' => 'تمت عملية الدفع',
+    'payment_failed' => 'فشلت عملية الدفع',
+    'payment_pending' => 'في إنتظار الدفع',
+    'delivary_prices' => 'أسعار طرق التوصيل',
     '' => '',
     '' => '',
 

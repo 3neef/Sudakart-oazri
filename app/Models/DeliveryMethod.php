@@ -18,4 +18,9 @@ class DeliveryMethod extends Model
     public function order () {
         return $this->hasMany(Order::class);
     }
+
+    public function city () {
+        return $this->belongsToMany(City::class,'cities_delivery_methods');
+        // ->withPivot('delivery_amount', 'city_id', 'delivery_method_id');
+    }
 }

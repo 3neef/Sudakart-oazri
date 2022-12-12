@@ -60,6 +60,7 @@
 		'sus_vendors' => 'Suspended Vendors',
 		'regions' => 'Regions',
 		'markets' => 'Markets',
+		'cities' => 'Cities',
 		'Inbound' => 'Inbound Orders',
 		'Outbound' => 'Outbound Orders',
 		'scheduled' => 'Scheduled Orders',

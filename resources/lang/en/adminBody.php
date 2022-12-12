@@ -154,9 +154,13 @@
         'no_notifications' => 'There are no notifications to show',
         'all' => ' all',
         'city' => ' City',
+        'State' => ' State',
         'new_market' => 'Add a new Market',
         'update_market' => 'Update a Market',
         'dirvers' => 'Dirvers',
+        'product_images' => 'Products Images',
+        'new_city' => 'Add a new City',
+        'update_city' => 'Update a City',
 
 
 

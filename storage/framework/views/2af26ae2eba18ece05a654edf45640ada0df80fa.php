@@ -73,7 +73,7 @@
                                         </td>
 
                                         <td>
-                                            <?php echo e($order->shop->vendor->first_name); ?>
+                                            <?php echo e($order->shop ? $order->shop->vendor->first_name : 'no name'); ?>
 
                                         </td>
 

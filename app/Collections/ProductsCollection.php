@@ -5,6 +5,7 @@ namespace App\Collections;
 
 
 use App\Filters\DealOfTheDayFilter;
+use App\Filters\ProductSearchFilter;
 use App\Filters\ProductWithOfferFilter;
 use App\Filters\TopSellProductsFilter;
 use App\Filters\VendorTopSellProductsFilter;
@@ -62,6 +63,7 @@ class ProductsCollection
             AllowedFilter::custom('has_offers', new ProductWithOfferFilter),
             AllowedFilter::custom('deal_of_the_day', new DealOfTheDayFilter),
             AllowedFilter::custom('top_sell', new TopSellProductsFilter),
+            AllowedFilter::custom('search', new ProductSearchFilter),
             AllowedFilter::custom('vendor_top_sell', new VendorTopSellProductsFilter),
         ];
 

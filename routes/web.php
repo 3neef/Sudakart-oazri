@@ -99,6 +99,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/orders/returned',[OrdersController::class, 'returned'])->name('orders.returned')->middleware('can:view-returned-products');
     Route::put('/orders/returned/{id}',[ReturnedController::class, 'update'])->name('orders.returned.update')->middleware('can:view-returned-products');
     Route::get('orders/getdrivers', [OrdersController::class, 'getdrivers'])->name('markets.getdrivers');
+    Route::get('orders/getStates', [OrdersController::class, 'getStates'])->name('markets.getStates');
 
     //accounting routes
     Route::group(['middleware' => ['can:view-payments']], function () {
@@ -246,7 +247,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('role/{id}/delete',[SettingsController::class, 'rolesDelete'])->name('roles.delete');
 
 
-    Route::get('commissions',[SettingsController::class, 'commissions'])->name('commissions');
+    Route::get('cities',[SettingsController::class, 'cities'])->name('cities');
+    Route::get('cities/create',[SettingsController::class, 'createcity'])->name('cities.create');
+    Route::post('cities/create',[SettingsController::class, 'storecity'])->name('cities.store');
+    Route::get('cities/edit/{city}',[SettingsController::class, 'editcity'])->name('cities.edit');
+    Route::post('cities/edit/{city}',[SettingsController::class, 'updatecity'])->name('cities.update');
     });
 
     Route::get('sales-report', [ReportsController::class, 'sales'])->name('sales-report');

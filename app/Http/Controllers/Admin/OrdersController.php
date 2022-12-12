@@ -14,6 +14,7 @@ use App\Http\Resources\OrderProductsResource;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\ReturnedsResource;
 use App\Models\CanceledOrder;
+use App\Models\City;
 use App\Models\Driver;
 use App\Models\Market;
 use App\Models\Order;
@@ -22,6 +23,8 @@ use App\Models\OrderProductOption;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Reason;
+use App\Models\Region;
+use App\Models\State;
 use App\Services\OrderServices;
 use App\Services\NotificationServices;
 use Illuminate\Http\Request;
@@ -303,6 +306,12 @@ class OrdersController extends Controller
         $delivery = $delivery_order->retrieveOrder($order->delivery_ref_id);
         $reasons = Reason::orderBy('id', 'desc')->get();
         $date = now();
+        if($delivery['status'] != 0){
+            $address =  $delivery['data']['region'];
+        }else{
+            $region = Region::where('region_id', $order->region_id)->first();
+            $address = $region->region;
+        }
         $barcode = (string)$order->id;
         return view('panel.orders.recipt')
             ->with([
@@ -310,7 +319,8 @@ class OrdersController extends Controller
                 'reasons' => $reasons,
                 'date' => $date,
                 'barcode' => $barcode,
-                'delivery' => $delivery
+                'delivery' => $delivery,
+                'address' => $address
             ]);
     }
 
@@ -625,6 +635,32 @@ class OrdersController extends Controller
             return view('panel.orders.inbound', compact('orders'));
         }
     }
+
+    public function getStates(Request $request)
+    {
+        if($request->search == ''){
+            $states = State::orderBy('id','desc')->limit(5)->get();
+        }else {
+            $states = State::orderBy('id','desc')
+            ->where('name', 'like', "%$request->search%")
+            ->orWhere('en_name', 'like', "%$request->search%")
+            ->get();
+        }
+
+        $response = array();
+
+        foreach ($states as $state) {
+            $response[] = array(
+                'id' => $state->id ,
+                'text' => $state->name.' - '.$state->en_name
+            );
+        }
+
+        echo json_encode($response);
+        
+        
+    }
+
 
 
 }

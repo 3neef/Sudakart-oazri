@@ -25,6 +25,7 @@
                                 <th>{{ __('adminBody.customer_name') }}</th>
                                 <th>{{ __('adminBody.Product_Name') }}</th>
                                 <th>{{ __('adminDash.payment_method') }}</th>
+                                <th>{{ __('body.payment_status') }}</th>
                                 <th>{{ __('adminBody.delivery_amount') }}</th>
                                 <th>{{ __('adminBody.order_status') }}</th>
                                 <th>{{ __('adminBody.date') }}</th>
@@ -55,6 +56,19 @@
                                 <span class="badge badge-dark">{{ __('body.bank_transfer') }}</span>
                                 @else
                                 <span class="badge badge-danger">{{ __('body.cash') }}</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($order->payment)
+                                @if ($order->payment->status == 'success')
+                                <span class="badge badge-success">{{__('body.payment_success')}}</span>
+                                @elseif ($order->payment->status == 'failed')
+                                <span class="badge badge-primary">{{__('body.payment_failed')}}</span>
+                                @else
+                                <span class="badge badge-danger">{{__('body.payment_pending')}}</span>
+                                @endif
+                                @else
+                                <span class="badge badge-danger">{{__('body.payment_pending')}}</span>
                                 @endif
                             </td>
                             <td>{{$order->delivery_amount}}</td>

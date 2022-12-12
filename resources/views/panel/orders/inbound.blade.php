@@ -71,7 +71,7 @@
                                         </td>
 
                                         <td>
-                                            {{$order->shop->vendor->first_name}}
+                                            {{$order->shop ? $order->shop->vendor->first_name : 'no name'}}
                                         </td>
 
 

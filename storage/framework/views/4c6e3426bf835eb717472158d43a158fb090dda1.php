@@ -1,6 +1,6 @@
-@extends('layouts.app2')
-@section('title', 'Commissions')
-@section('content')
+
+<?php $__env->startSection('title', 'Commissions'); ?>
+<?php $__env->startSection('content'); ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
@@ -524,4 +524,5 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app2', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\10\Desktop\mazin projects\sudakart-latest-2023\resources\views/panel/settings/commissions.blade.php ENDPATH**/ ?>
