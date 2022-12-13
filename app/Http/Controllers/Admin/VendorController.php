@@ -185,9 +185,11 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Vendor $vendor)
     {
-        //
+        // dd($vendor->shop);
+        $categories = Category::pluck('name', 'id');
+        return view('panel.vendors.edit', compact('vendor', 'categories'));
     }
 
     /**

@@ -17,8 +17,18 @@ class ShopsServices
         return $shop;
     }
 
+    public static function update (Vendor $vendor, $request) {
+        $shop =  $vendor->shop()->update($request->only('shop_name', 'shop_en_name', 'shop_address'));
+        $vendor_shop = $vendor->shop;
+        if($request->shop_categories){
+            self::addCategory($vendor_shop, $request->shop_categories);
+        }
+        return $vendor_shop;
+    }
+
     public static function addCategory(Shop $shop, $categories)
     {
+        // dd($shop);
         foreach ($categories as $category) {
             ShopCategory::create([
                 'shop_id' => $shop->id,

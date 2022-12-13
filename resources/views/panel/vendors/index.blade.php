@@ -14,6 +14,7 @@
                         <th>{{ __('adminBody.Wallet_Balance') }}</th>
                         <th>{{ __('adminBody.suspend') }}</th>
                         <th>{{ __('adminBody.approve') }}</th>
+                        <th>{{ __('body.edit') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,6 +77,12 @@
                                     </i>
                                 </a>
                             </div>
+                        </td>
+
+                        <td>
+                            <a class="mx-1" href="{{route('admin.vendors.edit', $vendor->id)}}">
+                                <i class="fa fa-edit fa-2x text-primary" title="{{ __('body.edit') }}"></i>
+                            </a>
                         </td>
                     </tr>
                         

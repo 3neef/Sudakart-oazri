@@ -131,6 +131,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/vendors',[VendorController::class, 'index'])->name('vendors');
     Route::get('/vendors/pending',[VendorController::class, 'pending'])->name('vendors.pending');
     Route::get('/vendor/suspend/{vendor}',[VendorController::class, 'suspend'])->name('vendors.suspend');
+    Route::get('/vendor/edit/{vendor}',[VendorController::class, 'edit'])->name('vendors.edit');
+    Route::put('/vendor/edit/{vendor}',[RegisterVendorController::class, 'update'])->name('vendors.update');
     Route::get('/vendor/approved/{vendor}',[VendorController::class, 'approved'])->name('vendors.approved');
     Route::get('/vendors/approve/categories/{id}',[VendorController::class, 'approvedcategory'])->name('vendors.pending.approvedcategory');
     Route::delete('/vendors/destroy/categories/{id}',[CategoryRequestController::class, 'destroy'])->name('vendors.pending.destroycategory');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CompleteVendorRegistrationRequest;
 use App\Http\Requests\RegisterCustomerRequest;
 use App\Http\Requests\RegisterVendorRequest;
+use App\Http\Requests\UpdateVendorRequest;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Vendor;
@@ -74,6 +75,26 @@ class RegisterVendorController extends Controller
     public function stats(){
         $pro = Vendor::findorfail(auth()->user()->userable_id);
         return $pro->statistics;
+    }
+
+    public function update(UpdateVendorRequest $request, Vendor $vendor){
+
+        DB::transaction(function () use ($request, $vendor) {
+            $vendor->update($request->validated());
+            UsersServices::update($vendor, $request);
+            if($vendor->shop){
+                ShopsServices::update($vendor, $request);
+                
+            }else{
+                ShopsServices::create($vendor, $request);
+
+            }
+            if (! $request->expectsJson()) {
+                return redirect()->route('admin.vendors');
+            }
+            // return (new LoginController())->login($request);
+        });
+        return redirect()->route('admin.vendors');
     }
 
 }

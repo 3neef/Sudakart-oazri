@@ -156,7 +156,7 @@ return [
     'payment_failed' => 'فشلت عملية الدفع',
     'payment_pending' => 'في إنتظار الدفع',
     'delivary_prices' => 'أسعار طرق التوصيل',
-    '' => '',
+    'update_vendor' => 'التعديل على تاجر',
     '' => '',
 
 

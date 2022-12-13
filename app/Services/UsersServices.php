@@ -18,6 +18,15 @@ class UsersServices
             'password' => Hash::make($request->password),
         ]);
     }
+
+    public static function update (Model $model, Request $request) {
+        return $model->user()->update([
+            // 'username' => $request->username,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            // 'password' => Hash::make($request->password),
+        ]);
+    }
     public static function updatePhone ($user, Request $request) {
         return $user->update([
             'phone' => $request->phone,

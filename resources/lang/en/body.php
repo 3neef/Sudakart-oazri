@@ -157,7 +157,7 @@ return [
     'payment_failed' => 'Payment was failed',
     'payment_pending' => 'Payment is Pending',
     'delivary_prices' => 'Delivary Methods prices',
-    '' => '',
+    'update_vendor' => 'Update a Vendor',
     '' => '',
     '' => '',
     '' => '',
