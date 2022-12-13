@@ -97,6 +97,18 @@ class OrdersController extends Controller
 
     } 
 
+    public function outbounddrivers(Request $request)
+    {
+        if($request->ids > 0){
+            $orders = Order::whereIn('id',$request->ids)->get();
+            foreach($orders as $order){
+                $order->update(['delivered_by' => $request->driver_id]);
+            }
+        }
+        return redirect()->back()->with('success', __('toastr.asigned'));
+
+    } 
+
     public function outboundstatus(Request $request, $id)
     {
         
@@ -256,7 +268,7 @@ class OrdersController extends Controller
                 {
                     $prod = Product::where('id' , $product)->first();
                     $user_id = $prod->shop->vendor->user->id;
-                    // return dd($user_id);
+
                     $device_token = User::whereNotNull('fcm_token')->where('id',$user_id)->pluck('fcm_token')->all();
 
                     $message = [
@@ -617,6 +629,20 @@ class OrdersController extends Controller
         echo json_encode($response);
         
         
+    }
+
+    public function outBoundCity(Request $request)
+    {
+        $id = $request->city_id;
+        $city = City::findorfail($id);
+
+        if($city){
+            $orders = Order::where('region_id', $city->id )
+            ->where('delivered_by', null)->with('products')->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+            return view('panel.orders.outbound', compact('orders'));
+        }
     }
 
     public function MarketInbound(Request $request)

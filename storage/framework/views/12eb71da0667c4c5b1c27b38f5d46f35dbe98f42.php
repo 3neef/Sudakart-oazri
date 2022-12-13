@@ -19,11 +19,11 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="account" role="tabpanel"
                             aria-labelledby="account-tab">
-                            <form method="GET" action="<?php echo e(route('admin.orders.MarketInbound')); ?>" class="needs-validation user-add">
+                            <form method="GET" action="<?php echo e(route('admin.orders.outBoundCity')); ?>" class="needs-validation user-add">
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('body.region')); ?></label>
                                     <div class="col-md-7">
-                                            <select class="form-control" name="market_id" style="width: 100%" id="marketId" required>
+                                            <select class="form-control" name="city_id" style="width: 100%" id="cityId" required>
                                                 <option value=""></option>
                                             </select>
                                         </select>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="card">
-                <form method="POST" action="<?php echo e(route('admin.orders.inbound.drivers')); ?>" class="needs-validation" enctype="multipart/form-data">
+                <form method="POST" action="<?php echo e(route('admin.orders.outbound.drivers')); ?>" class="needs-validation" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
                 <div class="table-responsive table-desi">
                     <table class="table all-package">
@@ -227,7 +227,7 @@
                 lang = 'rtl';
             }
 
-            $('#marketId').select2({
+            $('#cityId').select2({
             dir:lang, 
             ajax : {
                 url: "<?php echo e(route('admin.markets.getcities')); ?>",
