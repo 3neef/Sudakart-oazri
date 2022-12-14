@@ -33,6 +33,10 @@
                                             <i class="fa fa-eye" title="{{__('body.show')}}"></i>
                                         </a>
 
+                                        <a href="{{route('admin.attribute.edit', $attribute->id)}}">
+                                            <i class="fa fa-edit" title="{{__('body.edit')}}"></i>
+                                        </a>
+
                                         <form action="{{route('admin.attribute.destroy', $attribute->id)}}" method="POST">
                                             @csrf
                                             @method('DELETE')

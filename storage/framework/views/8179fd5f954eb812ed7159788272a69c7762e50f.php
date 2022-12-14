@@ -1,6 +1,6 @@
-@extends('layouts.app2')
-@section('content')
-@section('title', __('adminBody.update_attr'))
+
+<?php $__env->startSection('content'); ?>
+<?php $__env->startSection('title', __('adminBody.update_attr')); ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
@@ -9,54 +9,54 @@
                     <ul class="nav nav-tabs tab-coupon" id="myTab" role="tablist">
                         <li class="nav-item"><a class="nav-link active show" id="account-tab"
                                 data-bs-toggle="tab" href="#account" role="tab" aria-controls="account"
-                                aria-selected="true" data-original-title="" title="">{{__('adminBody.update_attr')}}</a></li>
+                                aria-selected="true" data-original-title="" title=""><?php echo e(__('adminBody.update_attr')); ?></a></li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="account" role="tabpanel"
                             aria-labelledby="account-tab">
-                            <form method="POST" action="{{route('admin.attribute.update', $attribute->id)}}" class="needs-validation user-add" enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
-                                <h4>{{__('adminBody.update_attr')}}</h4>
+                            <form method="POST" action="<?php echo e(route('admin.attribute.update', $attribute->id)); ?>" class="needs-validation user-add" enctype="multipart/form-data">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('PUT'); ?>
+                                <h4><?php echo e(__('adminBody.update_attr')); ?></h4>
                                 <div class="form-group row">
                                     <label for="validationCustom0"
-                                        class="col-xl-3 col-md-4"><span>*</span>{{__('body.name')}}</label>
+                                        class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('body.name')); ?></label>
                                     <div class="col-xl-8 col-md-7">
-                                        <input class="form-control" id="name" name="name" type="text" value="{{$attribute->name}}"
+                                        <input class="form-control" id="name" name="name" type="text" value="<?php echo e($attribute->name); ?>"
                                             required="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="validationCustom1"
-                                        class="col-xl-3 col-md-4"><span>*</span> {{__('form.en_name')}}</label>
+                                        class="col-xl-3 col-md-4"><span>*</span> <?php echo e(__('form.en_name')); ?></label>
                                     <div class="col-xl-8 col-md-7">
-                                        <input class="form-control" id="en_name" name="en_name" type="text" value="{{$attribute->en_name}}"
+                                        <input class="form-control" id="en_name" name="en_name" type="text" value="<?php echo e($attribute->en_name); ?>"
                                             required="">
                                     </div>
                                 </div>
-                                <h4 class="mt-5">{{__('body.options')}}</h4>
+                                <h4 class="mt-5"><?php echo e(__('body.options')); ?></h4>
                                 <div id="dynamicAddRemove" class="addandremove">
-                                    @forelse ($options as $option)
+                                    <?php $__empty_1 = true; $__currentLoopData = $options; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                     <div class="form-group row">
                                         <label for="validationCustom2"
-                                            class="col-xl-3 col-md-4"><span>*</span>{{__('form.option')}}</label>
+                                            class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('form.option')); ?></label>
                                         <div class="col-xl-8 col-md-7">
-                                            <input class="form-control" id="options[{{$loop->index}}][option]" name="options[{{$loop->index}}][option]" type="text"
-                                                value="{{$option->option}}" required="">
+                                            <input class="form-control" id="options[<?php echo e($loop->index); ?>][option]" name="options[<?php echo e($loop->index); ?>][option]" type="text"
+                                                value="<?php echo e($option->option); ?>" required="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="validationCustom3"
-                                            class="col-xl-3 col-md-4"><span>*</span>{{__('form.en_option')}}</label>
+                                            class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('form.en_option')); ?></label>
                                         <div class="col-xl-8 col-md-7">
-                                            <input class="form-control" id="options[{{$loop->index}}][en_option]" name="options[{{$loop->index}}][en_option]"
-                                                value="{{$option->en_option}}" type="text">
+                                            <input class="form-control" id="options[<?php echo e($loop->index); ?>][en_option]" name="options[<?php echo e($loop->index); ?>][en_option]"
+                                                value="<?php echo e($option->en_option); ?>" type="text">
                                         </div>
                                     </div>
-                                    @empty
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                         <div class="form-group row">
                                             <label for="validationCustom2"
-                                                class="col-xl-3 col-md-4"><span>*</span>{{__('form.option')}}</label>
+                                                class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('form.option')); ?></label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input class="form-control" id="options[0][option]" name="options[0][option]" type="text"
                                                     required="">
@@ -64,18 +64,18 @@
                                         </div>
                                         <div class="form-group row">
                                             <label for="validationCustom3"
-                                                class="col-xl-3 col-md-4"><span>*</span>{{__('form.en_option')}}</label>
+                                                class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('form.en_option')); ?></label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input class="form-control" id="options[0][en_option]" name="options[0][en_option]"
                                                     type="text">
                                             </div>
                                         </div>
                                         
-                                    @endforelse
+                                    <?php endif; ?>
                                 </div>
-                                <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-info">{{__('form.add_other_op')}}</button></td>
+                                <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-info"><?php echo e(__('form.add_other_op')); ?></button></td>
                                 <div class="form-group row mt-4">
-                                    <input class="btn btn-primary" type="submit" value="{{__('adminBody.save')}}"></input>
+                                    <input class="btn btn-primary" type="submit" value="<?php echo e(__('adminBody.save')); ?>"></input>
                                 </div>
                             </form>
                         </div>
@@ -85,21 +85,21 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
-{{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
-<script src="{{asset('assets/js/jquery-3.3.1.min.js')}}"></script>
+<?php $__env->startPush('scripts'); ?>
+
+<script src="<?php echo e(asset('assets/js/jquery-3.3.1.min.js')); ?>"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
-    var i = {{ Illuminate\Support\Js::from($options->count() - 1) }};
+    var i = <?php echo e(Illuminate\Support\Js::from($options->count() - 1)); ?>;
     $("#dynamic-ar").click(function () {
         ++i;
         $("#dynamicAddRemove").append(`<section class="pt-1 border-top mt-3">
         <div class="form-group row">
             <label for="validationCustom2"
-                class="col-xl-3 col-md-4"><span>*</span>{{__('form.option')}}</label>
+                class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('form.option')); ?></label>
             <div class="col-xl-8 col-md-7">` +
                 '<input class="form-control" id="options['+i+'][option]" name="options['+i+'][option]" type="text"required="">'
                 + `
@@ -107,7 +107,7 @@
         </div>
         <div class="form-group row">
             <label for="validationCustom3"
-                class="col-xl-3 col-md-4"><span>*</span>{{__('form.en_option')}}</label>
+                class="col-xl-3 col-md-4"><span>*</span><?php echo e(__('form.en_option')); ?></label>
             <div class="col-xl-8 col-md-7">
                 <input class="form-control" id="options[`+i+`][en_option]" name="options[`+i+`][en_option]"
                     type="text">
@@ -119,5 +119,7 @@
     });
 </script>
     
-@endpush
+<?php $__env->stopPush(); ?>
 
+
+<?php echo $__env->make('layouts.app2', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\10\Desktop\mazin projects\sudakart-latest-2023\resources\views/panel/settings/attributes/edit.blade.php ENDPATH**/ ?>

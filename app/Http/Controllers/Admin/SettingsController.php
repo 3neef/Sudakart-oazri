@@ -150,11 +150,23 @@ class SettingsController extends Controller
     //     $attribute->update($request->validated());
     //     return redirect()->route('admin.attribute');
     // }
-    public function editattribute($id)
+    public function editattribute(Attribute $attribute)
     {
-        // $attribute = ::findorfail($id);
-        return view('panel.settings.attributes.edit', compact('attribute'));
+        $options = Option::where('attribute_id', $attribute->id)->get();
+        return view('panel.settings.attributes.edit', compact('attribute', 'options'));
     }
+
+
+    public function updateattribute(CreateOrUpdateAttributeRequest $request, Attribute $attribute)
+    {
+        $attribute->update($request->validated());
+        if ($request->options) {
+            Option::where('attribute_id', $attribute->id)->delete();
+            OptionsServices::createOption($attribute->id, $request->options);
+        }
+        return redirect()->route('admin.attributes');
+    }
+
     public function destroyattribute($id)
     {
         $attribute = Attribute::findorfail($id);

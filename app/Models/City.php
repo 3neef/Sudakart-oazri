@@ -15,6 +15,8 @@ class City extends Model
         'en_name'
     ];
 
+    protected $with = ['delivery'];
+
     public function state () {
         return $this->belongsTo(State::class);
     }

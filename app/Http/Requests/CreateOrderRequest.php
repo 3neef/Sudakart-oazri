@@ -25,10 +25,10 @@ class CreateOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'region_id'=>['nullable'],
+            'city_id'=>['nullable'],
             'delivery_amount'=>['nullable'],
             'coupon_id' => ['nullable', 'exists:coupons,id'],
-            // 'delivery_method_id' => ['required', 'exists:delivery_methods,id'],
+            'delivery_method_id' => ['required', 'exists:delivery_methods,id'],
             'payment_method' => ['required', Rule::in(['online', 'cash', 'bank'])],
             'take_by' => ['nullable'],
             'delivered_by' => ['nullable', 'exists:drivers,id'],

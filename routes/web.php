@@ -231,8 +231,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('attributes/create',[SettingsController::class, 'createattribute'])->name('attribute.create');
     Route::post('attributes/create',[SettingsController::class, 'storeattribute'])->name('attribute.store');
     Route::get('attributes/show/{id}',[SettingsController::class, 'showattribute'])->name('attribute.show');
-    Route::get('attributes/edit/{id}',[SettingsController::class, 'editattribute'])->name('attribute.edit');
-    Route::put('attributes/edit/{id}',[SettingsController::class, 'updateattribute'])->name('attribute.update');
+    Route::get('attributes/edit/{attribute}',[SettingsController::class, 'editattribute'])->name('attribute.edit');
+    Route::put('attributes/edit/{attribute}',[SettingsController::class, 'updateattribute'])->name('attribute.update');
     Route::delete('attributes/destroy/{id}',[SettingsController::class, 'destroyattribute'])->name('attribute.destroy');
 
     Route::get('reasons',[SettingsController::class, 'reason'])->name('reasons');
