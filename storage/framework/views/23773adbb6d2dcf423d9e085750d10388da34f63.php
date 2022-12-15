@@ -141,7 +141,7 @@
                             </td>
                             <td>
                                 <div style="display: flex;">
-                                <?php if(auth()->user()->userable_type == 'App\Models\Admin' && $order->delivery_ref_id == null && $order->status != 'completed' && $order->status != 'canceled' && Str::contains($order->region_id, 'region_') == false): ?>
+                                <?php if(auth()->user()->userable_type == 'App\Models\Admin' && $order->delivery_ref_id == null && $order->status != 'completed' && $order->status != 'canceled'): ?>
                                 <a class=" mx-1 btn btn-success" href="javascript:void(0)" style="padding: 5px 5px;">
                                     <i  data-id="<?php echo e($order->id); ?>" class="fa fa-dot-circle-o px-1 status-ticket" title="<?php echo e(__('adminBody.order_handling')); ?>"></i>
                                 </a>

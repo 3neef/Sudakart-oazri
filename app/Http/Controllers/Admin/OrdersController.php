@@ -156,6 +156,8 @@ class OrdersController extends Controller
                 $cancel_delivery = $delivery_order->cancelOrder($order->delivery_ref_id);
                 foreach ($canceled_order_products as $product) {
                     $product->update(['status' => 'canceled']);
+                    $product->product->update(['quantity' => $product->product->quantity + $product->quantity ]);
+
                 }
             }
             return redirect()->back();
@@ -321,7 +323,7 @@ class OrdersController extends Controller
         if($delivery['status'] != 0){
             $address =  $delivery['data']['region'];
         }else{
-            $region = Region::where('region_id', $order->region_id)->first();
+            $region = Region::where('region_id', $order->city_id)->first();
             $address = $region->region;
         }
         $barcode = (string)$order->id;

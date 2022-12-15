@@ -167,13 +167,11 @@
 									<?php echo e($order->customer->name); ?><br />
 									<?php echo e($order->customer->user->phone); ?> <br />
                                     <?php echo e($order->address); ?> <br />
+									<?php echo e($address); ?> <br />
 									<?php if($delivery['status'] != 0): ?>
-									<?php echo e($delivery['data']['region']); ?> <br />
 									<?php echo e($delivery['data']['ref_no']); ?>
 
 									<?php endif; ?>
-									<?php echo e($address); ?>
-
 								</td>
 
 								<td style="text-align: right">
