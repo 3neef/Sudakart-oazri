@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Card extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = ['amount'];
 }

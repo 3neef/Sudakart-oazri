@@ -380,6 +380,10 @@ $user = Auth::user();
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('admin.cards')}}"><i class="fa fa-circle"></i>{{ __('adminNav.cards') }}
+                    </a>
+                </li>
+                <li>
                     <a href="{{route('admin.markets')}}"><i class="fa fa-circle"></i>{{ __('adminNav.markets') }}
                     </a>
                 </li>

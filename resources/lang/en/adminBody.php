@@ -161,6 +161,8 @@
         'product_images' => 'Products Images',
         'new_city' => 'Add a new City',
         'update_city' => 'Update a City',
+        'new_card' => 'Add a new Card',
+        'update_card' => 'Update a Card',
 
 
 

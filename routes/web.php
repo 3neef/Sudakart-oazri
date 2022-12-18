@@ -242,6 +242,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('reasons/edit/{id}',[SettingsController::class, 'editreason'])->name('reason.edit');
     Route::put('reasons/edit/{id}',[SettingsController::class, 'updatereason'])->name('reason.update');
     Route::delete('reasons/destroy/{id}',[SettingsController::class, 'destroyreason'])->name('reason.destroy');
+
+    Route::get('cards',[SettingsController::class, 'card'])->name('cards');
+    Route::get('cards/create',[SettingsController::class, 'createcard'])->name('card.create');
+    Route::post('cards/create',[SettingsController::class, 'storecard'])->name('card.store');
+    Route::get('cards/show/{id}',[SettingsController::class, 'showcard'])->name('card.show');
+    Route::get('cards/edit/{id}',[SettingsController::class, 'editcard'])->name('card.edit');
+    Route::put('cards/edit/{id}',[SettingsController::class, 'updatecard'])->name('card.update');
+    Route::delete('cards/destroy/{id}',[SettingsController::class, 'destroycard'])->name('card.destroy');
     // roles routes
     Route::get('roles',[SettingsController::class, 'roles'])->name('roles');
     Route::get('role/{id}/edit',[SettingsController::class, 'rolesEdit'])->name('roles.edit');

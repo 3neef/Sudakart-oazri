@@ -414,6 +414,11 @@ $user = Auth::user();
                     </a>
                 </li>
                 <li>
+                    <a href="<?php echo e(route('admin.cards')); ?>"><i class="fa fa-circle"></i><?php echo e(__('adminNav.cards')); ?>
+
+                    </a>
+                </li>
+                <li>
                     <a href="<?php echo e(route('admin.markets')); ?>"><i class="fa fa-circle"></i><?php echo e(__('adminNav.markets')); ?>
 
                     </a>

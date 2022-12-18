@@ -61,6 +61,7 @@
 		'regions' => 'Regions',
 		'markets' => 'Markets',
 		'cities' => 'Cities',
+		'cards' => 'Balance Cards',
 		'Inbound' => 'Inbound Orders',
 		'Outbound' => 'Outbound Orders',
 		'scheduled' => 'Scheduled Orders',

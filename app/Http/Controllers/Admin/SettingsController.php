@@ -12,6 +12,7 @@ use App\Http\Requests\CreateOrUpdateCityRequest;
 use App\Http\Requests\CreateOrUpdateDeliveryMethodRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Attribute;
+use App\Models\Card;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\DeliveryMethod;
@@ -180,6 +181,42 @@ class SettingsController extends Controller
         return redirect()->route('admin.attributes');
     }
 
+
+    public function card()
+    {
+        $cards = Card::all();
+        return view('panel.settings.cards.index', compact('cards'));
+    }
+    public function createcard()
+    {
+        return view('panel.settings.cards.create');
+    }
+    public function storecard(Request $request)
+    {
+        $card = card::create([
+            'amount'=> $request->amount,
+    ]);
+        return redirect()->route('admin.cards');
+    }
+    public function updatecard(Request $request, $id)
+    {
+        $card = card::findorfail($id);
+        $card->update([
+            'amount'=> $request->amount,
+    ]);
+        return redirect()->route('admin.cards');
+    }
+    public function editcard($id)
+    {
+        $card = card::findorfail($id);
+        return view('panel.settings.cards.edit', compact('card'));
+    }
+    public function destroycard($id)
+    {
+        $card = card::findorfail($id);
+        $card->delete();
+        return redirect()->route('admin.cards');
+    }
 
     public function reason()
     {
