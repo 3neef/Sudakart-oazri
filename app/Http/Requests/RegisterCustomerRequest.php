@@ -25,9 +25,11 @@ class RegisterCustomerRequest extends FormRequest
     {
         return [
             'phone'             => ['required', 'string', 'unique:users', 'min:10', 'max:13'],
+            'city_id'           => ['nullable', 'exists:cities,id'],
             'email'             => ['nullable', 'unique:users', 'email'],
             'password'          => ['required', 'confirmed', 'string', 'min:8'],
             'name'              => ['required', 'string', 'max:121'],
+            'address'           => ['nullable', 'string'],
             'secondary_phone'   => ['nullable', 'string', 'unique:customers', 'min:10', 'max:13'],
             'lat'               => ['nullable', 'numeric'],
             'long'              => ['nullable', 'numeric'],

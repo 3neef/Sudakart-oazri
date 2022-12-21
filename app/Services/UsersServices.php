@@ -12,10 +12,9 @@ class UsersServices
 {
     public static function create (Model $model, Request $request) {
         return $model->user()->create([
-            // 'username' => $request->username,
             'phone' => $request->phone,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            // 'password' => Hash::make($request->password),
         ]);
     }
 

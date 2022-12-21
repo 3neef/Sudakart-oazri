@@ -26,7 +26,7 @@ class RegisterVendorRequest extends FormRequest
         return [
             'phone'             => ['required', 'string', 'unique:users', 'min:10', 'max:13'],
             'email'             => ['nullable', 'unique:users', 'email'],
-            'password'          => ['required', 'confirmed', 'string', 'min:8'],
+            // 'password'          => ['required', 'confirmed', 'string', 'min:8'],
         ];
     }
 }

@@ -14,8 +14,9 @@ class UpSellsServices
     }
 
     public static function upProducts ($upsell, $products) {
+        $upsell->products()->delete();
         foreach ($products as $product) {
-            $upsell->products()->update($product);
+            $upsell->products()->create($product);
         }
         return $upsell;
     }

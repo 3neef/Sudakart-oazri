@@ -45,7 +45,7 @@ class UpdateProductRequest extends FormRequest
             'category_id'       => [ 'exists:categories,id'],
             'name'              => [ 'string'],
             'en_name'           => [ 'string'],
-            'sku'               => ['string'],
+            'sku'               => ['nullable', 'string'],
             'weight'            => ['nullable', 'string'],
             'frs'               => ['required','boolean'],
             'price'             => [ 'numeric'],

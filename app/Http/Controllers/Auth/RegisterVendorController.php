@@ -54,7 +54,7 @@ class RegisterVendorController extends Controller
                 $vendor = Vendor::find($user->userable_id);
                 $vendor->update($request->validated());
                 ShopsServices::create($vendor, $request);
-                // UsersServices::addPassword($vendor, $request);
+                UsersServices::addPassword($vendor, $request);
                 // CodesServices::deleteCode($user->phone);
                 if (! $request->expectsJson()) {
                     return redirect()->route('login.view');

@@ -45,7 +45,9 @@ class UpSellsController extends Controller
     public function update(UpdateOrCreateUpSellsRequest $request, $id){
         $upsell = UpSell::findOrFail($id);
         $upsell->update($request->all());
-        UpSellsServices::upProducts($upsell, $request->products);
+        if($request->products){
+            UpSellsServices::upProducts($upsell, $request->products);
+        }
         if (! $request->expectsJson()) {
             return redirect()->route('admin.upselling');
         }

@@ -14,7 +14,7 @@ class Shop extends Model
     protected $fillable = [
         'vendor_id',
         'market_id',
-        // 'city_id',
+        'city_id',
         'shop_name',
         'shop_en_name',
         'shop_address',
@@ -46,5 +46,9 @@ class Shop extends Model
 
     public function market () {
         return $this->belongsTo(Market::class);
+    }
+
+    public function city () {
+        return $this->belongsTo(City::class);
     }
 }

@@ -30,6 +30,7 @@ class RegisterCustomerController extends Controller
             $customer = Customer::create($request->validated());
             $customer->wallet()->create();
             $user =  UsersServices::create($customer, $request);
+            UsersServices::addPassword($customer, $request);
             if ($user) {
                 return DB::transaction(function () use ($request, $user) {
                     return (new LoginController())->login($request);

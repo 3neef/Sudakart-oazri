@@ -72,9 +72,11 @@
                                         <div class="payment-options">
                                             <h4 class="mb-3">Payment Method : </h4>
                                             @if($order->payment_method == 'cash')
-                                                <h4>Cash On Delivery</h4>
-                                            @else  
-                                               <h4>Online</h4>
+                                                <h4>{{__('body.cash')}}</h4>
+                                            @elseif($order->payment_method == 'bank')  
+                                               <h4>{{__('body.bank_transfer')}}</h4>
+                                            @else
+                                                <h4>{{__('body.online')}}</h4>
                                             @endif
                                         </div>
                                        
