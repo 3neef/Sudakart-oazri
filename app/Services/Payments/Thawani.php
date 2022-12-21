@@ -26,8 +26,8 @@ class Thawani {
 	{
 		$response = Http::baseUrl($this->base_url)->withHeaders([
 			'thawani-api-key' => $this->secret_key
-		])->asJson()->post('checkout/session', $data);
-		$body = $response->json();
+			])->asJson()->post('checkout/session', $data);
+			$body = $response->json();
 		if ($body['success'] == true && $body['code'] == '2004') {
 			return $body['data']['session_id'];
 		} else {

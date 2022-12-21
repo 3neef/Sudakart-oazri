@@ -66,7 +66,7 @@
                                 <div class="qty-box">
                                     <form  class="form-inline">
                                         <div class="input-group">
-                                           <input type="number" id="product-qty-<?php echo e($product->rowId); ?>" value="<?php echo e($product->qty); ?>"
+                                           <input type="number" id="product-qty-<?php echo e($product->rowId); ?>" value="<?php echo e($product->qty); ?>" max="<?php echo e(\App\Models\Product::findorfail($product->id)->quantity); ?>"
                                             class="form-control">
                                             <div class="input-group-prepend">
                                                <input type="submit" class="btn btn-warning update-pro-btn" data-id="<?php echo e($product->rowId); ?>" value="<?php echo e(__('body.update_qty')); ?>">

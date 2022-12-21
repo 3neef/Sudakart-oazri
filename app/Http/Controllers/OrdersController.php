@@ -105,7 +105,7 @@ class OrdersController extends Controller
                         'products' => [
                             [
                                 'name' => 'order-'.$order->id,
-                                'unit_amount' => 1 * round($order->total, 0, PHP_ROUND_HALF_UP),
+                                'unit_amount' => 1 * round($order->total * 1000),
                                 'quantity' => 1,
                             ],
                         ],

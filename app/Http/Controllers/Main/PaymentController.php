@@ -41,7 +41,7 @@ class PaymentController extends Controller
                         ]);
                         // $delivery_order = $delivery_order->createOrder($data);
                         // // update order delivery ref id for the api 
-                        // $order = Order::findOrFail($payment->order->id);
+                        $order = Order::findOrFail($payment->order->id);
                         // $order->update([
                         //     'delivery_ref_id' => $delivery_order['data']['ref_no']
                         // ]);

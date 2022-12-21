@@ -270,9 +270,12 @@
     });
     $('.quantity-right-plus').on('click', function () {
         var $qty = $(this).siblings(".qty-input");
+        var quantity  = $qty.data('qty');
         var currentVal = parseInt($qty.val());
         if (!isNaN(currentVal)) {
-            $qty.val(currentVal + 1);
+            if(currentVal <= quantity){
+                $qty.val(currentVal + 1);
+            }
         }
     });
     $('.quantity-left-minus').on('click', function () {

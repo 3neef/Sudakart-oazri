@@ -66,7 +66,8 @@ class OrderController extends Controller
                 'product_id' => $product->id,
                 'quantity' => $product->qty,
                 'coupon_id' => $request->coupon_id,
-                'options' =>  $options
+                'options' =>  $options,
+                'upsell_id' => null
             ]);
         }
 

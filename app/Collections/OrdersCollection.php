@@ -36,7 +36,7 @@ class OrdersCollection
             'status',
             'approved',
             'handover',
-            'city_id',
+            'region_id',
             'delivery_ref_id',
             'created_at',
             'updated_at'

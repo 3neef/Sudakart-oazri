@@ -65,7 +65,7 @@
                                 <div class="qty-box">
                                     <form  class="form-inline">
                                         <div class="input-group">
-                                           <input type="number" id="product-qty-{{ $product->rowId }}" value="{{ $product->qty }}"
+                                           <input type="number" id="product-qty-{{ $product->rowId }}" value="{{ $product->qty }}" max="{{\App\Models\Product::findorfail($product->id)->quantity }}"
                                             class="form-control">
                                             <div class="input-group-prepend">
                                                <input type="submit" class="btn btn-warning update-pro-btn" data-id="{{ $product->rowId }}" value="{{ __('body.update_qty') }}">

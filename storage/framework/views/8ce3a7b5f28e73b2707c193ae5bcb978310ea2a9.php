@@ -1,2 +1,0 @@
-<img src="<?php echo e(asset('main/images/new_logo.png')); ?>" style="width : 80px; height: 80px;" />
-<?php /**PATH /var/www/html/sudakart/resources/views/components/application-logo.blade.php ENDPATH**/ ?>

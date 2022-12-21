@@ -44,22 +44,23 @@ class PaymentsCallbackController extends Controller
             $response = $client->getCheckoutSession($session_id);
             if ($response['data']['payment_status'] == 'paid') {
                 $client = new Thawani(config('services.thawani.secret_key'), config('services.thawani.publishable_key'), 'test');
-                $delivery_order = new Dotman(config('services.product_delivery.api'));
-                $data = [
-                    "name" => $user->userable->name,
-                    "phone" => $user->phone,
-                    "region_id" => $order->region_id,
-                    "address" => $order->address,
-                    "cod" => 0,
-                    // "order_id" => $payment->order->id,
-                    "ecom_ref_no" => "oazricom"
-                ];
-                $delivery_order = $delivery_order->createOrder($data);
+                // $delivery_order = new Dotman(config('services.product_delivery.api'));
+                // $data = [
+                //     "name" => $user->userable->name,
+                //     "phone" => $user->phone,
+                //     "region_id" => $order->region_id,
+                //     "address" => $order->address,
+                //     "cod" => 0,
+                //     "order_id" => $payment->order->id,
+                //     "ecom_ref_no" => "oazricom"
+                // ];
+                // dd($data);
+                // $delivery_order = $delivery_order->createOrder($data);
                 // update order delivery ref id for the api 
-                $order = Order::findOrFail($order->id);
-                $order->update([
-                    'delivery_ref_id' => $delivery_order['data']['ref_no']
-                ]);
+                // $order = Order::findOrFail($order->id);
+                // $order->update([
+                //     'delivery_ref_id' => $delivery_order['data']['ref_no']
+                // ]);
                 $payment->status = 'success';
                 $payment->data = $response;
                 $payment->save();
