@@ -37,7 +37,10 @@ class LoginController extends Controller
             return response()->json(['error' => __('these credentials dosen\'t match any of our records')], 401);
         }
 
-        $fcm_token = Auth::guard('api')->user()->update(['fcm_token' => $request->fcm_token]);
+        $fcm_token = Auth::guard('api')->user()->update([
+            'fcm_token' => $request->fcm_token,
+            'login_date' => now()
+        ]);
 
         return $this->respondWithToken($token, $fcm_token);
     

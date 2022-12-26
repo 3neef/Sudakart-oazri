@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Order extends Model
 {
-    use HasFactory, Notification;
+    use HasFactory, Notification, LogsActivity;
 
     protected $fillable = [
         'customer_id',
@@ -37,6 +39,12 @@ class Order extends Model
 
     protected $appends = ['start', 'vendor_total'];
     protected $with = ['payment'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logFillable()->logOnlyDirty()->useLogName('Order')->setDescriptionForEvent(fn(string $eventName) => "The order no- ".$this->id." has been {$eventName}");
+    }
     protected function getStartAttribute()
     { 
         return (object) array('lat' => '15.60649592111121', 'long' => '32.52949785224432');

@@ -93,6 +93,53 @@ trait Notification
                         )
                     );
                 }
+                if ($model->status == 'canceled') {
+                    if ($user->fcm_token != null){
+                    $message = [
+                        'title' => "الطلب ملغي",
+                        'body' => "تم الغاء الطلب",
+                    ];
+                    NotificationServices::sendNotification($device_token, $message);
+                    }
+                    DB::table('notifications')->insert(
+                        array(
+                            'title' => "الطلب ملغي",
+                            'message' => "تم الغاء الطلب",
+                            'type' => 'order',
+                            'item_id' => $model->id,
+                            'user_id' => $user->id,
+                            'created_at' => now()
+                        )
+                    );
+                    $vendors = [];
+                    foreach($model->products as $product )
+                    {
+                        $vendors[] = $product->shop->vendor->user->id;
+                    }
+                    
+                    $ids = array_unique($vendors);
+                    $owners = User::whereIn('id', $ids)->get();
+                    foreach($owners as $owner)
+                    {
+                        if ($user->fcm_token != null){
+                            $message = [
+                                'title' => "الطلب ملغي",
+                                'body' => "تم الغاء الطلب",
+                            ];
+                            NotificationServices::sendNotification($device_token, $message);
+                            }
+                            DB::table('notifications')->insert(
+                                array(
+                                    'title' => "الطلب ملغي",
+                                    'message' => "تم الغاء الطلب",
+                                    'type' => 'order',
+                                    'item_id' => $model->id,
+                                    'user_id' => $owner->id,
+                                    'created_at' => now()
+                                )
+                            );
+                    }
+                }
             // if($model->status == 'completed'){
             //     $message = [
             //         'title' => "Order Updated",

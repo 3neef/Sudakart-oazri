@@ -65,6 +65,8 @@
 		'Inbound' => 'Inbound Orders',
 		'Outbound' => 'Outbound Orders',
 		'scheduled' => 'Scheduled Orders',
+		'Logs' => 'Users Logs',
+		'logins' => 'Users Log-ins',
 
 	];
 

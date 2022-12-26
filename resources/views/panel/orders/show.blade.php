@@ -32,6 +32,7 @@
                                                 <th>#{{ __('body.refrence_number') }}</th>
                                                 <th>{{ __('body.date') }}</th>
                                                 <th>{{ __('body.product') }}</th>
+                                                <th>{{ __('body.options') }}</th>
                                                 <th>{{ __('body.quantity') }}</th>
                                                 <th>{{ __('body.price') }}</th>
                                                 @if(auth()->user()->userable_type == 'App\Models\Admin')
@@ -52,6 +53,23 @@
                                                         @else
                                                         {{ $one->name }}
                                                         @endif    
+                                                    </td>
+                                                    <td>
+                                                    
+                                                        @forelse(\App\Models\Product::getOptions($order->id,$one->pivot->product_id) as $op)
+                                                        @if($op->name)
+                                                        @if(app()->getLocale() == 'en')
+                                                            <div>{{ $op->en_name }} : {{ $op->en_option }} </div>
+                                                        @else 
+                                                            <div>{{ $op->name }} : {{ $op->option }} </div>
+                                                        @endif
+                                                        @else
+                                                        {{ __('body.no_options') }}
+                                                        @endif
+                                                        @empty
+                                                        {{ __('body.no_options') }}
+                                                        
+                                                        @endforelse
                                                     </td>
                                                     <td>{{ $one->pivot->quantity }}</td>
                                                     <td>{{ number_format($one->pivot->price * $one->pivot->quantity,2) }}

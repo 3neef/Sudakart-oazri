@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDeliveryMethodIdToOrdersTable extends Migration
+class AddLoginDateToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDeliveryMethodIdToOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->foreignId('delivery_method_id')->references('id')->on('delivery_methods')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->timestamp('login_date')->nullable()->after('updated_at');
         });
     }
 
@@ -25,7 +25,7 @@ class AddDeliveryMethodIdToOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

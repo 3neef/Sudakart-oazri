@@ -388,6 +388,14 @@ $user = Auth::user();
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('admin.activities')}}"><i class="fa fa-circle"></i>{{ __('adminNav.Logs') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('admin.logins')}}"><i class="fa fa-circle"></i>{{ __('adminNav.logins') }}
+                    </a>
+                </li>
+                <li>
                     <a href="{{route('admin.roles')}}"><i class="fa fa-circle"></i>
                     {{ __('adminNav.roles') }}
                     </a>

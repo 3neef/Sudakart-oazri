@@ -27,6 +27,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UpSellsController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Spatie\Activitylog\Models\Activity;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,9 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
 Route::redirect('/admin', 'admin/login');
+Route::get('act', function(){
+    return Activity::all();
+});
 
 Route::post('register/vendor', [RegisterVendorController::class, 'register'])->name('admin.register.vendor');
 Route::post('complete/register/vendor', [RegisterVendorController::class, 'completeRegistration'])->name('admin.complete.register.vendor');
@@ -54,7 +58,7 @@ Route::group(
             return view('auth.login');
         })->name('login.view');
         Route::get('complete/register/vendor/{id}', [RegisterVendorController::class, 'completepage'])->name('admin.complete-register.vendor');
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth:web', 'approved_vendor']], function () {
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth:web', 'approved_vendor']], function () {
     Route::get('/dashboard',[AdminHomeController::class, 'index'])->name('dashboard');
 
     //products routes
@@ -298,6 +302,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('markets/destroy/{market}',[MarketsController::class, 'destroy'])->name('markets.destroy');
     Route::get('markets/getMarkets', [OrdersController::class, 'getMarkets'])->name('markets.getMarkets');
     
+    Route::get('activities', [SettingsController::class, 'activities'])->name('activities');
+    Route::get('activities/show/{activity}', [SettingsController::class, 'showActivities'])->name('activities.show');
+    
+    Route::get('user-logins', [SettingsController::class, 'userLogin'])->name('logins');
+    Route::get('user-logins-request', [SettingsController::class, 'userLoginRequest'])->name('user-login.request');
+
 
 });
 

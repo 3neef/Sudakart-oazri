@@ -323,7 +323,8 @@ class OrdersController extends Controller
         if($delivery['status'] != 0){
             $address =  $delivery['data']['region'];
         }else{
-            $region = Region::where('region_id', $order->city_id)->first();
+            $region = Region::where('region_id', $order->region_id)->first();
+            dd($region);
             $address = $region->region;
         }
         $barcode = (string)$order->id;

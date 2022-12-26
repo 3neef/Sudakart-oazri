@@ -19,9 +19,12 @@ use App\Models\DeliveryMethod;
 use App\Models\Market;
 use App\Models\Option;
 use App\Models\Reason;
+use App\Models\User;
 use App\Services\OptionsServices;
 use App\Services\UploadImageServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -390,9 +393,45 @@ class SettingsController extends Controller
     }
 
     
-    public function store(Request $request)
+    public function activities(Request $request)
     {
-        //
+        $activities = Activity::paginate(10);
+        return view('panel.settings.activities.index', compact('activities'));
+    }
+
+
+    public function showActivities(Activity $activity)
+    {
+        return view('panel.settings.activities.show', compact('activity'));
+    }
+
+    public function userLogin()
+    {
+        return view('panel.settings.logins.request');
+    }
+
+    public function userLoginRequest(Request $request)
+    {
+        if($request->date_to){
+            $date_to = $request->date_to;
+        }else{
+            $date_to = now();
+        }
+        $date_from = $request->date_from;
+
+        if($request->userable_type){
+            $userable_type = $request->userable_type;
+            $users = User::whereNotNull('login_date')
+            ->where('userable_type', $userable_type)
+            ->whereRaw('Date(login_date) between ? and ?',[$date_from,$date_to])
+            ->get();
+        }else{
+            $users = User::whereNotNull('login_date')
+            ->whereRaw('Date(login_date) between? and?',[$date_from,$date_to])
+            ->get();
+        }
+
+        return view('panel.settings.logins.index', compact('users'));
     }
 
     /**

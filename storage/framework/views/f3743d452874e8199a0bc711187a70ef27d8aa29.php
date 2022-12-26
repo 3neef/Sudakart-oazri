@@ -424,6 +424,16 @@ $user = Auth::user();
                     </a>
                 </li>
                 <li>
+                    <a href="<?php echo e(route('admin.activities')); ?>"><i class="fa fa-circle"></i><?php echo e(__('adminNav.Logs')); ?>
+
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo e(route('admin.logins')); ?>"><i class="fa fa-circle"></i><?php echo e(__('adminNav.logins')); ?>
+
+                    </a>
+                </li>
+                <li>
                     <a href="<?php echo e(route('admin.roles')); ?>"><i class="fa fa-circle"></i>
                     <?php echo e(__('adminNav.roles')); ?>
 
