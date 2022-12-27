@@ -19,7 +19,7 @@ class Wallet extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logFillable()->logOnlyDirty()->useLogName('Wallet')->setDescriptionForEvent(fn(string $eventName) => "Wallet no-".$this->id."  has been {$eventName}");
+        ->logAll()->useLogName('Wallet')->setDescriptionForEvent(fn(string $eventName) => "Wallet no-".$this->id." has been {$eventName}");
     }
 
     public function accountable () {

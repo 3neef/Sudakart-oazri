@@ -134,10 +134,10 @@
                                     
                                     <td>
                                         <a href="{{route('admin.accounting.wallets.operation', $wallet->id)}}">
-                                            <i class="fa fa-edit fa-2x" title="operations"></i>
+                                            <i class="fa fa-money fa-2x text-success" title="operations"></i>
                                         </a>
                                         <a href="{{route('admin.accounting.wallets.history', $wallet->id)}}">
-                                            <i class="fa fa-history fa-2x" title="history"></i>
+                                            <i class="fa fa-history fa-2x text-warning" title="history"></i>
                                         </a>
                                     </td>
                                 </tr>

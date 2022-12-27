@@ -31,6 +31,9 @@ class UserController extends Controller
         
         $request->authenticate();
         $request->session()->regenerate();
+        
+        $user = User::where('phone', $request->phone)->first();
+        $user->update(['login_date' => now()]);
         return redirect()->intended(RouteServiceProvider::WEBHOME);
        
     }
