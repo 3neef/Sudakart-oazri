@@ -26,19 +26,20 @@ class RegisterDriverController extends Controller
     public function register(RegisterDriverRequest $request)
     {
         return DB::transaction(function () use ($request) {
-            $driver = Driver::create($request->validated());
+            $fields = $request->validated();
+            $driver = Driver::create($fields);
+            if($request->image){
+                $fields['image'] = UploadImageServices::upload($request->file('image'), 'profiles');
+            }
+            if($request->identity){
+            $fields['identity'] = UploadImageServices::upload($request->file('identity'), 'identities');
+            }
             $driver->wallet()->create();
-            return  UsersServices::create($driver, $request);
+            UsersServices::create($driver, $request);
+            UsersServices::addPassword($driver, $request);
+            return redirect()->route('admin.drivers');
         });
-        // return DB::transaction(function () use ($request) {
-        //     $fields = $request->validated();
-        //     // $fields['image'] = UploadImageServices::upload($request->file('image'), 'profiles');
-        //     // $fields['identity'] = UploadImageServices::upload($request->file('identity'), 'identities');
-        //     $driver = Driver::create($fields);
-        //     $driver->wallet()->create();
-        //     // UsersServices::addPassword($driver, $request);
-        //     return UsersServices::create($driver, $request);
-        // });
+        return redirect()->route('admin.drivers');
     }
 
     public function completeRegistration (CompleteDriverRegisterationRequest $request) {

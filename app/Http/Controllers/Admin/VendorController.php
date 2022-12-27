@@ -9,6 +9,7 @@ use App\Models\Admin;
 use App\Models\Category;
 use App\Models\CategoryRequest;
 use App\Models\Customer;
+use App\Models\Driver;
 use App\Models\Vendor;
 use App\Services\UsersServices;
 use Illuminate\Http\Request;
@@ -128,10 +129,22 @@ class VendorController extends Controller
         return view('admin.users.index', compact('admins'));
     }
 
+    public function drivers()
+    {
+        $drivers =  Driver::all();
+        return view('panel.drivers.index', compact('drivers'));
+    }
+
     public function admincreate()
     {
         $roles =  Role::pluck('name');
         return view('admin.users.create', compact('roles'));
+    }
+
+    public function drivercreate()
+    {
+        $vichels = ['motor', 'car', 'mini van', 'van', 'truck'];
+        return view('panel.drivers.create', compact('vichels'));
     }
 
     public function adminstore(RegisterAdminRequest $request)

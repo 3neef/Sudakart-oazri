@@ -277,6 +277,14 @@ $user = Auth::user();
                         <i class="fa fa-circle"></i>{{ __('adminNav.most_viewed_blogs') }}
                     </a>
                 </li>
+                <li>
+                    <a href="{{route('admin.activities')}}"><i class="fa fa-circle"></i>{{ __('adminNav.Logs') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('admin.logins')}}"><i class="fa fa-circle"></i>{{ __('adminNav.logins') }}
+                    </a>
+                </li>
                 @can('data-analysis-vip-vendors', $user)
                 <li>
                     <a href="{{route('admin.vip.vendor')}}">
@@ -388,14 +396,6 @@ $user = Auth::user();
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('admin.activities')}}"><i class="fa fa-circle"></i>{{ __('adminNav.Logs') }}
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('admin.logins')}}"><i class="fa fa-circle"></i>{{ __('adminNav.logins') }}
-                    </a>
-                </li>
-                <li>
                     <a href="{{route('admin.roles')}}"><i class="fa fa-circle"></i>
                     {{ __('adminNav.roles') }}
                     </a>
@@ -403,6 +403,11 @@ $user = Auth::user();
                 <li>
                     <a href="{{route('admin.users')}}"><i class="fa fa-circle"></i>
                     {{ __('adminNav.users') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('admin.drivers')}}"><i class="fa fa-circle"></i>
+                    {{ __('adminBody.dirvers') }}
                     </a>
                 </li>
             </ul>

@@ -27,6 +27,7 @@
                                             <option value=""><?php echo e(__('body.Choose')); ?></option>
                                             <option value="App\Models\Vendor"><?php echo e(__('adminBody.Vendors')); ?></option>
                                             <option value="App\Models\Customer"><?php echo e(__('adminNav.customers')); ?></option>
+                                            <option value="App\Models\Driver"><?php echo e(__('adminBody.dirvers')); ?></option>
                                         </select>
                                     </div>
                                 </div>

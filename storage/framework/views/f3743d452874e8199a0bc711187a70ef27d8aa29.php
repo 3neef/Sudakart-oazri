@@ -297,6 +297,16 @@ $user = Auth::user();
 
                     </a>
                 </li>
+                <li>
+                    <a href="<?php echo e(route('admin.activities')); ?>"><i class="fa fa-circle"></i><?php echo e(__('adminNav.Logs')); ?>
+
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo e(route('admin.logins')); ?>"><i class="fa fa-circle"></i><?php echo e(__('adminNav.logins')); ?>
+
+                    </a>
+                </li>
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('data-analysis-vip-vendors', $user)): ?>
                 <li>
                     <a href="<?php echo e(route('admin.vip.vendor')); ?>">
@@ -424,16 +434,6 @@ $user = Auth::user();
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo e(route('admin.activities')); ?>"><i class="fa fa-circle"></i><?php echo e(__('adminNav.Logs')); ?>
-
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo e(route('admin.logins')); ?>"><i class="fa fa-circle"></i><?php echo e(__('adminNav.logins')); ?>
-
-                    </a>
-                </li>
-                <li>
                     <a href="<?php echo e(route('admin.roles')); ?>"><i class="fa fa-circle"></i>
                     <?php echo e(__('adminNav.roles')); ?>
 
@@ -442,6 +442,12 @@ $user = Auth::user();
                 <li>
                     <a href="<?php echo e(route('admin.users')); ?>"><i class="fa fa-circle"></i>
                     <?php echo e(__('adminNav.users')); ?>
+
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo e(route('admin.drivers')); ?>"><i class="fa fa-circle"></i>
+                    <?php echo e(__('adminBody.dirvers')); ?>
 
                     </a>
                 </li>

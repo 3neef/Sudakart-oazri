@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\RegionsController;
 use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\Auth\RegisterDriverController;
 use App\Http\Controllers\Auth\RegisterVendorController;
 use App\Http\Controllers\CategoryRequestController;
 use App\Http\Controllers\CouponsController;
@@ -213,6 +214,8 @@ Route::group(
     });
     //System Users
     Route::get('users',[VendorController::class, 'users'])->name('users');
+    //drivers
+    Route::get('drivers',[VendorController::class, 'drivers'])->name('drivers');
 
     //settings routes
     Route::group(['middleware' => ['can:view-settings']], function () {
@@ -283,6 +286,9 @@ Route::group(
 
     Route::get('admin-create', [VendorController::class, 'admincreate'])->name('admin-create');
     Route::post('admin-create', [VendorController::class, 'adminstore'])->name('admin-create.store');
+
+    Route::get('driver-create', [VendorController::class, 'drivercreate'])->name('driver-create');
+    Route::post('driver-create', [RegisterDriverController::class, 'register'])->name('driver-create.store');
 
     Route::get('regions',[RegionsController::class, 'index'])->name('regions');
     Route::get('regions/create',[RegionsController::class, 'create'])->name('region.create');
