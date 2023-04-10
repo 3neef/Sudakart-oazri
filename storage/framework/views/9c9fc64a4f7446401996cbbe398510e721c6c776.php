@@ -390,15 +390,15 @@
                                             <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('add-to-wishlist', ['product_id' => $product->id])->html();
-} elseif ($_instance->childHasBeenRendered('kwr4cUG')) {
-    $componentId = $_instance->getRenderedChildComponentId('kwr4cUG');
-    $componentTag = $_instance->getRenderedChildComponentTagName('kwr4cUG');
+} elseif ($_instance->childHasBeenRendered('oLCv8eK')) {
+    $componentId = $_instance->getRenderedChildComponentId('oLCv8eK');
+    $componentTag = $_instance->getRenderedChildComponentTagName('oLCv8eK');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('kwr4cUG');
+    $_instance->preserveRenderedChild('oLCv8eK');
 } else {
     $response = \Livewire\Livewire::mount('add-to-wishlist', ['product_id' => $product->id]);
     $html = $response->html();
-    $_instance->logRenderedChild('kwr4cUG', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('oLCv8eK', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -478,15 +478,15 @@ echo $html;
                                                                 <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('add-to-wishlist', ['product_id' => $product->id])->html();
-} elseif ($_instance->childHasBeenRendered('nIQsoMt')) {
-    $componentId = $_instance->getRenderedChildComponentId('nIQsoMt');
-    $componentTag = $_instance->getRenderedChildComponentTagName('nIQsoMt');
+} elseif ($_instance->childHasBeenRendered('p2F3OmP')) {
+    $componentId = $_instance->getRenderedChildComponentId('p2F3OmP');
+    $componentTag = $_instance->getRenderedChildComponentTagName('p2F3OmP');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('nIQsoMt');
+    $_instance->preserveRenderedChild('p2F3OmP');
 } else {
     $response = \Livewire\Livewire::mount('add-to-wishlist', ['product_id' => $product->id]);
     $html = $response->html();
-    $_instance->logRenderedChild('nIQsoMt', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('p2F3OmP', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -565,15 +565,15 @@ echo $html;
                                                         <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('add-to-wishlist', ['product_id' => $product->id])->html();
-} elseif ($_instance->childHasBeenRendered('PHssZgd')) {
-    $componentId = $_instance->getRenderedChildComponentId('PHssZgd');
-    $componentTag = $_instance->getRenderedChildComponentTagName('PHssZgd');
+} elseif ($_instance->childHasBeenRendered('KCYUe8V')) {
+    $componentId = $_instance->getRenderedChildComponentId('KCYUe8V');
+    $componentTag = $_instance->getRenderedChildComponentTagName('KCYUe8V');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('PHssZgd');
+    $_instance->preserveRenderedChild('KCYUe8V');
 } else {
     $response = \Livewire\Livewire::mount('add-to-wishlist', ['product_id' => $product->id]);
     $html = $response->html();
-    $_instance->logRenderedChild('PHssZgd', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('KCYUe8V', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -729,15 +729,15 @@ echo $html;
                                                         <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('add-to-wishlist', ['product_id' => $special->product_id,'style' => 'color : white; margin-top:10px;'])->html();
-} elseif ($_instance->childHasBeenRendered('a1MKT0B')) {
-    $componentId = $_instance->getRenderedChildComponentId('a1MKT0B');
-    $componentTag = $_instance->getRenderedChildComponentTagName('a1MKT0B');
+} elseif ($_instance->childHasBeenRendered('4lOpIFX')) {
+    $componentId = $_instance->getRenderedChildComponentId('4lOpIFX');
+    $componentTag = $_instance->getRenderedChildComponentTagName('4lOpIFX');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('a1MKT0B');
+    $_instance->preserveRenderedChild('4lOpIFX');
 } else {
     $response = \Livewire\Livewire::mount('add-to-wishlist', ['product_id' => $special->product_id,'style' => 'color : white; margin-top:10px;']);
     $html = $response->html();
-    $_instance->logRenderedChild('a1MKT0B', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('4lOpIFX', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -874,15 +874,15 @@ echo $html;
                                                           <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('add-to-wishlist', ['product_id' => $pro->product_id,'style' => 'color : white; margin-top:10px;'])->html();
-} elseif ($_instance->childHasBeenRendered('7dpVGVB')) {
-    $componentId = $_instance->getRenderedChildComponentId('7dpVGVB');
-    $componentTag = $_instance->getRenderedChildComponentTagName('7dpVGVB');
+} elseif ($_instance->childHasBeenRendered('AeMp3yW')) {
+    $componentId = $_instance->getRenderedChildComponentId('AeMp3yW');
+    $componentTag = $_instance->getRenderedChildComponentTagName('AeMp3yW');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('7dpVGVB');
+    $_instance->preserveRenderedChild('AeMp3yW');
 } else {
     $response = \Livewire\Livewire::mount('add-to-wishlist', ['product_id' => $pro->product_id,'style' => 'color : white; margin-top:10px;']);
     $html = $response->html();
-    $_instance->logRenderedChild('7dpVGVB', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('AeMp3yW', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>

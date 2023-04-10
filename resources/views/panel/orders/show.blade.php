@@ -1,3 +1,4 @@
+
 @extends('layouts.app2')
 @section('title', __('body.Order_Details'))
 @section('content')

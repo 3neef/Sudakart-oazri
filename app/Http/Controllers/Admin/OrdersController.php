@@ -24,6 +24,7 @@ use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Reason;
 use App\Models\Region;
+use App\Models\ReturnedProducts;
 use App\Models\State;
 use App\Services\OrderServices;
 use App\Services\NotificationServices;
@@ -89,6 +90,18 @@ class OrdersController extends Controller
     {
         if($request->ids > 0){
             $products = OrderProduct::whereIn('id',$request->ids)->get();
+            foreach($products as $product){
+                $product->update(['driver_id' => $request->driver_id]);
+            }
+        }
+        return redirect()->back()->with('success', __('toastr.asigned'));
+
+    } 
+
+    public function returneddrivers(Request $request)
+    {
+        if($request->ids > 0){
+            $products = ReturnedProducts::whereIn('id',$request->ids)->get();
             foreach($products as $product){
                 $product->update(['driver_id' => $request->driver_id]);
             }
@@ -328,6 +341,7 @@ class OrdersController extends Controller
             $address = $region->region;
         }
         $barcode = (string)$order->id;
+        // dd($barcode);
         return view('panel.orders.recipt')
             ->with([
                 'order' => $order,
@@ -350,7 +364,7 @@ class OrdersController extends Controller
                 'handover' => 0
             ]);
         }
-        return redirect()->route('admin.orders.index');
+        return redirect()->back()->with('success', __('toastr.added'));
     }
 
     public function VendorOrder(Request $request) {
@@ -416,14 +430,21 @@ class OrdersController extends Controller
     public function statusupdate(OutboundRequest $request,$id)
     {
         $order = Order::findorfail($id);
-        $order_products = OrderProduct::where('order_id', $id)->where('status', 'packaging')->get();
+        $order_products = OrderProduct::where('order_id', $id)->get();
         if ($request->status == 'completed') {
             foreach($order_products as $product){
                 $product->update(['status'=>'delivered']);
             }
             $order->delivered_at = Carbon::now();
             $order->update($request->validated());
-        }else{
+        }elseif($request->status == 'canceled'){
+            foreach($order_products as $product){
+                $product->update(['status'=>'canceled']);
+                $product->product->update(['quantity' => $product->product->quantity + $product->quantity ]);
+            }
+            $order->update($request->validated());
+        }
+        else{
             $order->update($request->validated());
         }
         return redirect()->back()->with('success', __('toastr.status_change'));
@@ -462,7 +483,7 @@ class OrdersController extends Controller
         $view = view('panel.orders.options', compact('product'))->render();
         echo $view;
         // echo $request->product_id;
-    }
+    } 
 
 
     public function newItem(Request $request){

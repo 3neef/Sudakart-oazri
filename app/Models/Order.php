@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str; 
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -48,6 +49,14 @@ class Order extends Model
     protected function getStartAttribute()
     { 
         return (object) array('lat' => '15.60649592111121', 'long' => '32.52949785224432');
+    }
+
+    protected function getEndAttribute()
+    { 
+        if(Str::contains($this->region_id, 'region_') == false){
+        $city = City::findorfail($this->region_id)->name;
+        }
+        return (object) array('city' => $city, 'address' => $this->address);
     }
 
     protected function getVendorTotalAttribute()

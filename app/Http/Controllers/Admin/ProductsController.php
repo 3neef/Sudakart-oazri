@@ -55,13 +55,13 @@ class ProductsController extends Controller
 
     public function create()
     {
-        $shop_categories = ShopCategory::where('shop_id', auth()->user()->userable->shop->id)->pluck('category_id');
+        // $shop_categories = ShopCategory::where('shop_id', auth()->user()->userable->shop->id)->pluck('category_id');
         if(App::getLocale() == 'en'){
-            $categories = Category::whereIn('id',$shop_categories )->pluck('en_name', 'id');
+            $categories = Category::pluck('en_name', 'id');
             $options = Option::pluck('en_option', 'id');
             
         }else{
-            $categories = Category::whereIn('id',$shop_categories )->pluck('name', 'id');
+            $categories = Category::pluck('name', 'id');
             $options = Option::pluck('option', 'id');
 
         }

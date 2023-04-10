@@ -17,16 +17,21 @@
                 </div>
 
                 <div class="card-body">
+                    <form method="POST" action="{{route('admin.orders.returned.drivers')}}" class="needs-validation" enctype="multipart/form-data">
+                        @csrf
                     <div class="table-responsive table-desi">
                         <table class="table list-digital all-package table-category "
                             id="editableTable">
                             <thead>
                                 <tr>
+                                    <th><input id="selectAll" type="checkbox"></th>
+                                    <th>{{ __('adminBody.Product_Id') }}</th>
                                     <th>{{ __('adminDash.order_ref') }}</th>
                                     <th>{{ __('adminBody.product_image') }}</th>
                                     <th>{{ __('adminBody.customer_name') }}</th>
                                     <th>{{ __('adminBody.Product_Name') }}</th>
                                     <th>{{ __('adminDash.product_status') }}</th>
+                                    <th>{{__('adminBody.dirvers')}}</th>
                                     <th>{{ __('adminDash.reason') }}</th>
                                 </tr>
                             </thead>
@@ -34,6 +39,10 @@
                             <tbody>
                                 @foreach ($products as $product)
                                 <tr>
+                                    <td><input name="ids[]" value="{{ $product->id }}" type="checkbox" ></td>
+
+                                    <td data-field="name">{{$loop->index + 1}}</td>
+
                                     <td data-field="name">#{{$product->order_id}}</td>
 
 
@@ -80,7 +89,7 @@
                                             </span>
                                         </a>
                                     </td>
-
+                                    <td data-field="number">{{$product->driver ? $product->driver->name : '' }}</td>
                                     <td data-field="name">{{$product->reason}}</td>
                                     
                                 </tr>
@@ -89,6 +98,19 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="form-group row mt-5">
+                        <label class="col-xl-3 col-md-4"><span>*</span>{{__('adminBody.dirvers')}}</label>
+                        <div class="col-md-7">
+                                <select class="form-control" name="driver_id" style="width: 100%" id="driverId" required>
+                                    <option value=""></option>
+                                </select>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary">{{__('adminBody.save')}}</button>
+                    </div>
+                </form>
                 </div>
                     <div class="d-flex justify-content-center">
                         {!! $products->links() !!}
@@ -132,7 +154,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-primary" id="clsBtnFooter" data-dismiss="modal">{{__('body.Close')}}</button>
-
             </div>
         </div>
     </div>
@@ -150,5 +171,70 @@
             $('#return-order-modal').modal('show');
     
 });
+</script>
+
+<script>
+    $(document).ready(function() {
+        
+        var dir = "{{app()->getLocale()}}";
+        var lang = "";
+
+        if(dir == 'en')
+        {
+            lang = 'ltr';
+        }else{
+            lang = 'rtl';
+        }
+
+        $('#marketId').select2({
+        dir:lang, 
+        ajax : {
+            url: "{{ route('admin.markets.getMarkets') }}",
+            type : "get" ,
+            dataType : "json",
+            data : function (params) {
+                return {
+                    search : params.term
+                };
+            } ,
+            processResults: function (response) {
+                return{
+                results : response
+                };
+            },
+            cache: true
+            }
+        });
+        $('#driverId').select2({
+        dir:lang, 
+        ajax : {
+            url: "{{ route('admin.markets.getdrivers') }}",
+            type : "get" ,
+            dataType : "json",
+            data : function (params) {
+                return {
+                    search : params.term
+                };
+            } ,
+            processResults: function (response) {
+                return{
+                results : response
+                };
+            },
+            cache: true
+            }
+        });
+    });
+</script>
+<script>
+    $("#selectAll").click(function() {
+        $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+        });
+
+        $("input[type=checkbox]").click(function() {
+        if (!$(this).prop("checked")) {
+            $("#selectAll").prop("checked", false);
+        }
+    });
 </script>
 @endpush

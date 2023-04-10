@@ -27,7 +27,7 @@ class OrderProduct extends Model
 
     protected $appends = ['start', 'end', 'total'];
     protected $with = ['product'];
-    protected function getStartAttribute()
+    protected function getEndAttribute()
     { 
         return (object) array('lat' => '15.60649592111121', 'long' => '32.52949785224432');
     }
@@ -37,7 +37,7 @@ class OrderProduct extends Model
         return $total;
     }
 
-    protected function getEndAttribute()
+    protected function getStartAttribute()
     { 
         $shop = Product::findorfail($this->product_id)->shop;
         if($shop){

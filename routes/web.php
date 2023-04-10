@@ -89,6 +89,7 @@ Route::group(
     Route::get('/orders/MarketInbound',[OrdersController::class, 'MarketInbound'])->name('orders.MarketInbound')->middleware('can:view-orders');
     Route::get('/orders/outBoundCity',[OrdersController::class, 'outBoundCity'])->name('orders.outBoundCity')->middleware('can:view-orders');
     Route::post('/orders/inbound/drivers',[OrdersController::class, 'inbounddrivers'])->name('orders.inbound.drivers');
+    Route::post('/orders/returned/drivers',[OrdersController::class, 'returneddrivers'])->name('orders.returned.drivers');
     Route::post('/orders/outbound/drivers',[OrdersController::class, 'outbounddrivers'])->name('orders.outbound.drivers');
     Route::get('/orders/inbound/status/{id}',[OrdersController::class, 'inboundedit'])->name('orders.inbound.edit')->middleware('can:view-orders');
     Route::put('/orders/inbound/status/{id}',[OrdersController::class, 'inboundstatus'])->name('orders.inbound.status')->middleware('can:view-orders');

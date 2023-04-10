@@ -140,8 +140,8 @@
             <table>
                 <tr style="text-align: right">
                     <td>
-                        <span style="font-weight: bold; font-size: 40px;">INVOICE</span> <br />
-                        <span style="font-weight: bold; font-size: 20px;">INVOICE #{{$order->id}}</span> <br />
+                        <span style="font-weight: bold; font-size: 20px;">INVOICE</span> <br />
+                        <span style="font-weight: bold; font-size: 15px;">INVOICE #{{$order->id}}</span> <br />
                         <span style="font-weight: bold; font-size: 10px;">INVOICE DATE: {{$date}}</span> 
                     </td>
                 </tr>
@@ -152,7 +152,7 @@
 						<table>
 							<tr>
 									<img src="{{ asset('main/images/new_logo.png') }}" style=" margin:auto; display: flex;
-                                    justify-content: center; width: 100%; max-width: 200px" />
+                                    justify-content: center; width: 50%; max-width: 100px" />
 							</tr>
 						</table>
 					</td>

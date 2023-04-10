@@ -140,8 +140,8 @@
             <table>
                 <tr style="text-align: right">
                     <td>
-                        <span style="font-weight: bold; font-size: 40px;">INVOICE</span> <br />
-                        <span style="font-weight: bold; font-size: 20px;">INVOICE #<?php echo e($order->id); ?></span> <br />
+                        <span style="font-weight: bold; font-size: 20px;">INVOICE</span> <br />
+                        <span style="font-weight: bold; font-size: 15px;">INVOICE #<?php echo e($order->id); ?></span> <br />
                         <span style="font-weight: bold; font-size: 10px;">INVOICE DATE: <?php echo e($date); ?></span> 
                     </td>
                 </tr>
@@ -152,7 +152,7 @@
 						<table>
 							<tr>
 									<img src="<?php echo e(asset('main/images/new_logo.png')); ?>" style=" margin:auto; display: flex;
-                                    justify-content: center; width: 100%; max-width: 200px" />
+                                    justify-content: center; width: 50%; max-width: 100px" />
 							</tr>
 						</table>
 					</td>
@@ -203,8 +203,7 @@
                         style="width:2em; height:2em;" ></td>
 					<td><?php echo e($product->sku); ?></td>
 					<td><?php echo e($product->product->name); ?></td>
-					<td>
-                                                    
+					<td>                      
 						<?php $__empty_1 = true; $__currentLoopData = \App\Models\Product::getOptions($order->id,$product->product->id); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $op): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
 						<?php if($op->name): ?>
 						<?php if(app()->getLocale() == 'en'): ?>
